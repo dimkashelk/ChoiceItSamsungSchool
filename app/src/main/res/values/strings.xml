@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ChoiceItSamsungSchool</string>
+    <string name="app_name">Chose It</string>
+
+    <string name="welcome_title">Добро пожаловать</string>
+    <string name="welcome_text">В первую социальную сеть, построенную на выборе</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="login">Войти</string>
+    <string name="create_by">Проект создал @dimkashelk</string>
 </resources>
