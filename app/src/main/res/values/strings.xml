@@ -6,4 +6,13 @@
     <string name="create_account">Создать аккаунт</string>
     <string name="login">Войти</string>
     <string name="create_by">Проект создал @dimkashelk</string>
+    <string name="registration">Регистрация</string>
+
+    <string name="password">Пароль</string>
+    <string name="re_type_password">Повторите пароль</string>
+    <string name="e_mail">Почта</string>
+    <string name="first_name">Имя</string>
+    <string name="second_name">Фамилия</string>
+    <string name="tag">Зарегиструйтесь, чтобы получить доступ к опросам</string>
+    <string name="already_has_account">Уже есть аккаунт?</string>
 </resources>
