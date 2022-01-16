@@ -49,6 +49,17 @@
         android:padding="15dp"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountFirstNameError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
+
     <EditText
         android:id="@+id/bottomSheetCreateAccountSecondName"
         android:layout_width="match_parent"
@@ -62,6 +73,17 @@
         android:inputType="textPersonName"
         android:padding="15dp"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountSecondNameError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
 
     <EditText
         android:id="@+id/bottomSheetCreateAccountShortName"
@@ -78,6 +100,17 @@
         android:padding="15dp"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountShortNameError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
+
     <EditText
         android:id="@+id/bottomSheetCreateAccountEmail"
         android:layout_width="match_parent"
@@ -91,6 +124,17 @@
         android:inputType="textEmailAddress"
         android:padding="15dp"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountEmailError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
 
     <EditText
         android:id="@+id/bottomSheetCreateAccountPassword"
@@ -106,6 +150,17 @@
         android:padding="15dp"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountPasswordError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
+
     <EditText
         android:id="@+id/bottomSheetCreateAccountRePassword"
         android:layout_width="match_parent"
@@ -118,6 +173,17 @@
         android:inputType="textPassword"
         android:padding="15dp"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/bottomSheetCreateAccountRePasswordError"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="15sp"
+        android:textColor="?attr/colorAccent"
+        android:fontFamily="@font/montserrat_regular"/>
 
     <Button
         android:id="@+id/bottomSheetCreateAccountButton"
