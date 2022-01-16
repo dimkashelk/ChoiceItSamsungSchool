@@ -117,7 +117,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:background="@drawable/buttom_with_corner_radius"
+        android:background="@drawable/button_with_corner_radius"
         app:cornerRadius="15dp"/>
 
 
