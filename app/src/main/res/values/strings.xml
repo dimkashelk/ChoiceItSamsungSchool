@@ -15,4 +15,12 @@
     <string name="second_name">Фамилия</string>
     <string name="tag">Зарегиструйтесь, чтобы получить доступ к опросам</string>
     <string name="already_has_account">Уже есть аккаунт?</string>
+    <string name="short_name">Логин</string>
+
+    <string name="error_first_name">Имя должно содержать только а-я, А-Я</string>
+    <string name="error_second_name">Фамилия должна содержать только а-я, А-Я</string>
+    <string name="error_login">Логин должен содержать только a-z</string>
+    <string name="error_e_mail">Используйте существующий адрес электронной почты</string>
+    <string name="error_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
+    <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
 </resources>
