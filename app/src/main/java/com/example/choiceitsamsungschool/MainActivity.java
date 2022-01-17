@@ -16,36 +16,55 @@ import com.google.android.material.button.MaterialButton;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
+
     private final static String salt = "[B@65b3120a";
+    private final static String ALPHABET_RU_LARGE = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
+    private final static String ALPHABET_RU_SMALL = "йцукенгшщзхъфывапролджэячсмитьбю";
+    private final static String ALPHABET_RU = ALPHABET_RU_LARGE + ALPHABET_RU_SMALL;
+    private final static String ALPHABET_EN_LARGE = "QWERTYUIOPASDFGHJKLZXCVBNM";
+    private final static String ALPHABET_EN_SMALL = "qwertyuiopasdfghjklzxcvbnm";
+    private final static String ALPHABET_EN = ALPHABET_EN_LARGE + ALPHABET_EN_SMALL;
+    private final static String DIGITS = "0123456789";
+
+    private APIServer apiServer;
+
+    private View bottomSheetViewCreateAccount;
+    private BottomSheetDialog bottomSheetDialogCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        apiServer = new APIServer(this);
+
+        initializeUI();
+    }
+
+    private void initializeUI() {
+        bottomSheetDialogCreateAccount = new BottomSheetDialog(
+                MainActivity.this, R.style.BottomSheetDialogTheme
+        );
+        bottomSheetViewCreateAccount = LayoutInflater.from(getApplicationContext()).inflate(
+                R.layout.bottom_sheet_create_account_activity,
+                (LinearLayout) findViewById(R.id.bottomSheetCreateAccount)
+        );
+        bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountButton).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkRegisterData(bottomSheetViewCreateAccount)) {
+                            bottomSheetDialogCreateAccount.dismiss();
+                        }
+                    }
+                }
+        );
+        bottomSheetDialogCreateAccount.setContentView(bottomSheetViewCreateAccount);
         MaterialButton create_account_view = findViewById(R.id.create_account);
         create_account_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        MainActivity.this, R.style.BottomSheetDialogTheme
-                );
-                View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
-                        R.layout.bottom_sheet_create_account_activity,
-                        (LinearLayout) findViewById(R.id.bottomSheetCreateAccount)
-                );
-                bottomSheetView.findViewById(R.id.bottomSheetCreateAccountButton).setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (checkRegisterData(bottomSheetView)) {
-                                    bottomSheetDialog.dismiss();
-                                }
-                            }
-                        }
-                );
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
+                bottomSheetDialogCreateAccount.show();
             }
         });
     }
@@ -61,15 +80,27 @@ public class MainActivity extends AppCompatActivity {
 
         boolean fl = true;
 
+//        TODO: доделать проверку свободности логина и почты
+
         if (firstName.getText().toString().equals("") || firstName.getText().toString().contains(" ")) {
             firstName.setBackground(getResources().getDrawable(
                     R.drawable.input_custom_error
             ));
             fl = false;
         } else {
-            firstName.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom
-            ));
+            if (checkStringToAnotherChars(
+                    firstName.getText().toString(),
+                    MainActivity.ALPHABET_RU
+            )) {
+                firstName.setBackground(getResources().getDrawable(
+                        R.drawable.input_custom
+                ));
+            } else {
+                firstName.setBackground(getResources().getDrawable(
+                        R.drawable.input_custom_error
+                ));
+                fl = false;
+            }
         }
 
         if (secondName.getText().toString().equals("") ||
@@ -79,9 +110,19 @@ public class MainActivity extends AppCompatActivity {
             ));
             fl = false;
         } else {
-            secondName.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom
-            ));
+            if (checkStringToAnotherChars(
+                    secondName.getText().toString(),
+                    MainActivity.ALPHABET_RU
+            )) {
+                secondName.setBackground(getResources().getDrawable(
+                        R.drawable.input_custom
+                ));
+            } else {
+                secondName.setBackground(getResources().getDrawable(
+                        R.drawable.input_custom_error
+                ));
+                fl = false;
+            }
         }
 
         if (login.getText().toString().equals("") ||
@@ -91,20 +132,11 @@ public class MainActivity extends AppCompatActivity {
             ));
             fl = false;
         } else {
-            Vector<Character> login_chars = new Vector<>();
-
-            String login_string = login.getText().toString();
-            for (int i = 0; i < login_string.length(); i++) {
-                login_chars.add(login_string.charAt(i));
-            }
-            String digits_and_alphabet = "qwertyuiopasdfghjklzxcvbnm0123456789";
-            for (Character i: login_chars) {
-                if (!digits_and_alphabet.contains(i.toString())) {
-                    fl = false;
-                    break;
-                }
-            }
-            if (fl) {
+            if (checkStringToAnotherChars(
+                    login.getText().toString(),
+                    MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
+            )) {
+                apiServer.checkLoginToCreate(login.getText().toString());
                 login.setBackground(getResources().getDrawable(
                         R.drawable.input_custom
                 ));
@@ -112,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 login.setBackground(getResources().getDrawable(
                         R.drawable.input_custom_error
                 ));
+                fl = false;
             }
         }
 
@@ -157,5 +190,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return fl;
+    }
+
+    private boolean checkStringToAnotherChars(String stringToCheck, String alphabet) {
+        Vector<Character> stringToCheck_chars = new Vector<>();
+        for (int i = 0; i < stringToCheck.length(); i++) {
+            stringToCheck_chars.add(stringToCheck.charAt(i));
+        }
+        for (Character i : stringToCheck_chars) {
+            if (!alphabet.contains(i.toString())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setErrorCreateAccountLogin() {
+        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_error
+        ));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setOkCreateAccountLogin() {
+        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_ok
+        ));
     }
 }
