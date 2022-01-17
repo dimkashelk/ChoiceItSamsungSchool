@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         boolean fl = true;
 
-//        TODO: доделать проверку свободности логина и почты
-
         if (firstName.getText().toString().equals("") || firstName.getText().toString().contains(" ")) {
             firstName.setBackground(getResources().getDrawable(
                     R.drawable.input_custom_error
@@ -154,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             ));
             fl = false;
         } else {
+            apiServer.checkEmailToCreate(email.getText().toString());
             email.setBackground(getResources().getDrawable(
                     R.drawable.input_custom
             ));
@@ -217,6 +216,22 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkCreateAccountLogin() {
         EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_ok
+        ));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setErrorCreateAccountEmail() {
+        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_error
+        ));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setOkCreateAccountEmail() {
+        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
         login.setBackground(getResources().getDrawable(
                 R.drawable.input_custom_ok
         ));

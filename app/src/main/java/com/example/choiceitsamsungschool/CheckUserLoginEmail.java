@@ -13,6 +13,7 @@ import okhttp3.Response;
 public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     private OkHttpClient client = new OkHttpClient();
     private APIServer apiServer;
+    private String mode;
 
     public void setApiServer(APIServer apiServer) {
         this.apiServer = apiServer;
@@ -20,12 +21,24 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... params) {
-        String ans;
-        RequestBody body = RequestBody.create(params[0], APIServer.JSON);
-        Request request = new Request.Builder()
-                .url(APIServer.URL + APIServer.CHECK_LOGIN)
-                .post(body)
-                .build();
+        mode = params[1];
+        RequestBody body;
+        Request request;
+        if (mode.equals(APIServer.LOGIN)) {
+            String json = "'login': '" + params[0] + "'";
+            body = RequestBody.create(json, APIServer.JSON);
+            request = new Request.Builder()
+                    .url(APIServer.URL + APIServer.CHECK_LOGIN)
+                    .post(body)
+                    .build();
+        } else {
+            String json = "'email': '" + params[0] + "'";
+            body = RequestBody.create(json, APIServer.JSON);
+            request = new Request.Builder()
+                    .url(APIServer.URL + APIServer.CHECK_EMAIL)
+                    .post(body)
+                    .build();
+        }
         try {
             Response response = client.newCall(request).execute();
             if (!response.isSuccessful()) {
@@ -43,10 +56,18 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean ans) {
         super.onPostExecute(ans);
-        if (ans) {
-            apiServer.freeLogin();
+        if (mode.equals(APIServer.LOGIN)) {
+            if (ans) {
+                apiServer.freeLogin();
+            } else {
+                apiServer.notFreeLogin();
+            }
         } else {
-            apiServer.notFreeLogin();
+            if (ans) {
+                apiServer.freeEmail();
+            } else {
+                apiServer.notFreeEmail();
+            }
         }
     }
 }
