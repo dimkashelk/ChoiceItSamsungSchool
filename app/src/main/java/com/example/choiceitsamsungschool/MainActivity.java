@@ -1,8 +1,12 @@
 package com.example.choiceitsamsungschool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -38,9 +42,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkAllPermission();
+
         apiServer = new APIServer(this);
 
         initializeUI();
+    }
+
+    private void checkAllPermission() {
+        Vector<String> permissionsToRequest = new Vector<>();
+
+        // INTERNET
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            permissionsToRequest.add(Manifest.permission.INTERNET);
+        }
+
+        ActivityCompat.requestPermissions(this, (String[]) permissionsToRequest.toArray(), 1);
     }
 
     private void initializeUI() {

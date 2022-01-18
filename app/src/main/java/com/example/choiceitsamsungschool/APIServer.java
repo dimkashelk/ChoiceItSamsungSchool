@@ -1,7 +1,12 @@
 package com.example.choiceitsamsungschool;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -24,10 +29,22 @@ public class APIServer {
         client = new OkHttpClient();
     }
 
+    private boolean checkInternetPermission() {
+        return ContextCompat.checkSelfPermission(mainActivity, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void getInternetPermission() {
+        ActivityCompat.requestPermissions(mainActivity, new String[] {Manifest.permission.INTERNET}, 1);
+    }
+
     public void checkLoginToCreate(String login) {
-        CheckUserLoginEmail checker = new CheckUserLoginEmail();
-        checker.setApiServer(this);
-        checker.execute(login, APIServer.LOGIN);
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(login, APIServer.LOGIN);
+        } else {
+            getInternetPermission();
+        }
     }
 
     public void freeLogin() {
@@ -39,9 +56,13 @@ public class APIServer {
     }
 
     public void checkEmailToCreate(String email) {
-        CheckUserLoginEmail checker = new CheckUserLoginEmail();
-        checker.setApiServer(this);
-        checker.execute(email, APIServer.EMAIL);
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(email, APIServer.EMAIL);
+        } else {
+            getInternetPermission();
+        }
     }
 
     public void freeEmail() {
