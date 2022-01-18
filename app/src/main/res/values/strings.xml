@@ -13,9 +13,12 @@
     <string name="e_mail">Почта</string>
     <string name="first_name">Имя</string>
     <string name="second_name">Фамилия</string>
-    <string name="tag">Зарегиструйтесь, чтобы получить доступ к опросам</string>
+    <string name="tag_create_account">Зарегиструйтесь, чтобы получить доступ к опросам</string>
+    <string name="tag_login">Войдите, чтобы получить доступ к опросам</string>
     <string name="already_has_account">Уже есть аккаунт?</string>
     <string name="short_name">Логин</string>
+    <string name="already_dont_has_account">Ещё нет аккаунта?</string>
+    <string name="login_input">Логин/почта</string>
 
     <string name="info_first_name">Имя должно содержать только а-я, А-Я</string>
     <string name="info_second_name">Фамилия должна содержать только а-я, А-Я</string>
@@ -23,4 +26,5 @@
     <string name="info_e_mail">Используйте существующий адрес электронной почты</string>
     <string name="info_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
     <string name="info_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
+    <string name="register">Зарегистрируйтесь</string>
 </resources>
