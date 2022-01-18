@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -50,14 +52,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAllPermission() {
-        Vector<String> permissionsToRequest = new Vector<>();
-
         // INTERNET
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
-            permissionsToRequest.add(Manifest.permission.INTERNET);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
         }
-
-        ActivityCompat.requestPermissions(this, (String[]) permissionsToRequest.toArray(), 1);
     }
 
     private void initializeUI() {
@@ -109,6 +107,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bottomSheetDialogLogin.show();
+            }
+        });
+
+        TextView bottomSheetCreateAccountLogin = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountLogin);
+        bottomSheetCreateAccountLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogCreateAccount.dismiss();
+                bottomSheetDialogLogin.show();
+            }
+        });
+
+        TextView bottomSheetLoginCreateAccount = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginCreateAccount);
+        bottomSheetLoginCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogLogin.dismiss();
+                bottomSheetDialogCreateAccount.show();
             }
         });
     }
