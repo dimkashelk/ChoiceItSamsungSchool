@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private APIServer apiServer;
 
     private View bottomSheetViewCreateAccount;
+    private View bottomSheetViewLogin;
     private BottomSheetDialog bottomSheetDialogCreateAccount;
+    private BottomSheetDialog bottomSheetDialogLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bottomSheetDialogCreateAccount.show();
+            }
+        });
+
+        bottomSheetDialogLogin = new BottomSheetDialog(
+                MainActivity.this, R.style.BottomSheetDialogTheme
+        );
+        bottomSheetViewLogin = LayoutInflater.from(getApplicationContext()).inflate(
+                R.layout.bottom_sheet_login_activity,
+                (LinearLayout) findViewById(R.id.bottomSheetLogin)
+        );
+        bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginButton).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO проверка данных
+                        bottomSheetDialogLogin.dismiss();
+                    }
+                }
+        );
+        bottomSheetDialogLogin.setContentView(bottomSheetViewLogin);
+        MaterialButton login_view = findViewById(R.id.login_account);
+        login_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogLogin.show();
             }
         });
     }
