@@ -1,6 +1,7 @@
 package com.example.choiceitsamsungschool;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -42,12 +43,11 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
         try {
             Response response = client.newCall(request).execute();
             if (!response.isSuccessful()) {
-                return null;
+                return false;
             }
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            boolean isFree = jsonObject.get("is_free").getAsBoolean();
-            return isFree;
+            return jsonObject.get("is_free").getAsBoolean();
         } catch (Exception e) {
             return false;
         }
