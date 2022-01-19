@@ -20,12 +20,12 @@
     <string name="already_dont_has_account">Ещё нет аккаунта?</string>
     <string name="login_input">Логин/почта</string>
 
-    <string name="info_first_name">Имя должно содержать только а-я, А-Я</string>
-    <string name="info_second_name">Фамилия должна содержать только а-я, А-Я</string>
-    <string name="info_login">Логин должен содержать только a-z, 0-9</string>
-    <string name="info_e_mail">Используйте существующий адрес электронной почты</string>
-    <string name="info_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
-    <string name="info_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
+    <string name="error_first_name">Имя должно содержать только а-я, А-Я</string>
+    <string name="error_second_name">Фамилия должна содержать только а-я, А-Я</string>
+    <string name="error_login">Логин должен содержать только a-z, 0-9</string>
+    <string name="error_email">Используйте существующий адрес электронной почты</string>
+    <string name="error_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
+    <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
     <string name="forgot_password">Забыли пароль</string>
     <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>

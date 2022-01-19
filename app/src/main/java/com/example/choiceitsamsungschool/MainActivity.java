@@ -16,10 +16,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Vector;
 
@@ -142,18 +142,18 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private boolean checkRegisterData(View v) {
-        EditText firstName = (EditText) v.findViewById(R.id.bottomSheetCreateAccountFirstName);
-        EditText secondName = (EditText) v.findViewById(R.id.bottomSheetCreateAccountSecondName);
-        EditText login = (EditText) v.findViewById(R.id.bottomSheetCreateAccountShortName);
-        EditText email = (EditText) v.findViewById(R.id.bottomSheetCreateAccountEmail);
-        EditText password = (EditText) v.findViewById(R.id.bottomSheetCreateAccountPassword);
-        EditText re_password = (EditText) v.findViewById(R.id.bottomSheetCreateAccountRePassword);
+        TextInputEditText firstName = v.findViewById(R.id.bottomSheetCreateAccountFirstName);
+        TextInputEditText secondName = v.findViewById(R.id.bottomSheetCreateAccountSecondName);
+        TextInputEditText login = v.findViewById(R.id.bottomSheetCreateAccountShortName);
+        TextInputEditText email = v.findViewById(R.id.bottomSheetCreateAccountEmail);
+        TextInputEditText password = v.findViewById(R.id.bottomSheetCreateAccountPassword);
+        TextInputEditText re_password = v.findViewById(R.id.bottomSheetCreateAccountRePassword);
 
         boolean fl = true;
 
         if (firstName.getText().toString().equals("") || firstName.getText().toString().contains(" ")) {
-            firstName.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            firstName.setError(getResources().getString(
+                    R.string.error_first_name
             ));
             fl = false;
         } else {
@@ -161,12 +161,10 @@ public class MainActivity extends AppCompatActivity {
                     firstName.getText().toString(),
                     MainActivity.ALPHABET_RU
             )) {
-                firstName.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom
-                ));
+                firstName.setError(null);
             } else {
-                firstName.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom_error
+                firstName.setError(getResources().getString(
+                        R.string.error_first_name
                 ));
                 fl = false;
             }
@@ -174,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (secondName.getText().toString().equals("") ||
                 secondName.getText().toString().contains(" ")) {
-            secondName.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            secondName.setError(getResources().getString(
+                    R.string.error_second_name
             ));
             fl = false;
         } else {
@@ -183,12 +181,10 @@ public class MainActivity extends AppCompatActivity {
                     secondName.getText().toString(),
                     MainActivity.ALPHABET_RU
             )) {
-                secondName.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom
-                ));
+                secondName.setError(null);
             } else {
-                secondName.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom_error
+                secondName.setError(getResources().getString(
+                        R.string.error_second_name
                 ));
                 fl = false;
             }
@@ -196,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (login.getText().toString().equals("") ||
                 login.getText().toString().contains(" ")) {
-            login.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            login.setError(getResources().getString(
+                    R.string.error_login
             ));
             fl = false;
         } else {
@@ -206,57 +202,49 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
             )) {
                 apiServer.checkLoginToCreate(login.getText().toString());
-                login.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom
-                ));
+                login.setError(null);
             } else {
-                login.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom_error
+                login.setError(getResources().getString(
+                        R.string.error_login
                 ));
                 fl = false;
             }
         }
 
         if (email.getText().toString().equals("") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-            email.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            email.setError(getResources().getString(
+                    R.string.error_email
             ));
             fl = false;
         } else {
             apiServer.checkEmailToCreate(email.getText().toString());
-            email.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom
-            ));
+            email.setError(null);
         }
 
         if (password.getText().toString().equals("") ||
                 password.getText().toString().contains(" ")) {
-            password.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            password.setError(getResources().getString(
+                    R.string.error_password
             ));
             fl = false;
         } else {
-            password.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom
-            ));
+            email.setError(null);
         }
 
         if (!password.getText().toString().equals(re_password.getText().toString())) {
-            re_password.setBackground(getResources().getDrawable(
-                    R.drawable.input_custom_error
+            re_password.setError(getResources().getString(
+                    R.string.error_re_password
             ));
             fl = false;
         } else {
             if (re_password.getText().toString().equals("") ||
                     re_password.getText().toString().contains(" ")) {
-                re_password.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom_error
+                re_password.setError(getResources().getString(
+                        R.string.error_re_password
                 ));
                 fl = false;
             } else {
-                re_password.setBackground(getResources().getDrawable(
-                        R.drawable.input_custom
-                ));
+                re_password.setError(null);
             }
         }
         return fl;
