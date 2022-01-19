@@ -1,7 +1,6 @@
 package com.example.choiceitsamsungschool;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

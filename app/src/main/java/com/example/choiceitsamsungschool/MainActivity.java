@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -32,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private final static String ALPHABET_EN = ALPHABET_EN_LARGE + ALPHABET_EN_SMALL;
     private final static String DIGITS = "0123456789";
 
+    private final static String PREFERENCES_AUTHORIZE_DATA = "authorize_data";
+
+    private SharedPreferences authorize_data;
+    private SharedPreferences.Editor editor_authorize_data;
+
     private APIServer apiServer;
 
     private View bottomSheetViewCreateAccount;
@@ -43,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
+        editor_authorize_data = authorize_data.edit();
 
         checkAllPermission();
 
@@ -96,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO проверка данных
-                        bottomSheetDialogLogin.dismiss();
+                        if (checkLoginData(bottomSheetViewLogin)) {
+                            bottomSheetDialogLogin.dismiss();
+                        }
                     }
                 }
         );
@@ -251,6 +262,24 @@ public class MainActivity extends AppCompatActivity {
         return fl;
     }
 
+    private boolean checkLoginData(View v) {
+        EditText login_email = v.findViewById(R.id.bottomSheetLoginLogin);
+        EditText password = v.findViewById(R.id.bottomSheetLoginPassword);
+
+        String login_string = login_email.getText().toString();
+        String password_string = password.getText().toString();
+        if (login_string.isEmpty() || password_string.isEmpty()) {
+            setErrorLoginUserLoginPassword();
+        } else {
+            if (Patterns.EMAIL_ADDRESS.matcher(login_string).matches()) {
+                apiServer.checkUserEmailPassword(login_string, password_string);
+            } else {
+                apiServer.checkUserLoginPassword(login_string, password_string);
+            }
+        }
+        return true;
+    }
+
     private boolean checkStringToAnotherChars(String stringToCheck, String alphabet) {
         Vector<Character> stringToCheck_chars = new Vector<>();
         for (int i = 0; i < stringToCheck.length(); i++) {
@@ -269,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
     public void setErrorCreateAccountLogin() {
         EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
         login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error
+                R.drawable.input_custom_error, null
         ));
     }
 
@@ -277,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
     public void setOkCreateAccountLogin() {
         EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
         login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok
+                R.drawable.input_custom_ok, null
         ));
     }
 
@@ -285,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     public void setErrorCreateAccountEmail() {
         EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
         login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error
+                R.drawable.input_custom_error, null
         ));
     }
 
@@ -293,7 +322,43 @@ public class MainActivity extends AppCompatActivity {
     public void setOkCreateAccountEmail() {
         EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
         login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok
+                R.drawable.input_custom_ok, null
         ));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setOkLoginUserLoginPassword(String login_string, String token) {
+        saveToken(login_string, token);
+
+        EditText login = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLogin);
+        EditText password = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPassword);
+
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_ok, null
+        ));
+        password.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_ok, null
+        ));
+
+        // TODO: открываем следующую страницу! Он молодец, он ввел пароль!
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setErrorLoginUserLoginPassword() {
+        EditText login = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLogin);
+        EditText password = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPassword);
+
+        login.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_error, null
+        ));
+        password.setBackground(getResources().getDrawable(
+                R.drawable.input_custom_error, null
+        ));
+        // TODO: восстановление пароля
+    }
+
+    private void saveToken(String login_string, String token) {
+        editor_authorize_data.putString(login_string, token);
+        editor_authorize_data.apply();
     }
 }

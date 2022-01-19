@@ -18,6 +18,7 @@ public class APIServer {
     public static final String URL = "https://example.com/api/";
     public static final String CHECK_LOGIN = "check_login";
     public static final String CHECK_EMAIL = "check_email";
+    public static final String AUTHORIZATION = "auth";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -71,5 +72,34 @@ public class APIServer {
 
     public void notFreeEmail() {
         mainActivity.setErrorCreateAccountEmail();
+    }
+
+    public void checkUserLoginPassword(String login, String password) {
+        if (checkInternetPermission()) {
+            CheckUserLoginPassword checker = new CheckUserLoginPassword();
+            checker.setApiServer(this);
+            checker.execute(login, password, APIServer.LOGIN);
+        } else {
+            getInternetPermission();
+        }
+    }
+
+
+    public void okUserLoginPassword(String login, String token) {
+        mainActivity.setOkLoginUserLoginPassword(login, token);
+    }
+
+    public void errorUserLoginPassword() {
+        mainActivity.setErrorLoginUserLoginPassword();
+    }
+
+    public void checkUserEmailPassword(String email, String password) {
+        if (checkInternetPermission()) {
+            CheckUserLoginPassword checker = new CheckUserLoginPassword();
+            checker.setApiServer(this);
+            checker.execute(email, password, APIServer.EMAIL);
+        } else {
+            getInternetPermission();
+        }
     }
 }
