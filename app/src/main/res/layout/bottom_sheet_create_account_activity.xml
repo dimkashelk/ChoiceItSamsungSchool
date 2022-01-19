@@ -36,6 +36,7 @@
         android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountFirstNameLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,12 +44,13 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
         android:hint="@string/first_name"
-        app:errorContentDescription="@string/error_first_name"
-        app:errorTextColor="?attr/colorAccent"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:errorContentDescription="@string/error_first_name"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountFirstName"
@@ -61,6 +63,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountSecondNameLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,12 +71,13 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
         android:hint="@string/second_name"
-        app:errorContentDescription="@string/error_second_name"
-        app:errorTextColor="?attr/colorAccent"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:errorContentDescription="@string/error_second_name"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountSecondName"
@@ -86,19 +90,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountShortNameLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
-        app:errorContentDescription="@string/error_login"
-        app:errorTextColor="?attr/colorAccent"
         android:hint="@string/short_name"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:errorContentDescription="@string/error_login"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountShortName"
@@ -111,19 +117,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountEmailLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
-        app:errorContentDescription="@string/error_email"
-        app:errorTextColor="?attr/colorAccent"
         android:hint="@string/email"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:errorContentDescription="@string/error_email"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountEmail"
@@ -135,11 +143,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountPasswordLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorContentDescription="@string/error_password"
-        app:errorTextColor="?attr/colorAccent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
@@ -147,7 +154,11 @@
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:endIconMode="password_toggle"
+        app:errorContentDescription="@string/error_password"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountPassword"
@@ -159,19 +170,22 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottomSheetCreateAccountRePasswordLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        app:errorContentDescription="@string/error_re_password"
-        app:errorTextColor="?attr/colorAccent"
         android:layout_marginBottom="5dp"
         android:hint="@string/re_type_password"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp">
+        app:boxCornerRadiusTopStart="15dp"
+        app:endIconMode="password_toggle"
+        app:errorContentDescription="@string/error_re_password"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/pink_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountRePassword"

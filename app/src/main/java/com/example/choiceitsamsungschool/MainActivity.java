@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Vector;
 
@@ -142,48 +143,54 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private boolean checkRegisterData(View v) {
-        TextInputEditText firstName = v.findViewById(R.id.bottomSheetCreateAccountFirstName);
-        TextInputEditText secondName = v.findViewById(R.id.bottomSheetCreateAccountSecondName);
+        TextInputEditText first_name = v.findViewById(R.id.bottomSheetCreateAccountFirstName);
+        TextInputLayout first_name_layout = v.findViewById(R.id.bottomSheetCreateAccountFirstNameLayout);
+        TextInputEditText second_name = v.findViewById(R.id.bottomSheetCreateAccountSecondName);
+        TextInputLayout second_name_layout = v.findViewById(R.id.bottomSheetCreateAccountSecondNameLayout);
         TextInputEditText login = v.findViewById(R.id.bottomSheetCreateAccountShortName);
+        TextInputLayout login_layout = v.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
         TextInputEditText email = v.findViewById(R.id.bottomSheetCreateAccountEmail);
+        TextInputLayout email_layout = v.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
         TextInputEditText password = v.findViewById(R.id.bottomSheetCreateAccountPassword);
+        TextInputLayout password_layout = v.findViewById(R.id.bottomSheetCreateAccountPasswordLayout);
         TextInputEditText re_password = v.findViewById(R.id.bottomSheetCreateAccountRePassword);
+        TextInputLayout re_password_layout = v.findViewById(R.id.bottomSheetCreateAccountRePasswordLayout);
 
         boolean fl = true;
 
-        if (firstName.getText().toString().equals("") || firstName.getText().toString().contains(" ")) {
-            firstName.setError(getResources().getString(
+        if (first_name.getText().toString().equals("") || first_name.getText().toString().contains(" ")) {
+            first_name_layout.setError(getResources().getString(
                     R.string.error_first_name
             ));
             fl = false;
         } else {
             if (checkStringToAnotherChars(
-                    firstName.getText().toString(),
+                    first_name.getText().toString(),
                     MainActivity.ALPHABET_RU
             )) {
-                firstName.setError(null);
+                first_name_layout.setError(null);
             } else {
-                firstName.setError(getResources().getString(
+                first_name_layout.setError(getResources().getString(
                         R.string.error_first_name
                 ));
                 fl = false;
             }
         }
 
-        if (secondName.getText().toString().equals("") ||
-                secondName.getText().toString().contains(" ")) {
-            secondName.setError(getResources().getString(
+        if (second_name.getText().toString().equals("") ||
+                second_name.getText().toString().contains(" ")) {
+            second_name_layout.setError(getResources().getString(
                     R.string.error_second_name
             ));
             fl = false;
         } else {
             if (checkStringToAnotherChars(
-                    secondName.getText().toString(),
+                    second_name.getText().toString(),
                     MainActivity.ALPHABET_RU
             )) {
-                secondName.setError(null);
+                second_name_layout.setError(null);
             } else {
-                secondName.setError(getResources().getString(
+                second_name_layout.setError(getResources().getString(
                         R.string.error_second_name
                 ));
                 fl = false;
@@ -192,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (login.getText().toString().equals("") ||
                 login.getText().toString().contains(" ")) {
-            login.setError(getResources().getString(
+            login_layout.setError(getResources().getString(
                     R.string.error_login
             ));
             fl = false;
@@ -202,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
             )) {
                 apiServer.checkLoginToCreate(login.getText().toString());
-                login.setError(null);
+                login_layout.setError(null);
             } else {
-                login.setError(getResources().getString(
+                login_layout.setError(getResources().getString(
                         R.string.error_login
                 ));
                 fl = false;
@@ -212,39 +219,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (email.getText().toString().equals("") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-            email.setError(getResources().getString(
+            email_layout.setError(getResources().getString(
                     R.string.error_email
             ));
             fl = false;
         } else {
             apiServer.checkEmailToCreate(email.getText().toString());
-            email.setError(null);
+            email_layout.setError(null);
         }
 
         if (password.getText().toString().equals("") ||
                 password.getText().toString().contains(" ")) {
-            password.setError(getResources().getString(
+            password_layout.setError(getResources().getString(
                     R.string.error_password
             ));
             fl = false;
         } else {
-            email.setError(null);
+            email_layout.setError(null);
         }
 
         if (!password.getText().toString().equals(re_password.getText().toString())) {
-            re_password.setError(getResources().getString(
+            re_password_layout.setError(getResources().getString(
                     R.string.error_re_password
             ));
             fl = false;
         } else {
             if (re_password.getText().toString().equals("") ||
                     re_password.getText().toString().contains(" ")) {
-                re_password.setError(getResources().getString(
+                re_password_layout.setError(getResources().getString(
                         R.string.error_re_password
                 ));
                 fl = false;
             } else {
-                re_password.setError(null);
+                re_password_layout.setError(null);
             }
         }
         return fl;
