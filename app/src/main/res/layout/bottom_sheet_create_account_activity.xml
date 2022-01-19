@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
 
     <TextView
@@ -34,89 +35,140 @@
         android:textColor="@color/black"
         android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountFirstName"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/input_custom"
-        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="5dp"
         android:hint="@string/first_name"
-        android:inputType="textPersonName"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountSecondName"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/input_custom"
-        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="5dp"
         android:hint="@string/second_name"
-        android:inputType="textPersonName"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountShortName"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountSecondName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/input_custom"
-        android:clickable="false"
-        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="5dp"
         android:hint="@string/short_name"
-        android:inputType="text"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountEmail"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountShortName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/input_custom"
-        android:fontFamily="@font/montserrat_regular"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        android:layout_marginBottom="5dp"
+        android:hint="@string/email"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountPassword"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/input_custom"
-        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="5dp"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
 
-    <EditText
-        android:id="@+id/bottomSheetCreateAccountRePassword"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/input_custom"
-        android:fontFamily="@font/montserrat_regular"
+        android:layout_marginBottom="5dp"
         android:hint="@string/re_type_password"
-        android:inputType="textPassword"
-        android:padding="15dp"
-        android:textSize="15sp" />
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetCreateAccountRePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/bottomSheetCreateAccountButton"
@@ -145,9 +197,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:layout_marginRight="5dp"
             android:text="@string/already_has_account"
             tools:ignore="RtlSymmetry" />
 

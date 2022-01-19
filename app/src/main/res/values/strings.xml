@@ -10,7 +10,7 @@
 
     <string name="password">Пароль</string>
     <string name="re_type_password">Повторите пароль</string>
-    <string name="e_mail">Почта</string>
+    <string name="email">Почта</string>
     <string name="first_name">Имя</string>
     <string name="second_name">Фамилия</string>
     <string name="tag_create_account">Зарегиструйтесь, чтобы получить доступ к опросам</string>
@@ -27,4 +27,7 @@
     <string name="info_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
     <string name="info_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
+    <string name="forgot_password">Забыли пароль</string>
+    <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>
+    <string name="get_verify_code">Получить код</string>
 </resources>
