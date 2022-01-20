@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -281,32 +282,49 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountLogin() {
         TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
-
+        login.setError(getResources().getString(
+                R.string.not_free_login
+        ));
+        login.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.pink_700, null
+        )));
         login.setErrorEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkCreateAccountLogin() {
-        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok, null
+        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
+        login.setHelperText(getResources().getString(
+                R.string.free_login
         ));
+        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.teal_200, null
+        )));
+        login.setHelperTextEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountEmail() {
-        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error, null
+        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
+        login.setError(getResources().getString(
+                R.string.not_free_email
         ));
+        login.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.pink_700, null
+        )));
+        login.setErrorEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkCreateAccountEmail() {
-        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok, null
+        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
+        login.setHelperText(getResources().getString(
+                R.string.free_email
         ));
+        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.teal_200, null
+        )));
+        login.setHelperTextEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
