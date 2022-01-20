@@ -23,7 +23,11 @@
     <string name="error_first_name">Имя должно содержать только а-я, А-Я</string>
     <string name="error_second_name">Фамилия должна содержать только а-я, А-Я</string>
     <string name="error_login">Логин должен содержать только a-z, 0-9</string>
+    <string name="not_free_login">Данный логин уже занят, попробуйте другой</string>
+    <string name="free_login">Данный логин свободен</string>
     <string name="error_email">Используйте существующий адрес электронной почты</string>
+    <string name="not_free_email">Данная почта уже занята, попробуйте другую</string>
+    <string name="free_email">Данная почта свободна</string>
     <string name="error_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
     <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
