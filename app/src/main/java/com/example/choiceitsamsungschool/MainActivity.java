@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private final static String DIGITS = "0123456789";
 
     private final static String PREFERENCES_AUTHORIZE_DATA = "authorize_data";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT = "bottomSheetCreateAccountFirstNameLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT = "bottomSheetCreateAccountSecondNameLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT = "bottomSheetCreateAccountShortNameLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT = "bottomSheetCreateAccountShortNameLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT = "bottomSheetCreateAccountPasswordLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT = "bottomSheetCreateAccountRePasswordLayout";
 
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
@@ -46,6 +54,25 @@ public class MainActivity extends AppCompatActivity {
     private View bottomSheetViewLogin;
     private BottomSheetDialog bottomSheetDialogCreateAccount;
     private BottomSheetDialog bottomSheetDialogLogin;
+
+    private TextInputEditText bottomSheetCreateAccountFirstName;
+    private TextInputLayout bottomSheetCreateAccountFirstNameLayout;
+    private boolean bottomSheetCreateAccountFirstNameOk = false;
+    private TextInputEditText bottomSheetCreateAccountSecondName;
+    private TextInputLayout bottomSheetCreateAccountSecondNameLayout;
+    private boolean bottomSheetCreateAccountSecondNameOk = false;
+    private TextInputEditText bottomSheetCreateAccountShortName;
+    private TextInputLayout bottomSheetCreateAccountShortNameLayout;
+    private boolean bottomSheetCreateAccountShortNameOk = false;
+    private TextInputEditText bottomSheetCreateAccountEmail;
+    private TextInputLayout bottomSheetCreateAccountEmailLayout;
+    private boolean bottomSheetCreateAccountEmailOk = false;
+    private TextInputEditText bottomSheetCreateAccountPassword;
+    private TextInputLayout bottomSheetCreateAccountPasswordLayout;
+    private boolean bottomSheetCreateAccountPasswordOk = false;
+    private TextInputEditText bottomSheetCreateAccountRePassword;
+    private TextInputLayout bottomSheetCreateAccountRePasswordLayout;
+    private boolean bottomSheetCreateAccountRePasswordOk = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,122 +166,84 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialogCreateAccount.show();
             }
         });
+
+        bottomSheetCreateAccountFirstName = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountFirstName);
+        bottomSheetCreateAccountFirstNameLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountFirstNameLayout);
+        bottomSheetCreateAccountSecondName = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountSecondName);
+        bottomSheetCreateAccountSecondNameLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountSecondNameLayout);
+        bottomSheetCreateAccountShortName = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
+        bottomSheetCreateAccountShortNameLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
+        bottomSheetCreateAccountEmail = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmail);
+        bottomSheetCreateAccountEmailLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
+        bottomSheetCreateAccountPassword = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountPassword);
+        bottomSheetCreateAccountPasswordLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountPasswordLayout);
+        bottomSheetCreateAccountRePassword = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountRePassword);
+        bottomSheetCreateAccountRePasswordLayout = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountRePasswordLayout);
+
+        TextInputLayoutTextWatcher textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountFirstNameLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT
+        );
+        bottomSheetCreateAccountFirstName.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountSecondNameLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT
+        );
+        bottomSheetCreateAccountSecondName.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountSecondNameLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT
+        );
+        bottomSheetCreateAccountSecondName.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountShortNameLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT
+        );
+        bottomSheetCreateAccountShortName.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountShortNameLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT
+        );
+        bottomSheetCreateAccountEmail.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountPasswordLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT
+        );
+        bottomSheetCreateAccountPassword.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountRePasswordLayout,
+                BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT
+        );
+        bottomSheetCreateAccountRePassword.addTextChangedListener(textInputLayoutTextWatcher);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private boolean checkRegisterData(View v) {
-        TextInputEditText first_name = v.findViewById(R.id.bottomSheetCreateAccountFirstName);
-        TextInputLayout first_name_layout = v.findViewById(R.id.bottomSheetCreateAccountFirstNameLayout);
-        TextInputEditText second_name = v.findViewById(R.id.bottomSheetCreateAccountSecondName);
-        TextInputLayout second_name_layout = v.findViewById(R.id.bottomSheetCreateAccountSecondNameLayout);
-        TextInputEditText login = v.findViewById(R.id.bottomSheetCreateAccountShortName);
-        TextInputLayout login_layout = v.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
-        TextInputEditText email = v.findViewById(R.id.bottomSheetCreateAccountEmail);
-        TextInputLayout email_layout = v.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
-        TextInputEditText password = v.findViewById(R.id.bottomSheetCreateAccountPassword);
-        TextInputLayout password_layout = v.findViewById(R.id.bottomSheetCreateAccountPasswordLayout);
-        TextInputEditText re_password = v.findViewById(R.id.bottomSheetCreateAccountRePassword);
-        TextInputLayout re_password_layout = v.findViewById(R.id.bottomSheetCreateAccountRePasswordLayout);
-
-        boolean fl = true;
-
-        if (first_name.getText().toString().equals("") || first_name.getText().toString().contains(" ")) {
-            first_name_layout.setError(getResources().getString(
-                    R.string.error_first_name
-            ));
-            fl = false;
-        } else {
-            if (checkStringToAnotherChars(
-                    first_name.getText().toString(),
-                    MainActivity.ALPHABET_RU
-            )) {
-                first_name_layout.setError(null);
-            } else {
-                first_name_layout.setError(getResources().getString(
-                        R.string.error_first_name
-                ));
-                fl = false;
-            }
-        }
-
-        if (second_name.getText().toString().equals("") ||
-                second_name.getText().toString().contains(" ")) {
-            second_name_layout.setError(getResources().getString(
-                    R.string.error_second_name
-            ));
-            fl = false;
-        } else {
-            if (checkStringToAnotherChars(
-                    second_name.getText().toString(),
-                    MainActivity.ALPHABET_RU
-            )) {
-                second_name_layout.setError(null);
-            } else {
-                second_name_layout.setError(getResources().getString(
-                        R.string.error_second_name
-                ));
-                fl = false;
-            }
-        }
-
-        if (login.getText().toString().equals("") ||
-                login.getText().toString().contains(" ")) {
-            login_layout.setError(getResources().getString(
-                    R.string.error_login
-            ));
-            fl = false;
-        } else {
-            if (checkStringToAnotherChars(
-                    login.getText().toString(),
-                    MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
-            )) {
-                apiServer.checkLoginToCreate(login.getText().toString());
-                login_layout.setError(null);
-            } else {
-                login_layout.setError(getResources().getString(
-                        R.string.error_login
-                ));
-                fl = false;
-            }
-        }
-
-        if (email.getText().toString().equals("") || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-            email_layout.setError(getResources().getString(
-                    R.string.error_email
-            ));
-            fl = false;
-        } else {
-            apiServer.checkEmailToCreate(email.getText().toString());
-            email_layout.setError(null);
-        }
-
-        if (password.getText().toString().equals("") ||
-                password.getText().toString().contains(" ")) {
-            password_layout.setError(getResources().getString(
-                    R.string.error_password
-            ));
-            fl = false;
-        } else {
-            email_layout.setError(null);
-        }
-
-        if (!password.getText().toString().equals(re_password.getText().toString())) {
-            re_password_layout.setError(getResources().getString(
-                    R.string.error_re_password
-            ));
-            fl = false;
-        } else {
-            if (re_password.getText().toString().equals("") ||
-                    re_password.getText().toString().contains(" ")) {
-                re_password_layout.setError(getResources().getString(
-                        R.string.error_re_password
-                ));
-                fl = false;
-            } else {
-                re_password_layout.setError(null);
-            }
-        }
-        return fl;
+        checkUserFirstName();
+        checkUserSecondName();
+        checkUserShortName();
+        checkUserEmail();
+        checkUserPassword();
+        checkUserRePassword();
+        return bottomSheetCreateAccountFirstNameOk &&
+                bottomSheetCreateAccountSecondNameOk &&
+                bottomSheetCreateAccountShortNameOk &&
+                bottomSheetCreateAccountEmailOk &&
+                bottomSheetCreateAccountPasswordOk &&
+                bottomSheetCreateAccountRePasswordOk;
     }
 
     private boolean checkLoginData(View v) {
@@ -291,10 +280,9 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountLogin() {
-        EditText login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortName);
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error, null
-        ));
+        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
+
+        login.setErrorEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -355,5 +343,130 @@ public class MainActivity extends AppCompatActivity {
     private void saveToken(String login_string, String token) {
         editor_authorize_data.putString(login_string, token);
         editor_authorize_data.apply();
+    }
+
+    public boolean checkUserFirstName() {
+        if (bottomSheetCreateAccountFirstName.getText().toString().equals("") || bottomSheetCreateAccountFirstName.getText().toString().contains(" ")) {
+            bottomSheetCreateAccountFirstNameLayout.setError(getResources().getString(
+                    R.string.error_first_name
+            ));
+            bottomSheetCreateAccountFirstNameOk = false;
+            return false;
+        } else {
+            if (checkStringToAnotherChars(
+                    bottomSheetCreateAccountFirstName.getText().toString(),
+                    MainActivity.ALPHABET_RU
+            )) {
+                bottomSheetCreateAccountFirstNameLayout.setError(null);
+                bottomSheetCreateAccountFirstNameOk = true;
+                return true;
+            } else {
+                bottomSheetCreateAccountFirstNameLayout.setError(getResources().getString(
+                        R.string.error_first_name
+                ));
+                bottomSheetCreateAccountFirstNameOk = false;
+                return false;
+            }
+        }
+    }
+
+    public boolean checkUserSecondName() {
+        if (bottomSheetCreateAccountSecondName.getText().toString().equals("") ||
+                bottomSheetCreateAccountSecondName.getText().toString().contains(" ")) {
+            bottomSheetCreateAccountSecondNameLayout.setError(getResources().getString(
+                    R.string.error_second_name
+            ));
+            bottomSheetCreateAccountSecondNameOk = false;
+            return false;
+        } else {
+            if (checkStringToAnotherChars(
+                    bottomSheetCreateAccountSecondName.getText().toString(),
+                    MainActivity.ALPHABET_RU
+            )) {
+                bottomSheetCreateAccountSecondNameLayout.setError(null);
+                bottomSheetCreateAccountSecondNameOk = true;
+                return true;
+            } else {
+                bottomSheetCreateAccountSecondNameLayout.setError(getResources().getString(
+                        R.string.error_second_name
+                ));
+                bottomSheetCreateAccountSecondNameOk = false;
+                return false;
+            }
+        }
+    }
+
+    public boolean checkUserShortName() {
+        if (bottomSheetCreateAccountShortName.getText().toString().equals("") ||
+                bottomSheetCreateAccountShortName.getText().toString().contains(" ")) {
+            bottomSheetCreateAccountShortNameOk = false;
+            return false;
+        } else {
+            if (checkStringToAnotherChars(
+                    bottomSheetCreateAccountShortName.getText().toString(),
+                    MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
+            )) {
+                apiServer.checkLoginToCreate(bottomSheetCreateAccountShortName.getText().toString());
+                bottomSheetCreateAccountShortNameLayout.setError(null);
+                bottomSheetCreateAccountShortNameOk = true;
+                return true;
+            } else {
+                bottomSheetCreateAccountShortNameOk = false;
+                return false;
+            }
+        }
+    }
+
+    public boolean checkUserEmail() {
+        if (bottomSheetCreateAccountEmail.getText().toString().equals("") || !Patterns.EMAIL_ADDRESS.matcher(bottomSheetCreateAccountEmail.getText().toString()).matches()) {
+            bottomSheetCreateAccountEmailLayout.setError(getResources().getString(
+                    R.string.error_email
+            ));
+            bottomSheetCreateAccountEmailOk = false;
+            return false;
+        } else {
+            apiServer.checkEmailToCreate(bottomSheetCreateAccountEmail.getText().toString());
+            bottomSheetCreateAccountEmailLayout.setError(null);
+            bottomSheetCreateAccountEmailOk = true;
+            return true;
+        }
+    }
+
+    public boolean checkUserPassword() {
+        if (bottomSheetCreateAccountPassword.getText().toString().equals("") ||
+                bottomSheetCreateAccountPassword.getText().toString().contains(" ")) {
+            bottomSheetCreateAccountPasswordLayout.setError(getResources().getString(
+                    R.string.error_password
+            ));
+            bottomSheetCreateAccountPasswordOk = false;
+            return false;
+        } else {
+            bottomSheetCreateAccountEmailLayout.setError(null);
+            bottomSheetCreateAccountPasswordOk = true;
+            return true;
+        }
+    }
+
+    public boolean checkUserRePassword() {
+        if (!bottomSheetCreateAccountPassword.getText().toString().equals(bottomSheetCreateAccountRePassword.getText().toString())) {
+            bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
+                    R.string.error_re_password
+            ));
+            bottomSheetCreateAccountRePasswordOk = false;
+            return false;
+        } else {
+            if (bottomSheetCreateAccountRePassword.getText().toString().equals("") ||
+                    bottomSheetCreateAccountRePassword.getText().toString().contains(" ")) {
+                bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
+                        R.string.error_re_password
+                ));
+                bottomSheetCreateAccountRePasswordOk = false;
+                return false;
+            } else {
+                bottomSheetCreateAccountRePasswordLayout.setError(null);
+                bottomSheetCreateAccountRePasswordOk = true;
+                return true;
+            }
+        }
     }
 }
