@@ -277,21 +277,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkLoginData(View v) {
-        EditText login_email = v.findViewById(R.id.bottomSheetLoginLogin);
-        EditText password = v.findViewById(R.id.bottomSheetLoginPassword);
-
-        String login_string = login_email.getText().toString();
-        String password_string = password.getText().toString();
-        if (login_string.isEmpty() || password_string.isEmpty()) {
-            setErrorLoginUserLoginPassword();
-        } else {
-            if (Patterns.EMAIL_ADDRESS.matcher(login_string).matches()) {
-                apiServer.checkUserEmailPassword(login_string, password_string);
+        checkUserLoginLogin();
+        checkUserLoginPassword();
+        if (bottomSheetLoginLoginOk && bottomSheetLoginPasswordOk) {
+            if (Patterns.EMAIL_ADDRESS.matcher(
+                    bottomSheetLoginLogin.getText().toString()
+            ).matches()) {
+                apiServer.checkUserEmailPassword(
+                        bottomSheetLoginLogin.getText().toString(),
+                        bottomSheetLoginPassword.getText().toString()
+                );
             } else {
-                apiServer.checkUserLoginPassword(login_string, password_string);
+                apiServer.checkUserLoginPassword(
+                        bottomSheetLoginLogin.getText().toString(),
+                        bottomSheetLoginPassword.getText().toString()
+                );
             }
         }
-        return true;
+        return false;
     }
 
     private boolean checkStringToAnotherChars(String stringToCheck, String alphabet) {
@@ -306,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountLogin() {
@@ -355,6 +357,9 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkLoginUserLoginPassword(String login_string, String token) {
         // saveToken(login_string, token);
+
+        bottomSheetLoginLoginOk = true;
+        bottomSheetLoginPasswordOk = true;
 
         bottomSheetDialogLogin.dismiss();
 

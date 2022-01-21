@@ -10,7 +10,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CheckUserLoginPassword extends AsyncTask<String, Void, String> {
+public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
     private OkHttpClient client = new OkHttpClient();
     private APIServer apiServer;
     private String login;
@@ -75,4 +75,6 @@ public class CheckUserLoginPassword extends AsyncTask<String, Void, String> {
             apiServer.errorUserLoginPassword();
         }
     }
+
+
 }
