@@ -310,81 +310,74 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountLogin() {
-        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
-        login.setError(getResources().getString(
+        bottomSheetCreateAccountShortNameLayout.setError(getResources().getString(
                 R.string.not_free_login
         ));
-        login.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
+        bottomSheetCreateAccountShortNameLayout.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.pink_700, null
         )));
-        login.setErrorEnabled(true);
+        bottomSheetCreateAccountShortNameLayout.setErrorEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkCreateAccountLogin() {
-        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountShortNameLayout);
-        login.setHelperText(getResources().getString(
+        bottomSheetCreateAccountShortNameLayout.setHelperText(getResources().getString(
                 R.string.free_login
         ));
-        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+        bottomSheetCreateAccountShortNameLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.teal_200, null
         )));
-        login.setHelperTextEnabled(true);
+        bottomSheetCreateAccountShortNameLayout.setHelperTextEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountEmail() {
-        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
-        login.setHelperText(getResources().getString(
+        bottomSheetCreateAccountEmailLayout.setHelperText(getResources().getString(
                 R.string.not_free_email
         ));
-        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+        bottomSheetCreateAccountEmailLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.pink_700, null
         )));
-        login.setHelperTextEnabled(true);
+        bottomSheetCreateAccountEmailLayout.setHelperTextEnabled(true);
     }
 
     @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     public void setOkCreateAccountEmail() {
-        TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
-        login.setBoxStrokeColor(R.color.teal_200);
-        login.setHelperText(getResources().getString(
+        bottomSheetCreateAccountEmailLayout.setHelperText(getResources().getString(
                 R.string.free_email
         ));
-        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+        bottomSheetCreateAccountEmailLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.teal_200, null
         )));
-        login.setHelperTextEnabled(true);
+        bottomSheetCreateAccountEmailLayout.setHelperTextEnabled(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkLoginUserLoginPassword(String login_string, String token) {
-        saveToken(login_string, token);
+        // saveToken(login_string, token);
 
-        EditText login = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLogin);
-        EditText password = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPassword);
-
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok, null
-        ));
-        password.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_ok, null
-        ));
+        bottomSheetDialogLogin.dismiss();
 
         // TODO: открываем следующую страницу! Он молодец, он ввел пароль!
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorLoginUserLoginPassword() {
-        EditText login = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLogin);
-        EditText password = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPassword);
+        bottomSheetLoginLoginLayout.setHelperText(getResources().getString(
+                R.string.wrong_login_data
+        ));
+        bottomSheetLoginLoginLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.pink_700, null
+        )));
+        bottomSheetLoginLoginLayout.setHelperTextEnabled(true);
 
-        login.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error, null
+        bottomSheetLoginPasswordLayout.setHelperText(getResources().getString(
+                R.string.wrong_login_data
         ));
-        password.setBackground(getResources().getDrawable(
-                R.drawable.input_custom_error, null
-        ));
+        bottomSheetLoginPasswordLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.pink_700, null
+        )));
+        bottomSheetLoginPasswordLayout.setHelperTextEnabled(true);
         // TODO: восстановление пароля
     }
 
