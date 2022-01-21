@@ -59,13 +59,13 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             if (ans) {
                 apiServer.freeLogin();
             } else {
-                apiServer.freeLogin();
+                apiServer.notFreeLogin();
             }
         } else {
             if (ans) {
                 apiServer.freeEmail();
             } else {
-                apiServer.freeEmail();
+                apiServer.notFreeEmail();
             }
         }
     }
