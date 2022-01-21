@@ -28,38 +28,31 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT)) {
-            if (!mainActivity.checkUserFirstName()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT)) {
-            if (!mainActivity.checkUserSecondName()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT)) {
-            if (!mainActivity.checkUserShortName()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT)) {
-            if (!mainActivity.checkUserEmail()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT)) {
-            if (!mainActivity.checkUserPassword()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT)) {
-            if (!mainActivity.checkUserRePassword()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT)) {
-            if (!mainActivity.checkUserLoginLogin()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT)) {
-            if (!mainActivity.checkUserLoginPassword()) {
-                layout.setErrorEnabled(true);
-            }
+        switch (layout_type) {
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserFirstName());
+                break;
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserSecondName());
+                break;
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserShortName());
+                break;
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserEmail());
+                break;
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserPassword());
+                break;
+            case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserRePassword());
+                break;
+            case MainActivity.BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserLoginLogin());
+                break;
+            case MainActivity.BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkUserLoginPassword());
+                break;
         }
         if (s.toString().equals("")) {
             layout.setErrorEnabled(false);
