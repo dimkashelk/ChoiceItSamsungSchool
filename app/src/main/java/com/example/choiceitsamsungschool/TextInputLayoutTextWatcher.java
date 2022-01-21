@@ -52,6 +52,14 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
             if (!mainActivity.checkUserRePassword()) {
                 layout.setErrorEnabled(true);
             }
+        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT)) {
+            if (!mainActivity.checkUserLoginLogin()) {
+                layout.setErrorEnabled(true);
+            }
+        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT)) {
+            if (!mainActivity.checkUserLoginPassword()) {
+                layout.setErrorEnabled(true);
+            }
         }
         if (s.toString().equals("")) {
             layout.setErrorEnabled(false);

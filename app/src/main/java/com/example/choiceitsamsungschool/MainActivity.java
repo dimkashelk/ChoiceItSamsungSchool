@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String ALPHABET_EN_SMALL = "qwertyuiopasdfghjklzxcvbnm";
     private final static String ALPHABET_EN = ALPHABET_EN_LARGE + ALPHABET_EN_SMALL;
     private final static String DIGITS = "0123456789";
+    private final static String SYMBOLS = "!@#$%,^:&?()*/-+[]";
 
     private final static String PREFERENCES_AUTHORIZE_DATA = "authorize_data";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT = "bottomSheetCreateAccountFirstNameLayout";
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT = "bottomSheetCreateAccountEmailLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT = "bottomSheetCreateAccountPasswordLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT = "bottomSheetCreateAccountRePasswordLayout";
+    public final static String BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT = "bottomSheetLoginLoginLayout";
+    public final static String BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT = "bottomSheetLoginPasswordLayout";
 
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
@@ -74,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText bottomSheetCreateAccountRePassword;
     private TextInputLayout bottomSheetCreateAccountRePasswordLayout;
     private boolean bottomSheetCreateAccountRePasswordOk = false;
+
+    private TextInputEditText bottomSheetLoginLogin;
+    private TextInputLayout bottomSheetLoginLoginLayout;
+    private boolean bottomSheetLoginLoginOk = false;
+    private TextInputEditText bottomSheetLoginPassword;
+    private TextInputLayout bottomSheetLoginPasswordLayout;
+    private boolean bottomSheetLoginPasswordOk = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +239,25 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT
         );
         bottomSheetCreateAccountRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+
+        bottomSheetLoginLogin = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLogin);
+        bottomSheetLoginLoginLayout = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginLoginLayout);
+        bottomSheetLoginPassword = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPassword);
+        bottomSheetLoginPasswordLayout = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginPasswordLayout);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetLoginLoginLayout,
+                BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT
+        );
+        bottomSheetLoginLogin.addTextChangedListener(textInputLayoutTextWatcher);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetLoginPasswordLayout,
+                BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT
+        );
+        bottomSheetLoginPassword.addTextChangedListener(textInputLayoutTextWatcher);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -486,6 +515,48 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetCreateAccountRePasswordOk = true;
                 return true;
             }
+        }
+    }
+
+    public boolean checkUserLoginLogin() {
+        if (bottomSheetLoginLogin.getText().toString().equals("")) {
+            bottomSheetLoginLoginOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetLoginLogin.getText().toString(),
+                MainActivity.ALPHABET_EN + MainActivity.DIGITS + "@"
+        )) {
+            bottomSheetLoginLoginLayout.setError(null);
+            bottomSheetLoginLoginOk = true;
+            return true;
+        } else {
+            bottomSheetLoginLoginLayout.setError(getResources().getString(
+                    R.string.error_login
+            ));
+            bottomSheetLoginLoginOk = false;
+            return false;
+        }
+    }
+
+    public boolean checkUserLoginPassword() {
+        if (bottomSheetLoginPassword.getText().toString().equals("")) {
+            bottomSheetLoginPasswordOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetLoginPassword.getText().toString(),
+                MainActivity.ALPHABET_EN + MainActivity.DIGITS + MainActivity.SYMBOLS
+        )) {
+            bottomSheetLoginPasswordLayout.setError(null);
+            bottomSheetLoginPasswordOk = true;
+            return true;
+        } else {
+            bottomSheetLoginPasswordLayout.setError(getResources().getString(
+                    R.string.error_password
+            ));
+            bottomSheetLoginPasswordOk = false;
+            return false;
         }
     }
 }
