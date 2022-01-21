@@ -40,16 +40,16 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
             if (!mainActivity.checkUserShortName()) {
                 layout.setErrorEnabled(true);
             }
+        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT)) {
+            if (!mainActivity.checkUserEmail()) {
+                layout.setErrorEnabled(true);
+            }
         } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT)) {
             if (!mainActivity.checkUserPassword()) {
                 layout.setErrorEnabled(true);
             }
         } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT)) {
             if (!mainActivity.checkUserRePassword()) {
-                layout.setErrorEnabled(true);
-            }
-        } else if (layout_type.equals(MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT)) {
-            if (!mainActivity.checkUserEmail()) {
                 layout.setErrorEnabled(true);
             }
         }

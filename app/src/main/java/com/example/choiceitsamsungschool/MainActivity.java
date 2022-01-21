@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_FIRST_NAME_LAYOUT = "bottomSheetCreateAccountFirstNameLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT = "bottomSheetCreateAccountSecondNameLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT = "bottomSheetCreateAccountShortNameLayout";
-    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT = "bottomSheetCreateAccountShortNameLayout";
+    public final static String BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT = "bottomSheetCreateAccountEmailLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT = "bottomSheetCreateAccountPasswordLayout";
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT = "bottomSheetCreateAccountRePasswordLayout";
 
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
-                bottomSheetCreateAccountShortNameLayout,
+                bottomSheetCreateAccountEmailLayout,
                 BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT
         );
         bottomSheetCreateAccountEmail.addTextChangedListener(textInputLayoutTextWatcher);
@@ -306,18 +306,19 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountEmail() {
         TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
-        login.setError(getResources().getString(
+        login.setHelperText(getResources().getString(
                 R.string.not_free_email
         ));
-        login.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
+        login.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.pink_700, null
         )));
-        login.setErrorEnabled(true);
+        login.setHelperTextEnabled(true);
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     public void setOkCreateAccountEmail() {
         TextInputLayout login = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountEmailLayout);
+        login.setBoxStrokeColor(R.color.teal_200);
         login.setHelperText(getResources().getString(
                 R.string.free_email
         ));
