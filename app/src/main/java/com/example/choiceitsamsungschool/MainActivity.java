@@ -394,79 +394,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserFirstName() {
-        if (bottomSheetCreateAccountFirstName.getText().toString().equals("") || bottomSheetCreateAccountFirstName.getText().toString().contains(" ")) {
+        if (bottomSheetCreateAccountFirstName.getText().toString().equals("")) {
+            bottomSheetCreateAccountFirstNameOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetCreateAccountFirstName.getText().toString(),
+                MainActivity.ALPHABET_RU
+        )) {
+            bottomSheetCreateAccountFirstNameLayout.setError(null);
+            bottomSheetCreateAccountFirstNameOk = true;
+            return true;
+        } else {
             bottomSheetCreateAccountFirstNameLayout.setError(getResources().getString(
                     R.string.error_first_name
             ));
             bottomSheetCreateAccountFirstNameOk = false;
             return false;
-        } else {
-            if (checkStringToAnotherChars(
-                    bottomSheetCreateAccountFirstName.getText().toString(),
-                    MainActivity.ALPHABET_RU
-            )) {
-                bottomSheetCreateAccountFirstNameLayout.setError(null);
-                bottomSheetCreateAccountFirstNameOk = true;
-                return true;
-            } else {
-                bottomSheetCreateAccountFirstNameLayout.setError(getResources().getString(
-                        R.string.error_first_name
-                ));
-                bottomSheetCreateAccountFirstNameOk = false;
-                return false;
-            }
         }
     }
 
     public boolean checkUserSecondName() {
-        if (bottomSheetCreateAccountSecondName.getText().toString().equals("") ||
-                bottomSheetCreateAccountSecondName.getText().toString().contains(" ")) {
+        if (bottomSheetCreateAccountSecondName.getText().toString().equals("")) {
+            bottomSheetCreateAccountSecondNameOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetCreateAccountSecondName.getText().toString(),
+                MainActivity.ALPHABET_RU
+        )) {
+            bottomSheetCreateAccountSecondNameLayout.setError(null);
+            bottomSheetCreateAccountSecondNameOk = true;
+            return true;
+        } else {
             bottomSheetCreateAccountSecondNameLayout.setError(getResources().getString(
                     R.string.error_second_name
             ));
             bottomSheetCreateAccountSecondNameOk = false;
             return false;
-        } else {
-            if (checkStringToAnotherChars(
-                    bottomSheetCreateAccountSecondName.getText().toString(),
-                    MainActivity.ALPHABET_RU
-            )) {
-                bottomSheetCreateAccountSecondNameLayout.setError(null);
-                bottomSheetCreateAccountSecondNameOk = true;
-                return true;
-            } else {
-                bottomSheetCreateAccountSecondNameLayout.setError(getResources().getString(
-                        R.string.error_second_name
-                ));
-                bottomSheetCreateAccountSecondNameOk = false;
-                return false;
-            }
         }
     }
 
     public boolean checkUserShortName() {
-        if (bottomSheetCreateAccountShortName.getText().toString().equals("") ||
-                bottomSheetCreateAccountShortName.getText().toString().contains(" ")) {
+        if (bottomSheetCreateAccountShortName.getText().toString().equals("")) {
             bottomSheetCreateAccountShortNameOk = false;
             return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetCreateAccountShortName.getText().toString(),
+                MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
+        )) {
+            apiServer.checkLoginToCreate(bottomSheetCreateAccountShortName.getText().toString());
+            bottomSheetCreateAccountShortNameLayout.setError(null);
+            bottomSheetCreateAccountShortNameOk = true;
+            return true;
         } else {
-            if (checkStringToAnotherChars(
-                    bottomSheetCreateAccountShortName.getText().toString(),
-                    MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
-            )) {
-                apiServer.checkLoginToCreate(bottomSheetCreateAccountShortName.getText().toString());
-                bottomSheetCreateAccountShortNameLayout.setError(null);
-                bottomSheetCreateAccountShortNameOk = true;
-                return true;
-            } else {
-                bottomSheetCreateAccountShortNameOk = false;
-                return false;
-            }
+            bottomSheetCreateAccountShortNameOk = false;
+            return false;
         }
     }
 
     public boolean checkUserEmail() {
-        if (bottomSheetCreateAccountEmail.getText().toString().equals("") || !Patterns.EMAIL_ADDRESS.matcher(bottomSheetCreateAccountEmail.getText().toString()).matches()) {
+        if (bottomSheetCreateAccountEmail.getText().toString().equals("")) {
+            bottomSheetCreateAccountEmailOk = false;
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(bottomSheetCreateAccountEmail.getText().toString()).matches()) {
             bottomSheetCreateAccountEmailLayout.setError(getResources().getString(
                     R.string.error_email
             ));
@@ -481,8 +474,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserPassword() {
-        if (bottomSheetCreateAccountPassword.getText().toString().equals("") ||
-                bottomSheetCreateAccountPassword.getText().toString().contains(" ")) {
+        if (bottomSheetCreateAccountPassword.getText().toString().equals("")) {
+            bottomSheetCreateAccountPasswordOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetCreateAccountPassword.getText().toString(),
+                MainActivity.ALPHABET_EN + MainActivity.DIGITS + MainActivity.SYMBOLS
+        )) {
             bottomSheetCreateAccountPasswordLayout.setError(getResources().getString(
                     R.string.error_password
             ));
@@ -496,25 +495,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserRePassword() {
-        if (!bottomSheetCreateAccountPassword.getText().toString().equals(bottomSheetCreateAccountRePassword.getText().toString())) {
+        if (bottomSheetCreateAccountRePassword.getText().toString().equals("")) {
+            bottomSheetCreateAccountRePasswordOk = false;
+            return false;
+        }
+        if (!bottomSheetCreateAccountPassword.getText().toString().equals(
+                bottomSheetCreateAccountRePassword.getText().toString()
+        )) {
             bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
                     R.string.error_re_password
             ));
             bottomSheetCreateAccountRePasswordOk = false;
             return false;
         } else {
-            if (bottomSheetCreateAccountRePassword.getText().toString().equals("") ||
-                    bottomSheetCreateAccountRePassword.getText().toString().contains(" ")) {
-                bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
-                        R.string.error_re_password
-                ));
-                bottomSheetCreateAccountRePasswordOk = false;
-                return false;
-            } else {
-                bottomSheetCreateAccountRePasswordLayout.setError(null);
-                bottomSheetCreateAccountRePasswordOk = true;
-                return true;
-            }
+            bottomSheetCreateAccountRePasswordLayout.setError(null);
+            bottomSheetCreateAccountRePasswordOk = true;
+            return true;
         }
     }
 
