@@ -89,7 +89,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/bottomSheetLoginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -101,7 +101,10 @@
         android:text="@string/login"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:spinning_bar_color="@color/pink_700"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
 
 
     <LinearLayout

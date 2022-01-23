@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Vector;
+
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout bottomSheetLoginPasswordLayout;
     private boolean bottomSheetLoginPasswordOk = false;
 
+    private CircularProgressButton bottomSheetLoginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,16 +146,17 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.bottom_sheet_login_activity,
                 (LinearLayout) findViewById(R.id.bottomSheetLogin)
         );
-        bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginButton).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkLoginData(bottomSheetViewLogin)) {
-                            bottomSheetDialogLogin.dismiss();
-                        }
-                    }
+
+        bottomSheetLoginButton = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginButton);
+        bottomSheetLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLoginData(bottomSheetViewLogin)) {
+                    bottomSheetDialogLogin.dismiss();
                 }
-        );
+            }
+        });
+
         bottomSheetDialogLogin.setContentView(bottomSheetViewLogin);
         MaterialButton login_view = findViewById(R.id.login_account);
         login_view.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
         checkUserLoginLogin();
         checkUserLoginPassword();
         if (bottomSheetLoginLoginOk && bottomSheetLoginPasswordOk) {
+            bottomSheetLoginButton.startAnimation();
             if (Patterns.EMAIL_ADDRESS.matcher(
                     bottomSheetLoginLogin.getText().toString()
             ).matches()) {
@@ -361,6 +368,11 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetLoginLoginOk = true;
         bottomSheetLoginPasswordOk = true;
 
+        bottomSheetLoginButton.revertAnimation();
+        bottomSheetLoginButton.setBackground(getResources().getDrawable(
+                R.drawable.button_with_corner_radius_not_flooded, null
+        ));
+
         bottomSheetDialogLogin.dismiss();
 
         // TODO: открываем следующую страницу! Он молодец, он ввел пароль!
@@ -383,6 +395,12 @@ public class MainActivity extends AppCompatActivity {
                 R.color.pink_700, null
         )));
         bottomSheetLoginPasswordLayout.setHelperTextEnabled(true);
+
+        bottomSheetLoginButton.revertAnimation();
+        bottomSheetLoginButton.setBackground(getResources().getDrawable(
+                R.drawable.button_with_corner_radius_not_flooded, null
+        ));
+
         // TODO: восстановление пароля
     }
 
@@ -513,6 +531,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserLoginLogin() {
+        boolean isEmail = Patterns.EMAIL_ADDRESS.matcher(
+                bottomSheetLoginLogin.getText().toString()
+        ).matches();
+        if (isEmail) {
+            bottomSheetLoginLoginOk = true;
+            return true;
+        }
         if (bottomSheetLoginLogin.getText().toString().equals("")) {
             bottomSheetLoginLoginOk = false;
             return false;
