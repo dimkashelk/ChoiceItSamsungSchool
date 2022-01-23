@@ -190,7 +190,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/bottomSheetCreateAccountButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
