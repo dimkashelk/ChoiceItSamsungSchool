@@ -43,6 +43,11 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT:
                 layout.setErrorEnabled(!mainActivity.checkUserPassword());
+                if (!mainActivity.checkUserRePassword()) {
+                    mainActivity.setErrorCreateAccountRePassword();
+                } else {
+                    mainActivity.setOkCreateAccountRePassword();
+                }
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT:
                 layout.setErrorEnabled(!mainActivity.checkUserRePassword());

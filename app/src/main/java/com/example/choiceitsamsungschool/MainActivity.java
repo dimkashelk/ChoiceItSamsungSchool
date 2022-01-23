@@ -11,15 +11,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -71,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText bottomSheetCreateAccountShortName;
     private TextInputLayout bottomSheetCreateAccountShortNameLayout;
     private boolean bottomSheetCreateAccountShortNameOk = false;
+    private boolean bottomSheetCreateAccountShortNameChecking = false;
     private TextInputEditText bottomSheetCreateAccountEmail;
     private TextInputLayout bottomSheetCreateAccountEmailLayout;
     private boolean bottomSheetCreateAccountEmailOk = false;
+    private boolean bottomSheetCreateAccountEmailChecking = false;
     private TextInputEditText bottomSheetCreateAccountPassword;
     private TextInputLayout bottomSheetCreateAccountPasswordLayout;
     private boolean bottomSheetCreateAccountPasswordOk = false;
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean bottomSheetLoginPasswordOk = false;
 
     private CircularProgressButton bottomSheetLoginButton;
+    private CircularProgressButton bottomSheetCreateAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.bottom_sheet_create_account_activity,
                 (LinearLayout) findViewById(R.id.bottomSheetCreateAccount)
         );
-        bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountButton).setOnClickListener(
+        bottomSheetCreateAccountButton = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountButton);
+        bottomSheetCreateAccountButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -213,13 +214,6 @@ public class MainActivity extends AppCompatActivity {
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
-                bottomSheetCreateAccountSecondNameLayout,
-                BOTTOM_SHEET_CREATE_ACCOUNT_SECOND_NAME_LAYOUT
-        );
-        bottomSheetCreateAccountSecondName.addTextChangedListener(textInputLayoutTextWatcher);
-
-        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
-                this,
                 bottomSheetCreateAccountShortNameLayout,
                 BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT
         );
@@ -268,18 +262,37 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private boolean checkRegisterData(View v) {
+        bottomSheetCreateAccountButton.startAnimation();
         checkUserFirstName();
         checkUserSecondName();
-        checkUserShortName();
-        checkUserEmail();
+        checkUserLoginEmail();
         checkUserPassword();
         checkUserRePassword();
+        bottomSheetCreateAccountButton.revertAnimation();
+        bottomSheetCreateAccountButton.setBackground(getResources().getDrawable(
+                R.drawable.button_with_corner_radius_flooded, null
+        ));
         return bottomSheetCreateAccountFirstNameOk &&
                 bottomSheetCreateAccountSecondNameOk &&
                 bottomSheetCreateAccountShortNameOk &&
                 bottomSheetCreateAccountEmailOk &&
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk;
+    }
+
+    private void checkUserLoginEmail() {
+        if (!bottomSheetCreateAccountEmailOk &&
+                !bottomSheetCreateAccountEmail.getText().toString().equals("")) {
+            apiServer.checkEmailToCreateWithWait(
+                    bottomSheetCreateAccountEmail.getText().toString()
+            );
+        }
+        if (!bottomSheetCreateAccountShortNameOk &&
+                !bottomSheetCreateAccountShortName.getText().toString().equals("")) {
+            apiServer.checkLoginToCreateWithWait(
+                    bottomSheetCreateAccountShortName.getText().toString()
+            );
+        }
     }
 
     private boolean checkLoginData(View v) {
@@ -314,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }
+        Toast.makeText(this, stringToCheck_chars.toString(), Toast.LENGTH_LONG).show();
         return true;
     }
 
@@ -326,6 +340,8 @@ public class MainActivity extends AppCompatActivity {
                 R.color.pink_700, null
         )));
         bottomSheetCreateAccountShortNameLayout.setErrorEnabled(true);
+
+        bottomSheetCreateAccountShortNameOk = false;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -337,6 +353,8 @@ public class MainActivity extends AppCompatActivity {
                 R.color.teal_200, null
         )));
         bottomSheetCreateAccountShortNameLayout.setHelperTextEnabled(true);
+
+        bottomSheetCreateAccountShortNameOk = true;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -348,6 +366,8 @@ public class MainActivity extends AppCompatActivity {
                 R.color.pink_700, null
         )));
         bottomSheetCreateAccountEmailLayout.setHelperTextEnabled(true);
+
+        bottomSheetCreateAccountEmailOk = false;
     }
 
     @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
@@ -359,6 +379,8 @@ public class MainActivity extends AppCompatActivity {
                 R.color.teal_200, null
         )));
         bottomSheetCreateAccountEmailLayout.setHelperTextEnabled(true);
+
+        bottomSheetCreateAccountEmailOk = true;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -494,7 +516,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetCreateAccountPasswordOk = false;
             return false;
         }
-        if (checkStringToAnotherChars(
+        if (!checkStringToAnotherChars(
                 bottomSheetCreateAccountPassword.getText().toString(),
                 MainActivity.ALPHABET_EN + MainActivity.DIGITS + MainActivity.SYMBOLS
         )) {
@@ -577,5 +599,17 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetLoginPasswordOk = false;
             return false;
         }
+    }
+
+    public void setErrorCreateAccountRePassword() {
+        bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
+                R.string.error_re_password
+        ));
+        bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(true);
+    }
+
+    public void setOkCreateAccountRePassword() {
+        bottomSheetCreateAccountRePasswordLayout.setError(null);
+        bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(false);
     }
 }

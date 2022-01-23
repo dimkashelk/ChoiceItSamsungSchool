@@ -35,7 +35,7 @@ public class APIServer {
     }
 
     private void getInternetPermission() {
-        ActivityCompat.requestPermissions(mainActivity, new String[] {Manifest.permission.INTERNET}, 1);
+        ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.INTERNET}, 1);
     }
 
     public void checkLoginToCreate(String login) {
@@ -98,6 +98,36 @@ public class APIServer {
             CheckUserLoginPassword checker = new CheckUserLoginPassword();
             checker.setApiServer(this);
             checker.execute(email, password, APIServer.EMAIL);
+        } else {
+            getInternetPermission();
+        }
+    }
+
+    public void checkEmailToCreateWithWait(String email) {
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(email, APIServer.EMAIL);
+            try {
+                checker.wait();
+            } catch (Exception e) {
+                notFreeEmail();
+            }
+        } else {
+            getInternetPermission();
+        }
+    }
+
+    public void checkLoginToCreateWithWait(String login) {
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(login, APIServer.LOGIN);
+            try {
+                checker.wait();
+            } catch (Exception e) {
+                notFreeEmail();
+            }
         } else {
             getInternetPermission();
         }
