@@ -10,10 +10,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
     private CircularProgressButton bottomSheetLoginButton;
     private CircularProgressButton bottomSheetCreateAccountButton;
 
+    private Animation shake;
+    private Vibrator vibrator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeUI() {
+        shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         bottomSheetDialogCreateAccount = new BottomSheetDialog(
                 MainActivity.this, R.style.BottomSheetDialogTheme
         );
@@ -327,7 +339,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }
-        Toast.makeText(this, stringToCheck_chars.toString(), Toast.LENGTH_LONG).show();
         return true;
     }
 
@@ -448,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_first_name
             ));
             bottomSheetCreateAccountFirstNameOk = false;
+            bottomSheetCreateAccountFirstNameLayout.startAnimation(shake);
             return false;
         }
     }
@@ -469,6 +481,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_second_name
             ));
             bottomSheetCreateAccountSecondNameOk = false;
+            bottomSheetCreateAccountSecondNameLayout.startAnimation(shake);
             return false;
         }
     }
@@ -487,7 +500,11 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetCreateAccountShortNameOk = true;
             return true;
         } else {
+            bottomSheetCreateAccountShortNameLayout.setError(getResources().getString(
+                    R.string.error_login
+            ));
             bottomSheetCreateAccountShortNameOk = false;
+            bottomSheetCreateAccountShortNameLayout.startAnimation(shake);
             return false;
         }
     }
@@ -501,6 +518,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetCreateAccountEmailLayout.setError(getResources().getString(
                     R.string.error_email
             ));
+            bottomSheetCreateAccountEmailLayout.startAnimation(shake);
             bottomSheetCreateAccountEmailOk = false;
             return false;
         } else {
@@ -523,6 +541,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetCreateAccountPasswordLayout.setError(getResources().getString(
                     R.string.error_password
             ));
+            bottomSheetCreateAccountPasswordLayout.startAnimation(shake);
             bottomSheetCreateAccountPasswordOk = false;
             return false;
         } else {
@@ -543,6 +562,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
                     R.string.error_re_password
             ));
+            bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
             bottomSheetCreateAccountRePasswordOk = false;
             return false;
         } else {
