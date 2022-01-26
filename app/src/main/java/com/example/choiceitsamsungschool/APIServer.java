@@ -15,6 +15,8 @@ import okhttp3.OkHttpClient;
 public class APIServer {
     public static final String EMAIL = "email";
     public static final String LOGIN = "login";
+    public static final String EMAIL_LOGIN = "email_login";
+
 
     public static final String URL = "https://example.com/api/";
     public static final String CHECK_LOGIN = "check_login";
@@ -108,13 +110,7 @@ public class APIServer {
         if (checkInternetPermission()) {
             CheckUserLoginEmail checker = new CheckUserLoginEmail();
             checker.setApiServer(this);
-            checker.execute(email, APIServer.EMAIL);
-            try {
-                while (!checker.isCancelled()) {
-                }
-            } catch (Exception e) {
-                notFreeEmail();
-            }
+            checker.execute(email, login, APIServer.EMAIL_LOGIN);
         } else {
             getInternetPermission();
         }
@@ -134,5 +130,9 @@ public class APIServer {
         } else {
             getInternetPermission();
         }
+    }
+
+    public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin) {
+        mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin);
     }
 }

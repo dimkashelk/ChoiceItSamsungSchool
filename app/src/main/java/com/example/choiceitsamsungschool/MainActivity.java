@@ -276,19 +276,10 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetCreateAccountButton.startAnimation();
         checkUserFirstName();
         checkUserSecondName();
-        checkUserLoginEmail();
         checkUserPassword();
         checkUserRePassword();
-        bottomSheetCreateAccountButton.revertAnimation();
-        bottomSheetCreateAccountButton.setBackground(getResources().getDrawable(
-                R.drawable.button_with_corner_radius_flooded, null
-        ));
-        return bottomSheetCreateAccountFirstNameOk &&
-                bottomSheetCreateAccountSecondNameOk &&
-                bottomSheetCreateAccountShortNameOk &&
-                bottomSheetCreateAccountEmailOk &&
-                bottomSheetCreateAccountPasswordOk &&
-                bottomSheetCreateAccountRePasswordOk;
+        checkUserLoginEmail();
+        return false;
     }
 
     private void checkUserLoginEmail() {
@@ -731,6 +722,31 @@ public class MainActivity extends AppCompatActivity {
             vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             vibrator.vibrate(milliseconds);
+        }
+    }
+
+    public void endCheckRegisterData(boolean isFreeEmail, boolean isFreeLogin) {
+        if (isFreeEmail) {
+            setOkCreateAccountEmail();
+        } else {
+            setErrorCreateAccountEmail();
+        }
+        if (isFreeLogin) {
+            setOkCreateAccountLogin();
+        } else {
+            setErrorCreateAccountLogin();
+        }
+        bottomSheetCreateAccountButton.revertAnimation();
+        bottomSheetCreateAccountButton.setBackground(getResources().getDrawable(
+                R.drawable.button_with_corner_radius_flooded, null
+        ));
+        if (bottomSheetCreateAccountFirstNameOk &&
+                bottomSheetCreateAccountSecondNameOk &&
+                bottomSheetCreateAccountShortNameOk &&
+                bottomSheetCreateAccountEmailOk &&
+                bottomSheetCreateAccountPasswordOk &&
+                bottomSheetCreateAccountRePasswordOk) {
+            bottomSheetDialogCreateAccount.dismiss();
         }
     }
 }
