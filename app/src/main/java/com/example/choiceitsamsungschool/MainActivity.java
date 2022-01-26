@@ -347,10 +347,8 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetCreateAccountShortNameLayout.setError(getResources().getString(
                 R.string.not_free_login
         ));
-        bottomSheetCreateAccountShortNameLayout.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(
-                R.color.pink_700, null
-        )));
         bottomSheetCreateAccountShortNameLayout.setErrorEnabled(true);
+        bottomSheetCreateAccountShortNameLayout.startAnimation(shake);
 
         bottomSheetCreateAccountShortNameOk = false;
     }
@@ -370,13 +368,11 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorCreateAccountEmail() {
-        bottomSheetCreateAccountEmailLayout.setHelperText(getResources().getString(
+        bottomSheetCreateAccountEmailLayout.setError(getResources().getString(
                 R.string.not_free_email
         ));
-        bottomSheetCreateAccountEmailLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
-                R.color.pink_700, null
-        )));
-        bottomSheetCreateAccountEmailLayout.setHelperTextEnabled(true);
+        bottomSheetCreateAccountEmailLayout.setErrorEnabled(true);
+        bottomSheetCreateAccountEmailLayout.startAnimation(shake);
 
         bottomSheetCreateAccountEmailOk = false;
     }
@@ -413,21 +409,17 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setErrorLoginUserLoginPassword() {
-        bottomSheetLoginLoginLayout.setHelperText(getResources().getString(
+        bottomSheetLoginLoginLayout.setError(getResources().getString(
                 R.string.wrong_login_data
         ));
-        bottomSheetLoginLoginLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
-                R.color.pink_700, null
-        )));
-        bottomSheetLoginLoginLayout.setHelperTextEnabled(true);
+        bottomSheetLoginLoginLayout.setErrorEnabled(true);
+        bottomSheetLoginLoginLayout.startAnimation(shake);
 
-        bottomSheetLoginPasswordLayout.setHelperText(getResources().getString(
+        bottomSheetLoginPasswordLayout.setError(getResources().getString(
                 R.string.wrong_login_data
         ));
-        bottomSheetLoginPasswordLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
-                R.color.pink_700, null
-        )));
-        bottomSheetLoginPasswordLayout.setHelperTextEnabled(true);
+        bottomSheetLoginPasswordLayout.setErrorEnabled(true);
+        bottomSheetLoginPasswordLayout.startAnimation(shake);
 
         bottomSheetLoginButton.revertAnimation();
         bottomSheetLoginButton.setBackground(getResources().getDrawable(
@@ -595,6 +587,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetLoginLoginLayout.setError(getResources().getString(
                     R.string.error_login
             ));
+            bottomSheetLoginLoginLayout.startAnimation(shake);
             bottomSheetLoginLoginOk = false;
             return false;
         }
@@ -616,6 +609,7 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetLoginPasswordLayout.setError(getResources().getString(
                     R.string.error_password
             ));
+            bottomSheetLoginPasswordLayout.startAnimation(shake);
             bottomSheetLoginPasswordOk = false;
             return false;
         }
@@ -626,6 +620,7 @@ public class MainActivity extends AppCompatActivity {
                 R.string.error_re_password
         ));
         bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(true);
+        bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
     }
 
     public void setOkCreateAccountRePassword() {
