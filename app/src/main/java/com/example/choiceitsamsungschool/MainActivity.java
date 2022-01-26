@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Patterns;
@@ -73,11 +74,9 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText bottomSheetCreateAccountShortName;
     private TextInputLayout bottomSheetCreateAccountShortNameLayout;
     private boolean bottomSheetCreateAccountShortNameOk = false;
-    private boolean bottomSheetCreateAccountShortNameChecking = false;
     private TextInputEditText bottomSheetCreateAccountEmail;
     private TextInputLayout bottomSheetCreateAccountEmailLayout;
     private boolean bottomSheetCreateAccountEmailOk = false;
-    private boolean bottomSheetCreateAccountEmailChecking = false;
     private TextInputEditText bottomSheetCreateAccountPassword;
     private TextInputLayout bottomSheetCreateAccountPasswordLayout;
     private boolean bottomSheetCreateAccountPasswordOk = false;
@@ -293,17 +292,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkUserLoginEmail() {
-        if (!bottomSheetCreateAccountEmailOk &&
-                !bottomSheetCreateAccountEmail.getText().toString().equals("")) {
-            apiServer.checkEmailToCreateWithWait(
-                    bottomSheetCreateAccountEmail.getText().toString()
-            );
-        }
-        if (!bottomSheetCreateAccountShortNameOk &&
+        if (!bottomSheetCreateAccountEmail.getText().toString().equals("") &&
                 !bottomSheetCreateAccountShortName.getText().toString().equals("")) {
-            apiServer.checkLoginToCreateWithWait(
+            apiServer.checkEmailLoginToCreate(
+                    bottomSheetCreateAccountEmail.getText().toString(),
                     bottomSheetCreateAccountShortName.getText().toString()
             );
+        } else {
+            if (bottomSheetCreateAccountEmail.getText().toString().equals("")) {
+                setErrorCreateAccountEmail();
+            }
+            if (bottomSheetCreateAccountShortName.getText().toString().equals("")) {
+                setErrorCreateAccountLogin();
+            }
         }
     }
 
@@ -349,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
         ));
         bottomSheetCreateAccountShortNameLayout.setErrorEnabled(true);
         bottomSheetCreateAccountShortNameLayout.startAnimation(shake);
+        vibrate(250);
 
         bottomSheetCreateAccountShortNameOk = false;
     }
@@ -373,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
         ));
         bottomSheetCreateAccountEmailLayout.setErrorEnabled(true);
         bottomSheetCreateAccountEmailLayout.startAnimation(shake);
+        vibrate(250);
 
         bottomSheetCreateAccountEmailOk = false;
     }
@@ -414,12 +417,14 @@ public class MainActivity extends AppCompatActivity {
         ));
         bottomSheetLoginLoginLayout.setErrorEnabled(true);
         bottomSheetLoginLoginLayout.startAnimation(shake);
+        vibrate(250);
 
         bottomSheetLoginPasswordLayout.setError(getResources().getString(
                 R.string.wrong_login_data
         ));
         bottomSheetLoginPasswordLayout.setErrorEnabled(true);
         bottomSheetLoginPasswordLayout.startAnimation(shake);
+        vibrate(250);
 
         bottomSheetLoginButton.revertAnimation();
         bottomSheetLoginButton.setBackground(getResources().getDrawable(
@@ -452,6 +457,7 @@ public class MainActivity extends AppCompatActivity {
             ));
             bottomSheetCreateAccountFirstNameOk = false;
             bottomSheetCreateAccountFirstNameLayout.startAnimation(shake);
+            vibrate(250);
             return false;
         }
     }
@@ -474,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
             ));
             bottomSheetCreateAccountSecondNameOk = false;
             bottomSheetCreateAccountSecondNameLayout.startAnimation(shake);
+            vibrate(250);
             return false;
         }
     }
@@ -497,6 +504,33 @@ public class MainActivity extends AppCompatActivity {
             ));
             bottomSheetCreateAccountShortNameOk = false;
             bottomSheetCreateAccountShortNameLayout.startAnimation(shake);
+            vibrate(250);
+            return false;
+        }
+    }
+
+    public boolean checkUserShortName(boolean checkIsFree) {
+        if (bottomSheetCreateAccountShortName.getText().toString().equals("")) {
+            bottomSheetCreateAccountShortNameOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetCreateAccountShortName.getText().toString(),
+                MainActivity.ALPHABET_EN_SMALL + MainActivity.DIGITS
+        )) {
+            if (checkIsFree) {
+                apiServer.checkLoginToCreate(bottomSheetCreateAccountShortName.getText().toString());
+            }
+            bottomSheetCreateAccountShortNameLayout.setError(null);
+            bottomSheetCreateAccountShortNameOk = true;
+            return true;
+        } else {
+            bottomSheetCreateAccountShortNameLayout.setError(getResources().getString(
+                    R.string.error_login
+            ));
+            bottomSheetCreateAccountShortNameOk = false;
+            bottomSheetCreateAccountShortNameLayout.startAnimation(shake);
+            vibrate(250);
             return false;
         }
     }
@@ -511,10 +545,34 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_email
             ));
             bottomSheetCreateAccountEmailLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetCreateAccountEmailOk = false;
             return false;
         } else {
             apiServer.checkEmailToCreate(bottomSheetCreateAccountEmail.getText().toString());
+            bottomSheetCreateAccountEmailLayout.setError(null);
+            bottomSheetCreateAccountEmailOk = true;
+            return true;
+        }
+    }
+
+    public boolean checkUserEmail(boolean checkIsFree) {
+        if (bottomSheetCreateAccountEmail.getText().toString().equals("")) {
+            bottomSheetCreateAccountEmailOk = false;
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(bottomSheetCreateAccountEmail.getText().toString()).matches()) {
+            bottomSheetCreateAccountEmailLayout.setError(getResources().getString(
+                    R.string.error_email
+            ));
+            bottomSheetCreateAccountEmailLayout.startAnimation(shake);
+            vibrate(250);
+            bottomSheetCreateAccountEmailOk = false;
+            return false;
+        } else {
+            if (checkIsFree) {
+                apiServer.checkEmailToCreate(bottomSheetCreateAccountEmail.getText().toString());
+            }
             bottomSheetCreateAccountEmailLayout.setError(null);
             bottomSheetCreateAccountEmailOk = true;
             return true;
@@ -534,6 +592,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_password
             ));
             bottomSheetCreateAccountPasswordLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetCreateAccountPasswordOk = false;
             return false;
         } else {
@@ -555,6 +614,31 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_re_password
             ));
             bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
+            vibrate(250);
+            bottomSheetCreateAccountRePasswordOk = false;
+            return false;
+        } else {
+            bottomSheetCreateAccountRePasswordLayout.setError(null);
+            bottomSheetCreateAccountRePasswordOk = true;
+            return true;
+        }
+    }
+
+    public boolean checkUserRePassword(boolean passwordInput) {
+        if (bottomSheetCreateAccountRePassword.getText().toString().equals("")) {
+            bottomSheetCreateAccountRePasswordOk = false;
+            return false;
+        }
+        if (!bottomSheetCreateAccountPassword.getText().toString().equals(
+                bottomSheetCreateAccountRePassword.getText().toString()
+        )) {
+            bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
+                    R.string.error_re_password
+            ));
+            if (!passwordInput) {
+                bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
+                vibrate(250);
+            }
             bottomSheetCreateAccountRePasswordOk = false;
             return false;
         } else {
@@ -588,6 +672,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_login
             ));
             bottomSheetLoginLoginLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetLoginLoginOk = false;
             return false;
         }
@@ -610,6 +695,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.error_password
             ));
             bottomSheetLoginPasswordLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetLoginPasswordOk = false;
             return false;
         }
@@ -621,10 +707,30 @@ public class MainActivity extends AppCompatActivity {
         ));
         bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(true);
         bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
+        vibrate(250);
+    }
+
+    public void setErrorCreateAccountRePassword(boolean passwordInput) {
+        bottomSheetCreateAccountRePasswordLayout.setError(getResources().getString(
+                R.string.error_re_password
+        ));
+        bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(true);
+        if (!passwordInput) {
+            bottomSheetCreateAccountRePasswordLayout.startAnimation(shake);
+            vibrate(250);
+        }
     }
 
     public void setOkCreateAccountRePassword() {
         bottomSheetCreateAccountRePasswordLayout.setError(null);
         bottomSheetCreateAccountRePasswordLayout.setErrorEnabled(false);
+    }
+
+    private void vibrate(int milliseconds) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(milliseconds);
+        }
     }
 }

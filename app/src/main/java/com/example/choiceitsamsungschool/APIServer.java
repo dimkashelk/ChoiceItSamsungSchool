@@ -4,6 +4,7 @@ package com.example.choiceitsamsungschool;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -103,13 +104,14 @@ public class APIServer {
         }
     }
 
-    public void checkEmailToCreateWithWait(String email) {
+    public void checkEmailLoginToCreate(String email, String login) {
         if (checkInternetPermission()) {
             CheckUserLoginEmail checker = new CheckUserLoginEmail();
             checker.setApiServer(this);
             checker.execute(email, APIServer.EMAIL);
             try {
-                checker.wait();
+                while (!checker.isCancelled()) {
+                }
             } catch (Exception e) {
                 notFreeEmail();
             }
@@ -124,7 +126,8 @@ public class APIServer {
             checker.setApiServer(this);
             checker.execute(login, APIServer.LOGIN);
             try {
-                checker.wait();
+                while (!checker.isCancelled()) {
+                }
             } catch (Exception e) {
                 notFreeEmail();
             }

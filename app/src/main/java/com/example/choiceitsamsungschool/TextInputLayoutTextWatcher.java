@@ -23,7 +23,7 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        layout.setErrorEnabled(false);
+
     }
 
     @Override
@@ -36,21 +36,21 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
                 layout.setErrorEnabled(!mainActivity.checkUserSecondName());
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT:
-                layout.setErrorEnabled(!mainActivity.checkUserShortName());
+                layout.setErrorEnabled(!mainActivity.checkUserShortName(false));
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT:
-                layout.setErrorEnabled(!mainActivity.checkUserEmail());
+                layout.setErrorEnabled(!mainActivity.checkUserEmail(false));
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT:
                 layout.setErrorEnabled(!mainActivity.checkUserPassword());
-                if (!mainActivity.checkUserRePassword()) {
-                    mainActivity.setErrorCreateAccountRePassword();
+                if (!mainActivity.checkUserRePassword(true)) {
+                    mainActivity.setErrorCreateAccountRePassword(true);
                 } else {
                     mainActivity.setOkCreateAccountRePassword();
                 }
                 break;
             case MainActivity.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT:
-                layout.setErrorEnabled(!mainActivity.checkUserRePassword());
+                layout.setErrorEnabled(!mainActivity.checkUserRePassword(true));
                 break;
             case MainActivity.BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT:
                 layout.setErrorEnabled(!mainActivity.checkUserLoginLogin());
