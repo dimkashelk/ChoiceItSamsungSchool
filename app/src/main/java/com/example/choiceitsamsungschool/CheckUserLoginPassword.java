@@ -28,8 +28,8 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
             if (mode.equals(APIServer.LOGIN)) {
                 login = strings[0];
                 String password = strings[1];
-                String json = "'login': '" + login + "', " +
-                        "'password': '" + password + "'";
+                String json = "{'login': '" + login + "', " +
+                        "'password': '" + password + "'}";
                 RequestBody body = RequestBody.create(json, APIServer.JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)
@@ -45,8 +45,8 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
             } else {
                 email = strings[0];
                 String password = strings[1];
-                String json = "'email': '" + login + "', " +
-                        "'password': '" + password + "'";
+                String json = "{'email': '" + login + "', " +
+                        "'password': '" + password + "'}";
                 RequestBody body = RequestBody.create(json, APIServer.JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)

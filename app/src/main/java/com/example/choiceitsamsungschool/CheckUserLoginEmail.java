@@ -28,28 +28,28 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
         RequestBody body;
         Request request;
         if (mode.equals(APIServer.LOGIN)) {
-            String json = "'login': '" + params[0] + "'";
+            String json = "{'login': '" + params[0] + "'}";
             body = RequestBody.create(json, APIServer.JSON);
             request = new Request.Builder()
                     .url(APIServer.URL + APIServer.CHECK_LOGIN)
                     .post(body)
                     .build();
         } else if (mode.equals(APIServer.EMAIL_LOGIN)) {
-            String json = "'email': '" + params[0] + "'";
+            String json = "{'email': '" + params[0] + "'}";
             body = RequestBody.create(json, APIServer.JSON);
             request = new Request.Builder()
                     .url(APIServer.URL + APIServer.CHECK_EMAIL)
                     .post(body)
                     .build();
         } else if (mode.equals(APIServer.FIND_EMAIL)) {
-            String json = "'email': '" + params[0] + "'";
+            String json = "{'email': '" + params[0] + "'}";
             body = RequestBody.create(json, APIServer.JSON);
             request = new Request.Builder()
                     .url(APIServer.URL + APIServer.CHECK_EMAIL)
                     .post(body)
                     .build();
         } else {
-            String json = "'email': '" + params[0] + "', 'login': '" + params[1] + "'";
+            String json = "{'email': '" + params[0] + "', 'login': '" + params[1] + "'}";
             body = RequestBody.create(json, APIServer.JSON);
             request = new Request.Builder()
                     .url(APIServer.URL + APIServer.CHECK_EMAIL)
