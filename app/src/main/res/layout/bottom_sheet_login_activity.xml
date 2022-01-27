@@ -109,32 +109,6 @@
         app:spinning_bar_width="4dp" />
 
     <LinearLayout
-        android:id="@+id/bottomSheetLoginForgotPasswordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:gravity="center"
-            android:text="@string/forgot_password_title"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/bottomSheetLoginForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="@string/forgot_password"
-            android:textColor="@color/pink_700" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -158,6 +132,33 @@
             android:focusable="true"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/register"
+            android:textColor="@color/pink_700" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetLoginForgotPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:gravity="center"
+            android:text="@string/forgot_password_title"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/bottomSheetLoginForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/forgot_password"
             android:textColor="@color/pink_700" />
     </LinearLayout>
 </LinearLayout>

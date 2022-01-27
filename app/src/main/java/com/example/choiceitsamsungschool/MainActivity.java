@@ -12,17 +12,16 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT = "bottomSheetCreateAccountRePasswordLayout";
     public final static String BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT = "bottomSheetLoginLoginLayout";
     public final static String BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT = "bottomSheetLoginPasswordLayout";
+    public final static String BOTTOM_SHEET_FORGOT_PASSWORD_LAYOUT = "bottomSheetForgotPasswordLayout";
 
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
@@ -62,8 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     private View bottomSheetViewCreateAccount;
     private View bottomSheetViewLogin;
+    private View bottomSheetViewForgotPassword;
+
     private BottomSheetDialog bottomSheetDialogCreateAccount;
     private BottomSheetDialog bottomSheetDialogLogin;
+    private BottomSheetDialog bottomSheetDialogForgotPassword;
 
     private TextInputEditText bottomSheetCreateAccountFirstName;
     private TextInputLayout bottomSheetCreateAccountFirstNameLayout;
@@ -92,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
     private boolean bottomSheetLoginPasswordOk = false;
     private LinearLayout bottomSheetLoginForgotPasswordLayout;
     private TextView bottomSheetLoginForgotPassword;
+
+    private TextInputLayout bottomSheetForgotPasswordLayout;
+    private TextInputEditText bottomSheetForgotPasswordEmail;
+    private boolean bottomSheetForgotPasswordEmailOk = false;
 
     private CircularProgressButton bottomSheetLoginButton;
     private CircularProgressButton bottomSheetCreateAccountButton;
@@ -274,6 +281,26 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetLoginForgotPasswordLayout = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPasswordLayout);
         bottomSheetLoginForgotPassword = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPassword);
+
+
+        bottomSheetDialogForgotPassword = new BottomSheetDialog(
+                MainActivity.this, R.style.BottomSheetDialogTheme
+        );
+        bottomSheetViewForgotPassword = LayoutInflater.from(getApplicationContext()).inflate(
+                R.layout.bottom_sheet_forgot_password_activity,
+                (LinearLayout) findViewById(R.id.bottomSheetForgotPassword)
+        );
+        bottomSheetDialogForgotPassword.setContentView(bottomSheetViewForgotPassword);
+
+        bottomSheetForgotPasswordLayout = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordLayout);
+        bottomSheetForgotPasswordEmail = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordEmail);
+
+        textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
+                this,
+                bottomSheetCreateAccountRePasswordLayout,
+                BOTTOM_SHEET_FORGOT_PASSWORD_LAYOUT
+        );
+        bottomSheetForgotPasswordEmail.addTextChangedListener(textInputLayoutTextWatcher);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -743,6 +770,26 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
+        }
+    }
+
+    public boolean checkForgotEmail() {
+        if (bottomSheetForgotPasswordEmail.getText().toString().equals("")) {
+            bottomSheetForgotPasswordEmailOk = false;
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(bottomSheetForgotPasswordEmail.getText().toString()).matches()) {
+            bottomSheetForgotPasswordLayout.setError(getResources().getString(
+                    R.string.error_email
+            ));
+            bottomSheetForgotPasswordLayout.startAnimation(shake);
+            vibrate(250);
+            bottomSheetForgotPasswordEmailOk = false;
+            return false;
+        } else {
+            bottomSheetForgotPasswordLayout.setError(null);
+            bottomSheetForgotPasswordEmailOk = true;
+            return true;
         }
     }
 }
