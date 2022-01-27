@@ -36,4 +36,7 @@
     <string name="forgot_password_error">Данная почта не найдена</string>
     <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>
     <string name="get_verify_code">Получить код</string>
+    <string name="verify_code">Код подтверждения</string>
+    <string name="enter_new_password">Введите новый пароль</string>
+    <string name="re_enter_new_password">Повторите новый пароль</string>
 </resources>
