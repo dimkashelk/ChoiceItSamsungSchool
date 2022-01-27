@@ -33,6 +33,7 @@
     <string name="register">Зарегистрируйтесь</string>
     <string name="forgot_password_title">Забыли пароль?</string>
     <string name="forgot_password">Восстановите доступ</string>
+    <string name="forgot_password_error">Данная почта не найдена</string>
     <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>
     <string name="get_verify_code">Получить код</string>
 </resources>
