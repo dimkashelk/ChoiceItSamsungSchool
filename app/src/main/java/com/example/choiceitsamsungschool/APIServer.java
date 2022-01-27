@@ -116,22 +116,6 @@ public class APIServer {
         }
     }
 
-    public void checkLoginToCreateWithWait(String login) {
-        if (checkInternetPermission()) {
-            CheckUserLoginEmail checker = new CheckUserLoginEmail();
-            checker.setApiServer(this);
-            checker.execute(login, APIServer.LOGIN);
-            try {
-                while (!checker.isCancelled()) {
-                }
-            } catch (Exception e) {
-                notFreeEmail();
-            }
-        } else {
-            getInternetPermission();
-        }
-    }
-
     public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin) {
         mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin);
     }
@@ -140,13 +124,7 @@ public class APIServer {
         if (checkInternetPermission()) {
             CheckUserLoginEmail checker = new CheckUserLoginEmail();
             checker.setApiServer(this);
-            checker.execute(email, APIServer.LOGIN);
-            try {
-                while (!checker.isCancelled()) {
-                }
-            } catch (Exception e) {
-                notFreeEmail();
-            }
+            checker.execute(email, APIServer.FIND_EMAIL);
         } else {
             getInternetPermission();
         }
