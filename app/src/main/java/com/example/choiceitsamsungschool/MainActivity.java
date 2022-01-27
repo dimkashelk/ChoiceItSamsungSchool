@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText bottomSheetLoginPassword;
     private TextInputLayout bottomSheetLoginPasswordLayout;
     private boolean bottomSheetLoginPasswordOk = false;
+    private LinearLayout bottomSheetLoginForgotPasswordLayout;
+    private TextView bottomSheetLoginForgotPassword;
 
     private CircularProgressButton bottomSheetLoginButton;
     private CircularProgressButton bottomSheetCreateAccountButton;
@@ -392,9 +394,6 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetLoginPasswordOk = true;
 
         bottomSheetLoginButton.revertAnimation();
-        bottomSheetLoginButton.setBackground(getResources().getDrawable(
-                R.drawable.button_with_corner_radius_not_flooded, null
-        ));
 
         bottomSheetDialogLogin.dismiss();
 
@@ -418,9 +417,6 @@ public class MainActivity extends AppCompatActivity {
         vibrate(250);
 
         bottomSheetLoginButton.revertAnimation();
-        bottomSheetLoginButton.setBackground(getResources().getDrawable(
-                R.drawable.button_with_corner_radius_not_flooded, null
-        ));
 
         // TODO: восстановление пароля
     }
@@ -737,9 +733,6 @@ public class MainActivity extends AppCompatActivity {
             setErrorCreateAccountLogin();
         }
         bottomSheetCreateAccountButton.revertAnimation();
-        bottomSheetCreateAccountButton.setBackground(getResources().getDrawable(
-                R.drawable.button_with_corner_radius_flooded, null
-        ));
         if (bottomSheetCreateAccountFirstNameOk &&
                 bottomSheetCreateAccountSecondNameOk &&
                 bottomSheetCreateAccountShortNameOk &&
