@@ -15,6 +15,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     private APIServer apiServer;
     private boolean isFreeEmail = false;
     private boolean isFreeLogin = false;
+    private boolean findEmail = false;
     private String mode;
 
     public void setApiServer(APIServer apiServer) {
@@ -40,6 +41,13 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                     .url(APIServer.URL + APIServer.CHECK_EMAIL)
                     .post(body)
                     .build();
+        } else if (mode.equals(APIServer.FIND_EMAIL)) {
+            String json = "'email': '" + params[0] + "'";
+            body = RequestBody.create(json, APIServer.JSON);
+            request = new Request.Builder()
+                    .url(APIServer.URL + APIServer.CHECK_EMAIL)
+                    .post(body)
+                    .build();
         } else {
             String json = "'email': '" + params[0] + "', 'login': '" + params[1] + "'";
             body = RequestBody.create(json, APIServer.JSON);
@@ -55,9 +63,22 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             }
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
-            isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
-            return jsonObject.get("is_free_email").getAsBoolean();
+            if (mode.equals(APIServer.FIND_EMAIL)) {
+                findEmail = jsonObject.get("find").getAsBoolean();
+                return findEmail;
+            } else if (mode.equals(APIServer.LOGIN)) {
+                isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
+                return isFreeLogin;
+            }
+             else if (mode.equals(APIServer.EMAIL)) {
+                isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
+                return isFreeEmail;
+            } else if (mode.equals(APIServer.EMAIL_LOGIN)) {
+                isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
+                isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
+                return isFreeEmail && isFreeLogin;
+            }
+             return false;
         } catch (Exception e) {
             return false;
         }
@@ -67,16 +88,22 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean ans) {
         super.onPostExecute(ans);
         if (mode.equals(APIServer.LOGIN)) {
-            if (ans) {
+            if (isFreeLogin) {
                 apiServer.freeLogin();
             } else {
                 apiServer.notFreeLogin();
             }
         } else if (mode.equals(APIServer.EMAIL)) {
-            if (ans) {
+            if (isFreeEmail) {
                 apiServer.freeEmail();
             } else {
                 apiServer.notFreeEmail();
+            }
+        } else if (mode.equals(APIServer.FIND_EMAIL)) {
+            if (findEmail) {
+                apiServer.foundEmail();
+            } else {
+                apiServer.notFoundEmail();
             }
         } else {
             apiServer.resultCheckingEmailLogin(isFreeEmail, isFreeLogin);

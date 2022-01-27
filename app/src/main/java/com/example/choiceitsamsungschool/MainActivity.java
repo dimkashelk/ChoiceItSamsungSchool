@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CircularProgressButton bottomSheetLoginButton;
     private CircularProgressButton bottomSheetCreateAccountButton;
+    private CircularProgressButton bottomSheetForgotPasswordButton;
 
     private Animation shake;
     private Vibrator vibrator;
@@ -281,6 +282,13 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetLoginForgotPasswordLayout = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPasswordLayout);
         bottomSheetLoginForgotPassword = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPassword);
+        bottomSheetLoginForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogLogin.dismiss();
+                bottomSheetDialogForgotPassword.show();
+            }
+        });
 
 
         bottomSheetDialogForgotPassword = new BottomSheetDialog(
@@ -301,6 +309,14 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_FORGOT_PASSWORD_LAYOUT
         );
         bottomSheetForgotPasswordEmail.addTextChangedListener(textInputLayoutTextWatcher);
+
+        bottomSheetForgotPasswordButton = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordButton);
+        bottomSheetForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkForgotEmail(true);
+            }
+        });
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -773,7 +789,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean checkForgotEmail() {
+    public boolean checkForgotEmail(boolean findEmail) {
         if (bottomSheetForgotPasswordEmail.getText().toString().equals("")) {
             bottomSheetForgotPasswordEmailOk = false;
             return false;
@@ -787,9 +803,31 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetForgotPasswordEmailOk = false;
             return false;
         } else {
+            if (findEmail) {
+                bottomSheetForgotPasswordButton.startAnimation();
+                apiServer.findEmail(
+                        bottomSheetForgotPasswordEmail.getText().toString()
+                );
+            }
             bottomSheetForgotPasswordLayout.setError(null);
             bottomSheetForgotPasswordEmailOk = true;
             return true;
         }
+    }
+
+    public void foundEmailForForgotPassword() {
+        bottomSheetForgotPasswordButton.stopAnimation();
+
+        // TODO: получение кода из письма
+    }
+
+    public void notFoundEmailForForgotPassword() {
+        bottomSheetForgotPasswordButton.stopAnimation();
+
+        bottomSheetForgotPasswordLayout.setError(getResources().getString(
+                R.string.forgot_password_error
+        ));
+        bottomSheetForgotPasswordLayout.setErrorEnabled(true);
+        bottomSheetForgotPasswordEmailOk = false;
     }
 }

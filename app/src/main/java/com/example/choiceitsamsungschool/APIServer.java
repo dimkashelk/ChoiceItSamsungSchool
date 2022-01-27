@@ -17,11 +17,11 @@ public class APIServer {
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
 
-
     public static final String URL = "https://example.com/api/";
     public static final String CHECK_LOGIN = "check_login";
     public static final String CHECK_EMAIL = "check_email";
     public static final String AUTHORIZATION = "auth";
+    public static final String FIND_EMAIL = "find_email";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -134,5 +134,29 @@ public class APIServer {
 
     public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin) {
         mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin);
+    }
+
+    public void findEmail(String email) {
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(email, APIServer.LOGIN);
+            try {
+                while (!checker.isCancelled()) {
+                }
+            } catch (Exception e) {
+                notFreeEmail();
+            }
+        } else {
+            getInternetPermission();
+        }
+    }
+
+    public void foundEmail() {
+        mainActivity.foundEmailForForgotPassword();
+    }
+
+    public void notFoundEmail() {
+        mainActivity.notFoundEmailForForgotPassword();
     }
 }
