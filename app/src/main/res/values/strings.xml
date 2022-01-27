@@ -31,7 +31,8 @@
     <string name="error_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
     <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
-    <string name="forgot_password">Забыли пароль</string>
+    <string name="forgot_password_title">Забыли пароль?</string>
+    <string name="forgot_password">Восстановите доступ</string>
     <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>
     <string name="get_verify_code">Получить код</string>
 </resources>

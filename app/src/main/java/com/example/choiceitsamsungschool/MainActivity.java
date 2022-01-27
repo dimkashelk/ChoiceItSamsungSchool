@@ -271,6 +271,9 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT
         );
         bottomSheetLoginPassword.addTextChangedListener(textInputLayoutTextWatcher);
+
+        bottomSheetLoginForgotPasswordLayout = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPasswordLayout);
+        bottomSheetLoginForgotPassword = bottomSheetViewLogin.findViewById(R.id.bottomSheetLoginForgotPassword);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

@@ -103,14 +103,40 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
+        app:initialCornerAngle="15dp"
         app:spinning_bar_color="@color/pink_700"
         app:spinning_bar_padding="6dp"
         app:spinning_bar_width="4dp" />
 
+    <LinearLayout
+        android:id="@+id/bottomSheetLoginForgotPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:gravity="center"
+            android:text="@string/forgot_password_title"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/bottomSheetLoginForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/forgot_password"
+            android:textColor="@color/pink_700" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="15dp">
