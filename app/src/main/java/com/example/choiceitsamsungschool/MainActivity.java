@@ -816,13 +816,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void foundEmailForForgotPassword() {
-        bottomSheetForgotPasswordButton.stopAnimation();
+        bottomSheetForgotPasswordButton.revertAnimation();
 
         // TODO: получение кода из письма
     }
 
     public void notFoundEmailForForgotPassword() {
-        bottomSheetForgotPasswordButton.stopAnimation();
+        bottomSheetForgotPasswordButton.revertAnimation();
 
         bottomSheetForgotPasswordLayout.setError(getResources().getString(
                 R.string.forgot_password_error
