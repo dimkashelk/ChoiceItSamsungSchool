@@ -16,6 +16,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     private boolean isFreeEmail = false;
     private boolean isFreeLogin = false;
     private boolean findEmail = false;
+    private boolean okVerifyCode = false;
     private String mode;
 
     public void setApiServer(APIServer apiServer) {
@@ -27,34 +28,52 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
         mode = params[params.length - 1];
         RequestBody body;
         Request request;
-        if (mode.equals(APIServer.LOGIN)) {
-            String json = "{'login': '" + params[0] + "'}";
-            body = RequestBody.create(json, APIServer.JSON);
-            request = new Request.Builder()
-                    .url(APIServer.URL + APIServer.CHECK_LOGIN)
-                    .post(body)
-                    .build();
-        } else if (mode.equals(APIServer.EMAIL_LOGIN)) {
-            String json = "{'email': '" + params[0] + "'}";
-            body = RequestBody.create(json, APIServer.JSON);
-            request = new Request.Builder()
-                    .url(APIServer.URL + APIServer.CHECK_EMAIL)
-                    .post(body)
-                    .build();
-        } else if (mode.equals(APIServer.FIND_EMAIL)) {
-            String json = "{'email': '" + params[0] + "'}";
-            body = RequestBody.create(json, APIServer.JSON);
-            request = new Request.Builder()
-                    .url(APIServer.URL + APIServer.CHECK_EMAIL)
-                    .post(body)
-                    .build();
-        } else {
-            String json = "{'email': '" + params[0] + "', 'login': '" + params[1] + "'}";
-            body = RequestBody.create(json, APIServer.JSON);
-            request = new Request.Builder()
-                    .url(APIServer.URL + APIServer.CHECK_EMAIL)
-                    .post(body)
-                    .build();
+        switch (mode) {
+            case APIServer.LOGIN: {
+                String json = "{'login': '" + params[0] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.CHECK_LOGIN)
+                        .post(body)
+                        .build();
+                break;
+            }
+            case APIServer.EMAIL: {
+                String json = "{'email': '" + params[0] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.CHECK_EMAIL)
+                        .post(body)
+                        .build();
+                break;
+            }
+            case APIServer.FIND_EMAIL: {
+                String json = "{'email': '" + params[0] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.FIND_EMAIL)
+                        .post(body)
+                        .build();
+                break;
+            }
+            case APIServer.CHECK_VERIFY_CODE: {
+                String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.CHECK_VERIFY_CODE)
+                        .post(body)
+                        .build();
+                break;
+            }
+            default: {
+                String json = "{'email': '" + params[0] + "', 'login': '" + params[1] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.CHECK_EMAIL_LOGIN)
+                        .post(body)
+                        .build();
+                break;
+            }
         }
         try {
             Response response = client.newCall(request).execute();
@@ -63,20 +82,23 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             }
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            if (mode.equals(APIServer.FIND_EMAIL)) {
-                findEmail = jsonObject.get("find").getAsBoolean();
-                return findEmail;
-            } else if (mode.equals(APIServer.LOGIN)) {
-                isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
-                return isFreeLogin;
-            }
-             else if (mode.equals(APIServer.EMAIL)) {
-                isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
-                return isFreeEmail;
-            } else if (mode.equals(APIServer.EMAIL_LOGIN)) {
-                isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
-                isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
-                return isFreeEmail && isFreeLogin;
+            switch (mode) {
+                case APIServer.FIND_EMAIL:
+                    findEmail = jsonObject.get("find").getAsBoolean();
+                    return findEmail;
+                case APIServer.LOGIN:
+                    isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
+                    return isFreeLogin;
+                case APIServer.EMAIL:
+                    isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
+                    return isFreeEmail;
+                case APIServer.EMAIL_LOGIN:
+                    isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
+                    isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
+                    return isFreeEmail && isFreeLogin;
+                case APIServer.CHECK_VERIFY_CODE:
+                    okVerifyCode = jsonObject.get("ok").getAsBoolean();
+                    return okVerifyCode;
             }
              return false;
         } catch (Exception e) {
@@ -87,26 +109,37 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean ans) {
         super.onPostExecute(ans);
-        if (mode.equals(APIServer.LOGIN)) {
-            if (isFreeLogin) {
-                apiServer.freeLogin();
-            } else {
-                apiServer.notFreeLogin();
-            }
-        } else if (mode.equals(APIServer.EMAIL)) {
-            if (isFreeEmail) {
-                apiServer.freeEmail();
-            } else {
-                apiServer.notFreeEmail();
-            }
-        } else if (mode.equals(APIServer.FIND_EMAIL)) {
-            if (findEmail) {
-                apiServer.foundEmail();
-            } else {
-                apiServer.notFoundEmail();
-            }
-        } else {
-            apiServer.resultCheckingEmailLogin(isFreeEmail, isFreeLogin);
+        switch (mode) {
+            case APIServer.LOGIN:
+                if (isFreeLogin) {
+                    apiServer.freeLogin();
+                } else {
+                    apiServer.notFreeLogin();
+                }
+                break;
+            case APIServer.EMAIL:
+                if (isFreeEmail) {
+                    apiServer.freeEmail();
+                } else {
+                    apiServer.notFreeEmail();
+                }
+                break;
+            case APIServer.FIND_EMAIL:
+                if (findEmail) {
+                    apiServer.foundEmail();
+                } else {
+                    apiServer.notFoundEmail();
+                }
+                break;
+            case APIServer.CHECK_VERIFY_CODE:
+                if (okVerifyCode) {
+                    apiServer.okVerifyCode();
+                } else {
+                    apiServer.wrongVerifyCode();
+                }
+            default:
+                apiServer.resultCheckingEmailLogin(isFreeEmail, isFreeLogin);
+                break;
         }
     }
 }

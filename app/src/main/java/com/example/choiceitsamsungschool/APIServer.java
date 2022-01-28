@@ -3,8 +3,6 @@ package com.example.choiceitsamsungschool;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,8 +18,10 @@ public class APIServer {
     public static final String URL = "https://example.com/api/";
     public static final String CHECK_LOGIN = "check_login";
     public static final String CHECK_EMAIL = "check_email";
+    public static final String CHECK_EMAIL_LOGIN = "check_email_login";
     public static final String AUTHORIZATION = "auth";
     public static final String FIND_EMAIL = "find_email";
+    public static final String CHECK_VERIFY_CODE = "check_verify_code";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -136,5 +136,23 @@ public class APIServer {
 
     public void notFoundEmail() {
         mainActivity.notFoundEmailForForgotPassword();
+    }
+
+    public void checkVerifyCode(String email, String code) {
+        if (checkInternetPermission()) {
+            CheckUserLoginEmail checker = new CheckUserLoginEmail();
+            checker.setApiServer(this);
+            checker.execute(email, code, APIServer.CHECK_VERIFY_CODE);
+        } else {
+            getInternetPermission();
+        }
+    }
+
+    public void okVerifyCode() {
+        mainActivity.okVerifyCode();
+    }
+
+    public void wrongVerifyCode() {
+        mainActivity.wrongVerifyCode();
     }
 }

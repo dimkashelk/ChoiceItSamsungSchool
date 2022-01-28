@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -104,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout bottomSheetForgotPasswordVerifyCodeLayout;
     private TextInputEditText bottomSheetForgotPasswordVerifyCode;
     private boolean bottomSheetForgotPasswordVerifyCodeOk = false;
+    private boolean bottomSheetForgotPasswordVerifyCodeCheck = false;
     private TextInputLayout bottomSheetForgotPasswordPasswordLayout;
     private TextInputEditText bottomSheetForgotPasswordPassword;
     private boolean bottomSheetForgotPasswordPasswordOk = false;
+    private boolean bottomSheetForgotPasswordPasswordChange = false;
     private TextInputLayout bottomSheetForgotPasswordRePasswordLayout;
     private TextInputEditText bottomSheetForgotPasswordRePassword;
     private boolean bottomSheetForgotPasswordRePasswordOk = false;
@@ -331,7 +334,13 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkForgotEmail(true);
+                if (bottomSheetForgotPasswordVerifyCodeCheck) {
+                    checkVerifyCode();
+                } else if (bottomSheetForgotPasswordPasswordChange) {
+                    changePassword();
+                } else {
+                    checkForgotEmail(true);
+                }
             }
         });
 
@@ -858,17 +867,14 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetForgotPasswordEmailOk = true;
 
-        bottomSheetForgotPasswordEmail.setClickable(false);
-        bottomSheetForgotPasswordEmail.setCursorVisible(false);
-        bottomSheetForgotPasswordEmail.setFocusable(false);
-        bottomSheetForgotPasswordEmail.setFocusableInTouchMode(false);
+        setEnable(bottomSheetForgotPasswordEmail, false);
 
-        bottomSheetForgotPasswordVerifyCode.setClickable(true);
-        bottomSheetForgotPasswordVerifyCode.setCursorVisible(true);
-        bottomSheetForgotPasswordVerifyCode.setFocusable(true);
-        bottomSheetForgotPasswordVerifyCode.setFocusableInTouchMode(true);
+        setEnable(bottomSheetForgotPasswordVerifyCode, true);
 
-        // TODO: получение кода из письма
+        bottomSheetForgotPasswordButton.setText(getResources().getString(
+                R.string.check_verify_code
+        ));
+        bottomSheetForgotPasswordVerifyCodeCheck = true;
     }
 
     public void notFoundEmailForForgotPassword() {
@@ -879,5 +885,60 @@ public class MainActivity extends AppCompatActivity {
         ));
         bottomSheetForgotPasswordEmailLayout.setErrorEnabled(true);
         bottomSheetForgotPasswordEmailOk = false;
+    }
+
+    private void checkVerifyCode() {
+        bottomSheetForgotPasswordButton.startAnimation();
+
+        setEnable(bottomSheetForgotPasswordVerifyCode, false);
+
+        apiServer.checkVerifyCode(
+                bottomSheetForgotPasswordEmail.getText().toString(),
+                bottomSheetForgotPasswordVerifyCode.getText().toString()
+        );
+    }
+
+    public void okVerifyCode() {
+        bottomSheetForgotPasswordButton.revertAnimation();
+
+        bottomSheetForgotPasswordVerifyCodeLayout.setHelperText(getResources().getString(
+                R.string.ok_verify_code
+        ));
+        bottomSheetForgotPasswordVerifyCodeLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+                R.color.teal_200, null
+        )));
+        bottomSheetForgotPasswordVerifyCodeLayout.setHelperTextEnabled(true);
+
+        bottomSheetForgotPasswordButton.setText(getResources().getString(
+                R.string.change_password
+        ));
+        bottomSheetForgotPasswordVerifyCodeCheck = false;
+    }
+
+    private void setEnable(EditText editText, boolean enable) {
+        editText.setClickable(enable);
+        editText.setCursorVisible(enable);
+        editText.setFocusable(enable);
+        editText.setFocusableInTouchMode(enable);
+    }
+
+    public void wrongVerifyCode() {
+        bottomSheetForgotPasswordButton.revertAnimation();
+
+        setEnable(bottomSheetForgotPasswordVerifyCode, true);
+        setEnable(bottomSheetForgotPasswordEmail, true);
+
+        bottomSheetForgotPasswordVerifyCodeLayout.setError(getResources().getString(
+                R.string.wrong_verify_code
+        ));
+        bottomSheetForgotPasswordVerifyCodeLayout.setErrorEnabled(true);
+        bottomSheetForgotPasswordVerifyCodeLayout.startAnimation(shake);
+
+        bottomSheetForgotPasswordButton.setText(getResources().getString(
+                R.string.get_verify_code
+        ));
+    }
+
+    private void changePassword() {
     }
 }
