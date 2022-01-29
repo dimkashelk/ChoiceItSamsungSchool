@@ -1001,7 +1001,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetDialogVerifyCode.dismiss();
 
-        saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+        // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
     }
 
     private void setEnable(EditText editText, boolean enable) {
