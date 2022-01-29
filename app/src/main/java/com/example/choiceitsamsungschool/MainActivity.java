@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
     private Animation shake;
     private Vibrator vibrator;
 
+    private String emailToChangePassword = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -348,6 +350,13 @@ public class MainActivity extends AppCompatActivity {
         );
         bottomSheetDialogVerifyCode.setContentView(bottomSheetViewVerifyCode);
 
+        bottomSheetDialogVerifyCode.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                freeVerifyCodeData();
+            }
+        });
+
         bottomSheetVerifyCodeButton = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeButton);
         bottomSheetVerifyCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -401,6 +410,14 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
         bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+    }
+
+    private void freeVerifyCodeData() {
+        bottomSheetVerifyCodeCode.setText("");
+        bottomSheetVerifyCodePassword.setText("");
+        bottomSheetVerifyCodeRePassword.setText("");
+
+        setEnable(bottomSheetVerifyCodeCode, true);
     }
 
     private void freeForgotPasswordData() {
