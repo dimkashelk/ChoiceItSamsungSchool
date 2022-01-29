@@ -57,7 +57,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 break;
             }
             case APIServer.CHECK_VERIFY_CODE: {
-                String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "'}";
+                String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "', 'password': '" + params[2] + "'}";
                 body = RequestBody.create(json, APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_VERIFY_CODE)

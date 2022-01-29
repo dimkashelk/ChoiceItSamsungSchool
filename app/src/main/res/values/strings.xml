@@ -22,13 +22,13 @@
     <string name="wrong_login_data">Неправильный логин или пароль</string>
     <string name="error_first_name">Имя должно содержать только а-я, А-Я</string>
     <string name="error_second_name">Фамилия должна содержать только а-я, А-Я</string>
-    <string name="error_login">Логин должен содержать только a-z, 0-9</string>
+    <string name="error_login">Логин должен содержать только a–z, 0–9</string>
     <string name="not_free_login">Данный логин уже занят, попробуйте другой</string>
     <string name="free_login">Данный логин свободен</string>
     <string name="error_email">Используйте существующий адрес электронной почты</string>
     <string name="not_free_email">Данная почта уже занята, попробуйте другую</string>
     <string name="free_email">Данная почта свободна</string>
-    <string name="error_password">Пароль должен содержать только a-z, A-Z, 0-9, !@#$%,^:&amp;?()*/-+[]</string>
+    <string name="error_password">Пароль должен содержать только a–z, A–Z, 0–9, !@#$%,^:&amp;?()*/-+[]</string>
     <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
     <string name="forgot_password_title">Забыли пароль?</string>
@@ -43,4 +43,5 @@
     <string name="check_verify_code">Проверить код подтверждения</string>
     <string name="ok_verify_code">Верный код</string>
     <string name="change_password">Изменить пароль</string>
+    <string name="tag_verify_code">Введите код подтверждения, отправленный на почту, и введите новый пароль</string>
 </resources>

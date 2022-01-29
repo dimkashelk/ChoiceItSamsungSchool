@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
     public final static String BOTTOM_SHEET_LOGIN_LOGIN_LAYOUT = "bottomSheetLoginLoginLayout";
     public final static String BOTTOM_SHEET_LOGIN_PASSWORD_LAYOUT = "bottomSheetLoginPasswordLayout";
     public final static String BOTTOM_SHEET_FORGOT_PASSWORD_EMAIL_LAYOUT = "bottomSheetForgotPasswordLayout";
-    public final static String BOTTOM_SHEET_FORGOT_PASSWORD_VERIFY_CODE_LAYOUT = "bottomSheetForgotPasswordVerifyCodeLayout";
-    public final static String BOTTOM_SHEET_FORGOT_PASSWORD_PASSWORD_LAYOUT = "bottomSheetForgotPasswordPasswordLayout";
-    public final static String BOTTOM_SHEET_FORGOT_PASSWORD_RE_PASSWORD_LAYOUT = "bottomSheetForgotPasswordRePasswordLayout";
+    public final static String BOTTOM_SHEET_VERIFY_CODE_VERIFY_CODE_LAYOUT = "bottomSheetVerifyCodeLayout";
+    public final static String BOTTOM_SHEET_VERIFY_CODE_PASSWORD_LAYOUT = "bottomSheetForgotPasswordPasswordLayout";
+    public final static String BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT = "bottomSheetForgotPasswordRePasswordLayout";
 
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
@@ -66,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
     private View bottomSheetViewCreateAccount;
     private View bottomSheetViewLogin;
     private View bottomSheetViewForgotPassword;
+    private View bottomSheetViewVerifyCode;
 
     private BottomSheetDialog bottomSheetDialogCreateAccount;
     private BottomSheetDialog bottomSheetDialogLogin;
     private BottomSheetDialog bottomSheetDialogForgotPassword;
+    private BottomSheetDialog bottomSheetDialogVerifyCode;
 
     private TextInputEditText bottomSheetCreateAccountFirstName;
     private TextInputLayout bottomSheetCreateAccountFirstNameLayout;
@@ -102,21 +104,21 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout bottomSheetForgotPasswordEmailLayout;
     private TextInputEditText bottomSheetForgotPasswordEmail;
     private boolean bottomSheetForgotPasswordEmailOk = false;
-    private TextInputLayout bottomSheetForgotPasswordVerifyCodeLayout;
-    private TextInputEditText bottomSheetForgotPasswordVerifyCode;
-    private boolean bottomSheetForgotPasswordVerifyCodeOk = false;
-    private boolean bottomSheetForgotPasswordVerifyCodeCheck = false;
-    private TextInputLayout bottomSheetForgotPasswordPasswordLayout;
-    private TextInputEditText bottomSheetForgotPasswordPassword;
-    private boolean bottomSheetForgotPasswordPasswordOk = false;
-    private boolean bottomSheetForgotPasswordPasswordChange = false;
-    private TextInputLayout bottomSheetForgotPasswordRePasswordLayout;
-    private TextInputEditText bottomSheetForgotPasswordRePassword;
-    private boolean bottomSheetForgotPasswordRePasswordOk = false;
+
+    private TextInputLayout bottomSheetVerifyCodeLayout;
+    private TextInputEditText bottomSheetVerifyCodeCode;
+    private boolean bottomSheetVerifyCodeCodeOk = false;
+    private TextInputLayout bottomSheetVerifyCodePasswordLayout;
+    private TextInputEditText bottomSheetVerifyCodePassword;
+    private boolean bottomSheetVerifyCodePasswordOk = false;
+    private TextInputLayout bottomSheetVerifyCodeRePasswordLayout;
+    private TextInputEditText bottomSheetVerifyCodeRePassword;
+    private boolean bottomSheetVerifyCodeRePasswordOk = false;
 
     private CircularProgressButton bottomSheetLoginButton;
     private CircularProgressButton bottomSheetCreateAccountButton;
     private CircularProgressButton bottomSheetForgotPasswordButton;
+    private CircularProgressButton bottomSheetVerifyCodeButton;
 
     private Animation shake;
     private Vibrator vibrator;
@@ -314,14 +316,32 @@ public class MainActivity extends AppCompatActivity {
         );
         bottomSheetDialogForgotPassword.setContentView(bottomSheetViewForgotPassword);
 
+        bottomSheetDialogVerifyCode = new BottomSheetDialog(
+                MainActivity.this, R.style.BottomSheetDialogTheme
+        );
+        bottomSheetViewVerifyCode = LayoutInflater.from(getApplicationContext()).inflate(
+                R.layout.bottom_sheet_verify_code,
+                (LinearLayout) findViewById(R.id.bottomSheetVerifyCode)
+        );
+        bottomSheetDialogVerifyCode.setContentView(bottomSheetViewVerifyCode);
+
+        bottomSheetVerifyCodeButton = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeButton);
+        bottomSheetVerifyCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkVerifyCode();
+            }
+        });
+
         bottomSheetForgotPasswordEmailLayout = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordLayout);
         bottomSheetForgotPasswordEmail = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordEmail);
-        bottomSheetForgotPasswordVerifyCodeLayout = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordVerifyCodeLayout);
-        bottomSheetForgotPasswordVerifyCode = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordVerifyCode);
-        bottomSheetForgotPasswordPasswordLayout = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordPasswordLayout);
-        bottomSheetForgotPasswordPassword = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordPassword);
-        bottomSheetForgotPasswordRePasswordLayout = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordRePasswordLayout);
-        bottomSheetForgotPasswordRePassword = bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordRePassword);
+
+        bottomSheetVerifyCodeLayout = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeLayout);
+        bottomSheetVerifyCodeCode = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeCode);
+        bottomSheetVerifyCodePasswordLayout = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodePasswordLayout);
+        bottomSheetVerifyCodePassword = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodePassword);
+        bottomSheetVerifyCodeRePasswordLayout = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeRePasswordLayout);
+        bottomSheetVerifyCodeRePassword = bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeRePassword);
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
@@ -334,36 +354,30 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bottomSheetForgotPasswordVerifyCodeCheck) {
-                    checkVerifyCode();
-                } else if (bottomSheetForgotPasswordPasswordChange) {
-                    changePassword();
-                } else {
-                    checkForgotEmail(true);
-                }
+                checkForgotEmail(true);
             }
         });
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
-                bottomSheetForgotPasswordVerifyCodeLayout,
-                BOTTOM_SHEET_FORGOT_PASSWORD_VERIFY_CODE_LAYOUT
+                bottomSheetVerifyCodeLayout,
+                BOTTOM_SHEET_VERIFY_CODE_VERIFY_CODE_LAYOUT
         );
-        bottomSheetForgotPasswordVerifyCode.addTextChangedListener(textInputLayoutTextWatcher);
+        bottomSheetVerifyCodeCode.addTextChangedListener(textInputLayoutTextWatcher);
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
-                bottomSheetForgotPasswordPasswordLayout,
-                BOTTOM_SHEET_FORGOT_PASSWORD_PASSWORD_LAYOUT
+                bottomSheetVerifyCodePasswordLayout,
+                BOTTOM_SHEET_VERIFY_CODE_PASSWORD_LAYOUT
         );
-        bottomSheetForgotPasswordPassword.addTextChangedListener(textInputLayoutTextWatcher);
+        bottomSheetVerifyCodePassword.addTextChangedListener(textInputLayoutTextWatcher);
 
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
-                bottomSheetForgotPasswordRePasswordLayout,
-                BOTTOM_SHEET_FORGOT_PASSWORD_RE_PASSWORD_LAYOUT
+                bottomSheetVerifyCodeRePasswordLayout,
+                BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
-        bottomSheetForgotPasswordRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+        bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -869,12 +883,10 @@ public class MainActivity extends AppCompatActivity {
 
         setEnable(bottomSheetForgotPasswordEmail, false);
 
-        setEnable(bottomSheetForgotPasswordVerifyCode, true);
+        setEnable(bottomSheetVerifyCodeCode, true);
 
-        bottomSheetForgotPasswordButton.setText(getResources().getString(
-                R.string.check_verify_code
-        ));
-        bottomSheetForgotPasswordVerifyCodeCheck = true;
+        bottomSheetDialogForgotPassword.dismiss();
+        bottomSheetDialogVerifyCode.show();
     }
 
     public void notFoundEmailForForgotPassword() {
@@ -888,31 +900,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkVerifyCode() {
-        bottomSheetForgotPasswordButton.startAnimation();
+        if (bottomSheetVerifyCodePasswordOk && bottomSheetVerifyCodeRePasswordOk
+                && !bottomSheetVerifyCodeCode.getText().toString().equals("")) {
+            bottomSheetVerifyCodeButton.startAnimation();
 
-        setEnable(bottomSheetForgotPasswordVerifyCode, false);
+            setEnable(bottomSheetVerifyCodeCode, false);
 
-        apiServer.checkVerifyCode(
-                bottomSheetForgotPasswordEmail.getText().toString(),
-                bottomSheetForgotPasswordVerifyCode.getText().toString()
-        );
+            apiServer.checkVerifyCode(
+                    bottomSheetForgotPasswordEmail.getText().toString(),
+                    bottomSheetVerifyCodeCode.getText().toString(),
+                    bottomSheetVerifyCodePassword.getText().toString()
+            );
+        } else {
+            bottomSheetVerifyCodePasswordLayout.startAnimation(shake);
+            bottomSheetVerifyCodeRePasswordLayout.startAnimation(shake);
+        }
     }
 
     public void okVerifyCode() {
         bottomSheetForgotPasswordButton.revertAnimation();
 
-        bottomSheetForgotPasswordVerifyCodeLayout.setHelperText(getResources().getString(
+        bottomSheetVerifyCodeCodeOk = true;
+
+        bottomSheetVerifyCodeLayout.setHelperText(getResources().getString(
                 R.string.ok_verify_code
         ));
-        bottomSheetForgotPasswordVerifyCodeLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
+        bottomSheetVerifyCodeLayout.setHelperTextColor(ColorStateList.valueOf(getResources().getColor(
                 R.color.teal_200, null
         )));
-        bottomSheetForgotPasswordVerifyCodeLayout.setHelperTextEnabled(true);
+        bottomSheetVerifyCodeLayout.setHelperTextEnabled(true);
 
-        bottomSheetForgotPasswordButton.setText(getResources().getString(
-                R.string.change_password
-        ));
-        bottomSheetForgotPasswordVerifyCodeCheck = false;
+        bottomSheetDialogVerifyCode.dismiss();
+
+        // TODO: открываем страницу
     }
 
     private void setEnable(EditText editText, boolean enable) {
@@ -925,20 +945,82 @@ public class MainActivity extends AppCompatActivity {
     public void wrongVerifyCode() {
         bottomSheetForgotPasswordButton.revertAnimation();
 
-        setEnable(bottomSheetForgotPasswordVerifyCode, true);
+        setEnable(bottomSheetVerifyCodeCode, true);
         setEnable(bottomSheetForgotPasswordEmail, true);
 
-        bottomSheetForgotPasswordVerifyCodeLayout.setError(getResources().getString(
+        bottomSheetVerifyCodeCodeOk = false;
+
+        bottomSheetVerifyCodeLayout.setError(getResources().getString(
                 R.string.wrong_verify_code
         ));
-        bottomSheetForgotPasswordVerifyCodeLayout.setErrorEnabled(true);
-        bottomSheetForgotPasswordVerifyCodeLayout.startAnimation(shake);
+        bottomSheetVerifyCodeLayout.setErrorEnabled(true);
+        bottomSheetVerifyCodeLayout.startAnimation(shake);
 
         bottomSheetForgotPasswordButton.setText(getResources().getString(
                 R.string.get_verify_code
         ));
     }
 
-    private void changePassword() {
+    public boolean checkVerifyPassword() {
+        if (bottomSheetVerifyCodePassword.getText().toString().equals("")) {
+            bottomSheetVerifyCodePasswordOk = false;
+            return false;
+        }
+        if (checkStringToAnotherChars(
+                bottomSheetVerifyCodePassword.getText().toString(),
+                MainActivity.ALPHABET_EN + MainActivity.DIGITS + MainActivity.SYMBOLS
+        )) {
+            bottomSheetVerifyCodePasswordLayout.setError(null);
+            bottomSheetVerifyCodePasswordOk = true;
+            return true;
+        } else {
+            bottomSheetVerifyCodePasswordLayout.setError(getResources().getString(
+                    R.string.error_password
+            ));
+            bottomSheetVerifyCodePasswordLayout.startAnimation(shake);
+            vibrate(250);
+            bottomSheetLoginPasswordOk = false;
+            return false;
+        }
+    }
+
+    public boolean checkVerifyRePassword(boolean passwordInput) {
+        if (bottomSheetVerifyCodeRePassword.getText().toString().equals("")) {
+            bottomSheetVerifyCodeRePasswordOk = false;
+            return false;
+        }
+        if (!bottomSheetVerifyCodePassword.getText().toString().equals(
+                bottomSheetVerifyCodeRePassword.getText().toString()
+        )) {
+            bottomSheetVerifyCodeRePasswordLayout.setError(getResources().getString(
+                    R.string.error_re_password
+            ));
+            if (!passwordInput) {
+                bottomSheetVerifyCodeRePasswordLayout.startAnimation(shake);
+                vibrate(250);
+            }
+            bottomSheetVerifyCodeRePasswordOk = false;
+            return false;
+        } else {
+            bottomSheetVerifyCodeRePasswordLayout.setError(null);
+            bottomSheetVerifyCodeRePasswordOk = true;
+            return true;
+        }
+    }
+
+    public void setErrorVerifyCodeRePassword(boolean passwordInput) {
+        bottomSheetVerifyCodeRePasswordLayout.setError(getResources().getString(
+                R.string.error_re_password
+        ));
+        bottomSheetVerifyCodeRePasswordLayout.setErrorEnabled(true);
+        if (!passwordInput) {
+            bottomSheetVerifyCodeRePasswordLayout.startAnimation(shake);
+            vibrate(250);
+        }
+    }
+
+    public void setOkVerifyCodeRePassword() {
+        bottomSheetVerifyCodeRePasswordLayout.setError(null);
+        bottomSheetVerifyCodeRePasswordLayout.setErrorEnabled(false);
     }
 }

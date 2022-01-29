@@ -60,6 +60,18 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
                 break;
             case MainActivity.BOTTOM_SHEET_FORGOT_PASSWORD_EMAIL_LAYOUT:
                 layout.setErrorEnabled(!mainActivity.checkForgotEmail(false));
+                break;
+            case MainActivity.BOTTOM_SHEET_VERIFY_CODE_PASSWORD_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkVerifyPassword());
+                if (!mainActivity.checkVerifyRePassword(true)) {
+                    mainActivity.setErrorVerifyCodeRePassword(true);
+                } else {
+                    mainActivity.setOkVerifyCodeRePassword();
+                }
+                break;
+            case MainActivity.BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT:
+                layout.setErrorEnabled(!mainActivity.checkVerifyRePassword(true));
+                break;
         }
         if (s.toString().equals("")) {
             layout.setErrorEnabled(false);

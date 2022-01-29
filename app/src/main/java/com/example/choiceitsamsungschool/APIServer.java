@@ -138,11 +138,11 @@ public class APIServer {
         mainActivity.notFoundEmailForForgotPassword();
     }
 
-    public void checkVerifyCode(String email, String code) {
+    public void checkVerifyCode(String email, String code, String new_password) {
         if (checkInternetPermission()) {
             CheckUserLoginEmail checker = new CheckUserLoginEmail();
             checker.setApiServer(this);
-            checker.execute(email, code, APIServer.CHECK_VERIFY_CODE);
+            checker.execute(email, code, new_password, APIServer.CHECK_VERIFY_CODE);
         } else {
             getInternetPermission();
         }
