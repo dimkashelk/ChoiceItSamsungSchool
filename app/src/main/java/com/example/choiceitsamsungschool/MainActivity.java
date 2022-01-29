@@ -332,6 +332,13 @@ public class MainActivity extends AppCompatActivity {
         );
         bottomSheetDialogForgotPassword.setContentView(bottomSheetViewForgotPassword);
 
+        bottomSheetDialogForgotPassword.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                freeForgotPasswordData();
+            }
+        });
+
         bottomSheetDialogVerifyCode = new BottomSheetDialog(
                 MainActivity.this, R.style.BottomSheetDialogTheme
         );
@@ -394,6 +401,11 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
         bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+    }
+
+    private void freeForgotPasswordData() {
+        bottomSheetForgotPasswordEmail.setText("");
+        setEnable(bottomSheetForgotPasswordEmail, true);
     }
 
     private void freeLoginData() {
