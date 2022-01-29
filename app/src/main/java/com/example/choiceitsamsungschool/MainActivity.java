@@ -947,8 +947,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetForgotPasswordEmailOk = true;
 
-        setEnable(bottomSheetForgotPasswordEmail, false);
+        emailToChangePassword = bottomSheetForgotPasswordEmail.getText().toString();
 
+        setEnable(bottomSheetForgotPasswordEmail, false);
         setEnable(bottomSheetVerifyCodeCode, true);
 
         bottomSheetDialogForgotPassword.dismiss();
@@ -973,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
             setEnable(bottomSheetVerifyCodeCode, false);
 
             apiServer.checkVerifyCode(
-                    bottomSheetForgotPasswordEmail.getText().toString(),
+                    emailToChangePassword,
                     bottomSheetVerifyCodeCode.getText().toString(),
                     bottomSheetVerifyCodePassword.getText().toString()
             );
