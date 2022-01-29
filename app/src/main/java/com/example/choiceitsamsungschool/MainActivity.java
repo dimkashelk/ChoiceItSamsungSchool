@@ -204,6 +204,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        bottomSheetDialogLogin.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                freeLoginData();
+            }
+        });
+
         bottomSheetDialogLogin.setContentView(bottomSheetViewLogin);
         MaterialButton login_view = findViewById(R.id.login_account);
         login_view.setOnClickListener(new View.OnClickListener() {
@@ -387,6 +394,11 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
         bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+    }
+
+    private void freeLoginData() {
+        bottomSheetLoginLogin.setText("");
+        bottomSheetLoginPassword.setText("");
     }
 
     private void freeCreateAccountData() {
