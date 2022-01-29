@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -157,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.bottom_sheet_create_account_activity,
                 (LinearLayout) findViewById(R.id.bottomSheetCreateAccount)
         );
+
+        bottomSheetDialogCreateAccount.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                freeCreateAccountData();
+            }
+        });
+
         bottomSheetCreateAccountButton = bottomSheetViewCreateAccount.findViewById(R.id.bottomSheetCreateAccountButton);
         bottomSheetCreateAccountButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -378,6 +387,15 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
         bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+    }
+
+    private void freeCreateAccountData() {
+        bottomSheetCreateAccountFirstName.setText("");
+        bottomSheetCreateAccountSecondName.setText("");
+        bottomSheetCreateAccountShortName.setText("");
+        bottomSheetCreateAccountEmail.setText("");
+        bottomSheetCreateAccountPassword.setText("");
+        bottomSheetCreateAccountRePassword.setText("");
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
