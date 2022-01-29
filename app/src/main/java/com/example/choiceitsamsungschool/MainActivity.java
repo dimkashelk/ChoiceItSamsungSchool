@@ -460,9 +460,12 @@ public class MainActivity extends AppCompatActivity {
     private void checkUserLoginEmail() {
         if (!bottomSheetCreateAccountEmail.getText().toString().equals("") &&
                 !bottomSheetCreateAccountShortName.getText().toString().equals("")) {
-            apiServer.checkEmailLoginToCreate(
+            apiServer.registration(
+                    bottomSheetCreateAccountFirstName.getText().toString(),
+                    bottomSheetCreateAccountSecondName.getText().toString(),
+                    bottomSheetCreateAccountShortName.getText().toString(),
                     bottomSheetCreateAccountEmail.getText().toString(),
-                    bottomSheetCreateAccountShortName.getText().toString()
+                    bottomSheetCreateAccountPassword.getText().toString()
             );
         } else {
             if (bottomSheetCreateAccountEmail.getText().toString().equals("")) {
@@ -590,8 +593,6 @@ public class MainActivity extends AppCompatActivity {
         vibrate(250);
 
         bottomSheetLoginButton.revertAnimation();
-
-        // TODO: восстановление пароля
     }
 
     private void saveToken(String login_string, String token) {
@@ -894,7 +895,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void endCheckRegisterData(boolean isFreeEmail, boolean isFreeLogin) {
+    public void endCheckRegisterData(boolean isFreeEmail, boolean isFreeLogin, String token) {
         if (isFreeEmail) {
             setOkCreateAccountEmail();
         } else {
@@ -913,6 +914,7 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
+            // TODO: save token
         }
     }
 

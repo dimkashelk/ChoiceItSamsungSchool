@@ -20,6 +20,7 @@ public class APIServer {
     public static final String CHECK_EMAIL = "check_email";
     public static final String CHECK_EMAIL_LOGIN = "check_email_login";
     public static final String AUTHORIZATION = "auth";
+    public static final String REGISTRATION = "reg";
     public static final String FIND_EMAIL = "find_email";
     public static final String CHECK_VERIFY_CODE = "check_verify_code";
 
@@ -116,8 +117,8 @@ public class APIServer {
         }
     }
 
-    public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin) {
-        mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin);
+    public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin, String token) {
+        mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin, token);
     }
 
     public void findEmail(String email) {
@@ -154,5 +155,21 @@ public class APIServer {
 
     public void wrongVerifyCode() {
         mainActivity.wrongVerifyCode();
+    }
+
+    public void registration(String firstName, String secondName, String shortName, String email, String password) {
+        if (checkInternetPermission()) {
+            RegisterUser registerUser = new RegisterUser(
+                    this,
+                    firstName,
+                    secondName,
+                    shortName,
+                    email,
+                    password
+            );
+            registerUser.execute();
+        } else {
+            getInternetPermission();
+        }
     }
 }

@@ -56,7 +56,8 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                         .build();
                 break;
             }
-            case APIServer.CHECK_VERIFY_CODE: {
+            default: {
+                // CHECK VERIFY CODE
                 String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "', 'password': '" + params[2] + "'}";
                 body = RequestBody.create(json, APIServer.JSON);
                 request = new Request.Builder()
@@ -65,15 +66,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                         .build();
                 break;
             }
-            default: {
-                String json = "{'email': '" + params[0] + "', 'login': '" + params[1] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
-                request = new Request.Builder()
-                        .url(APIServer.URL + APIServer.CHECK_EMAIL_LOGIN)
-                        .post(body)
-                        .build();
-                break;
-            }
+
         }
         try {
             Response response = client.newCall(request).execute();
@@ -92,15 +85,11 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 case APIServer.EMAIL:
                     isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
                     return isFreeEmail;
-                case APIServer.EMAIL_LOGIN:
-                    isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
-                    isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
-                    return isFreeEmail && isFreeLogin;
                 case APIServer.CHECK_VERIFY_CODE:
                     okVerifyCode = jsonObject.get("ok").getAsBoolean();
                     return okVerifyCode;
             }
-             return false;
+            return false;
         } catch (Exception e) {
             return false;
         }
@@ -137,8 +126,6 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 } else {
                     apiServer.wrongVerifyCode();
                 }
-            default:
-                apiServer.resultCheckingEmailLogin(isFreeEmail, isFreeLogin);
                 break;
         }
     }
