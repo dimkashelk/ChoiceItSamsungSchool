@@ -408,6 +408,13 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetCreateAccountEmail.setText("");
         bottomSheetCreateAccountPassword.setText("");
         bottomSheetCreateAccountRePassword.setText("");
+
+        setEnable(bottomSheetCreateAccountFirstName, true);
+        setEnable(bottomSheetCreateAccountSecondName, true);
+        setEnable(bottomSheetCreateAccountShortName, true);
+        setEnable(bottomSheetCreateAccountEmail, true);
+        setEnable(bottomSheetCreateAccountPassword, true);
+        setEnable(bottomSheetCreateAccountRePassword, true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
