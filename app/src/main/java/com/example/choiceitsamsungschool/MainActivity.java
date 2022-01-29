@@ -914,7 +914,7 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
-            // TODO: save token
+            // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
         }
     }
 
@@ -986,7 +986,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void okVerifyCode() {
+    public void okVerifyCode(String token) {
         bottomSheetForgotPasswordButton.revertAnimation();
 
         bottomSheetVerifyCodeCodeOk = true;
@@ -1001,7 +1001,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetDialogVerifyCode.dismiss();
 
-        // TODO: открываем страницу
+        saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
     }
 
     private void setEnable(EditText editText, boolean enable) {

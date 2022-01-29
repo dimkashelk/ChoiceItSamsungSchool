@@ -149,8 +149,8 @@ public class APIServer {
         }
     }
 
-    public void okVerifyCode() {
-        mainActivity.okVerifyCode();
+    public void okVerifyCode(String token) {
+        mainActivity.okVerifyCode(token);
     }
 
     public void wrongVerifyCode() {

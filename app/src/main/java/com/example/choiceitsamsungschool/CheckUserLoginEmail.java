@@ -18,6 +18,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
     private boolean findEmail = false;
     private boolean okVerifyCode = false;
     private String mode;
+    private String token;
 
     public void setApiServer(APIServer apiServer) {
         this.apiServer = apiServer;
@@ -87,6 +88,9 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                     return isFreeEmail;
                 case APIServer.CHECK_VERIFY_CODE:
                     okVerifyCode = jsonObject.get("ok").getAsBoolean();
+                    if (okVerifyCode) {
+                        token = jsonObject.get("token").getAsString();
+                    }
                     return okVerifyCode;
             }
             return false;
@@ -122,7 +126,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 break;
             case APIServer.CHECK_VERIFY_CODE:
                 if (okVerifyCode) {
-                    apiServer.okVerifyCode();
+                    apiServer.okVerifyCode(token);
                 } else {
                     apiServer.wrongVerifyCode();
                 }
