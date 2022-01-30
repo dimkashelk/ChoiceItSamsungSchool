@@ -390,6 +390,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        bottomSheetViewForgotPassword.findViewById(R.id.bottomSheetForgotPasswordCreateAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogForgotPassword.dismiss();
+                bottomSheetDialogCreateAccount.show();
+            }
+        });
+
         textInputLayoutTextWatcher = new TextInputLayoutTextWatcher(
                 this,
                 bottomSheetVerifyCodeLayout,
