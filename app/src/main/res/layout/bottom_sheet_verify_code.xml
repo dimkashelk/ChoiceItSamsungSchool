@@ -152,17 +152,17 @@
             android:layout_marginRight="5dp"
             android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:text="@string/already_dont_has_account"
+            android:text="@string/already_has_account"
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/bottomSheetVerifyCodeCreateAccount"
+            android:id="@+id/bottomSheetVerifyCodeLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/montserrat_regular"
-            android:text="@string/register"
+            android:text="@string/login"
             android:textColor="@color/pink_700" />
     </LinearLayout>
 </LinearLayout>

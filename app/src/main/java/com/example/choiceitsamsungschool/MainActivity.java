@@ -418,6 +418,14 @@ public class MainActivity extends AppCompatActivity {
                 BOTTOM_SHEET_VERIFY_CODE_RE_PASSWORD_LAYOUT
         );
         bottomSheetVerifyCodeRePassword.addTextChangedListener(textInputLayoutTextWatcher);
+
+        bottomSheetViewVerifyCode.findViewById(R.id.bottomSheetVerifyCodeLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogVerifyCode.dismiss();
+                bottomSheetDialogLogin.show();
+            }
+        });
     }
 
     private void freeVerifyCodeData() {
