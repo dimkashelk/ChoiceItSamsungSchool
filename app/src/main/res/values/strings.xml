@@ -1,3 +1,47 @@
 <resources>
-    <string name="app_name">ChoiceItSamsungSchool</string>
+    <string name="app_name">Chose It</string>
+
+    <string name="welcome_title">Добро пожаловать</string>
+    <string name="welcome_text">В первую социальную сеть, построенную на выборе</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="login">Войти</string>
+    <string name="create_by">Проект создал @dimkashelk</string>
+    <string name="registration">Регистрация</string>
+
+    <string name="password">Пароль</string>
+    <string name="re_type_password">Повторите пароль</string>
+    <string name="email">Почта</string>
+    <string name="first_name">Имя</string>
+    <string name="second_name">Фамилия</string>
+    <string name="tag_create_account">Зарегиструйтесь, чтобы получить доступ к опросам</string>
+    <string name="tag_login">Войдите, чтобы получить доступ к опросам</string>
+    <string name="already_has_account">Уже есть аккаунт?</string>
+    <string name="short_name">Логин</string>
+    <string name="already_dont_has_account">Ещё нет аккаунта?</string>
+    <string name="login_input">Логин/почта</string>
+    <string name="wrong_login_data">Неправильный логин или пароль</string>
+    <string name="error_first_name">Имя должно содержать только а-я, А-Я</string>
+    <string name="error_second_name">Фамилия должна содержать только а-я, А-Я</string>
+    <string name="error_login">Логин должен содержать только a–z, 0–9</string>
+    <string name="not_free_login">Данный логин уже занят, попробуйте другой</string>
+    <string name="free_login">Данный логин свободен</string>
+    <string name="error_email">Используйте существующий адрес электронной почты</string>
+    <string name="not_free_email">Данная почта уже занята, попробуйте другую</string>
+    <string name="free_email">Данная почта свободна</string>
+    <string name="error_password">Пароль должен содержать только a–z, A–Z, 0–9, !@#$%,^:&amp;?()*/-+[]</string>
+    <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
+    <string name="register">Зарегистрируйтесь</string>
+    <string name="forgot_password_title">Забыли пароль?</string>
+    <string name="forgot_password">Восстановите доступ</string>
+    <string name="forgot_password_error">Данная почта не найдена</string>
+    <string name="tag_forgot_password">Введите почту, к которой был привязан аккаунт</string>
+    <string name="get_verify_code">Получить код</string>
+    <string name="verify_code">Код подтверждения</string>
+    <string name="enter_new_password">Введите новый пароль</string>
+    <string name="re_enter_new_password">Повторите новый пароль</string>
+    <string name="wrong_verify_code">Неверный код подтверждения</string>
+    <string name="check_verify_code">Проверить код подтверждения</string>
+    <string name="ok_verify_code">Верный код</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="tag_verify_code">Введите код подтверждения, отправленный на почту, и введите новый пароль</string>
 </resources>
