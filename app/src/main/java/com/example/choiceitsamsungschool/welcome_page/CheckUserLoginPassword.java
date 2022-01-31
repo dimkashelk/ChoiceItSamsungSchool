@@ -1,7 +1,8 @@
-package com.example.choiceitsamsungschool;
+package com.example.choiceitsamsungschool.welcome_page;
 
 import android.os.AsyncTask;
 
+import com.example.choiceitsamsungschool.APIServer;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 

@@ -7,6 +7,10 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
+import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
+import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 

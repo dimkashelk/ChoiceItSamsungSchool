@@ -1,8 +1,9 @@
-package com.example.choiceitsamsungschool;
+package com.example.choiceitsamsungschool.welcome_page;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.example.choiceitsamsungschool.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class TextInputLayoutTextWatcher implements TextWatcher {
