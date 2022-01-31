@@ -11,7 +11,7 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
     private TextInputLayout layout;
     private String layout_type;
 
-    TextInputLayoutTextWatcher(MainActivity mainActivity, TextInputLayout layout, String layout_type) {
+    public TextInputLayoutTextWatcher(MainActivity mainActivity, TextInputLayout layout, String layout_type) {
         this.mainActivity = mainActivity;
         this.layout = layout;
         this.layout_type = layout_type;
