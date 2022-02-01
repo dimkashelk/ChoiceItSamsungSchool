@@ -130,16 +130,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_page);
 
-        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
-        editor_authorize_data = authorize_data.edit();
-
-        checkAllPermission();
-
-        apiServer = new APIServer(this);
-
-        initializeUI();
+//        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
+//        editor_authorize_data = authorize_data.edit();
+//
+//        checkAllPermission();
+//
+//        apiServer = new APIServer(this);
+//
+//        initializeUI();
     }
 
     private void checkAllPermission() {
