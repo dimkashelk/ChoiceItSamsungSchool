@@ -36,8 +36,8 @@ public class HomePage extends Fragment {
 
         sheetBehavior = BottomSheetBehavior.from(contentLayout);
         sheetBehavior.setFitToContents(false);
-        sheetBehavior.setHideable(false);//prevents the bottom sheet from completely hiding off the screen
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);//initially state to fully expanded
+        sheetBehavior.setHideable(false);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
