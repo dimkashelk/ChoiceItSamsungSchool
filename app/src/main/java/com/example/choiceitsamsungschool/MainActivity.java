@@ -17,22 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.choiceitsamsungschool.main_page.Backdrop;
+import com.example.choiceitsamsungschool.main_page.HomePage;
+import com.example.choiceitsamsungschool.main_page.NavigationItemListener;
 import com.example.choiceitsamsungschool.welcome_page.TextInputLayoutTextWatcher;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -140,40 +137,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_page);
 
-        Backdrop backdrop = new Backdrop();
-
-//        FriendsFragment friendsBackFragment = new FriendsFragment(this);
-//        CreateFragment createBackFragment = new CreateFragment(this);
-//        SearchFragment searchBackFragment = new SearchFragment(this);
-//        UserFragment userBackFragment = new UserFragment(this);
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-//                    case R.id.page_main:
-//
-//                        break;
-                    case R.id.page_friends:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content, backdrop).commit();
-                        bottomNavigationView.setSelectedItemId(R.id.page_friends);
-                        break;
-//                    case R.id.page_create:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content, createBackFragment).commit();
-//                        break;
-//                    case R.id.page_search:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content, searchBackFragment).commit();
-//                        break;
-//                    case R.id.page_user:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content, userBackFragment).commit();
-//                        break;
-                }
-                return false;
-            }
-        });
-        bottomNavigationView.setSelectedItemId(R.id.page_main);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new NavigationItemListener(this, bottomNavigationView));
+        bottomNavigationView.setSelectedItemId(R.id.page_friends);
 
 //        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
 //        editor_authorize_data = authorize_data.edit();

@@ -10,7 +10,6 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        tools:layout="@layout/home_page"
         android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

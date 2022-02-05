@@ -18,7 +18,7 @@ import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 
-public class Backdrop extends Fragment {
+public class HomePage extends Fragment {
     private View view;
     private BottomSheetBehavior sheetBehavior;
     private MaterialButton filterIcon;
