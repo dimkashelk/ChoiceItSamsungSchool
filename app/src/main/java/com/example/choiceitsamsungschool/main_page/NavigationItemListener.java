@@ -45,6 +45,6 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.content, userBackFragment).commit();
 //                        break;
         }
-        return false;
+        return true;
     }
 }
