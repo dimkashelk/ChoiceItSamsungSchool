@@ -1,5 +1,6 @@
 package com.example.choiceitsamsungschool.main_page;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 
 public class HomePage extends Fragment {
+    @SuppressLint("StaticFieldLeak")
     private static HomePage page = null;
     private View home_page;
     private BottomSheetBehavior sheetBehavior;

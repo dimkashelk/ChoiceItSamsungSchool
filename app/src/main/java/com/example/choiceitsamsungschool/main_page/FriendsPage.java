@@ -1,5 +1,6 @@
 package com.example.choiceitsamsungschool.main_page;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 
 public class FriendsPage extends Fragment {
+    @SuppressLint("StaticFieldLeak")
+    private static FriendsPage page = null;
     private View friends_page;
     private BottomSheetBehavior sheetBehavior;
     private MaterialButton button;
@@ -25,24 +28,29 @@ public class FriendsPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        friends_page = inflater.inflate(R.layout.friends_page, container, false);
-        Context context = getContext();
+        if (page == null) {
+            friends_page = inflater.inflate(R.layout.friends_page, container, false);
+            Context context = getContext();
 
-        button = friends_page.findViewById(R.id.friends_page_button);
-        LinearLayout contentLayout = friends_page.findViewById(R.id.friends_page_front);
+            button = friends_page.findViewById(R.id.friends_page_button);
+            LinearLayout contentLayout = friends_page.findViewById(R.id.friends_page_front);
 
-        sheetBehavior = BottomSheetBehavior.from(contentLayout);
-        sheetBehavior.setFitToContents(false);
-        sheetBehavior.setHideable(false);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            sheetBehavior = BottomSheetBehavior.from(contentLayout);
+            sheetBehavior.setFitToContents(false);
+            sheetBehavior.setHideable(false);
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeState();
-            }
-        });
-        return friends_page;
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeState();
+                }
+            });
+            page = this;
+            return friends_page;
+        } else {
+            return page.getFriends_page();
+        }
     }
 
     private void changeState() {
@@ -51,5 +59,9 @@ public class FriendsPage extends Fragment {
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    public View getFriends_page() {
+        return friends_page;
     }
 }
