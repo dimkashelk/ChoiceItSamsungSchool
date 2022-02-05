@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_page"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        tools:layout="@layout/home_page"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:id="@+id/bottomNavigationView"
         android:layout_gravity="bottom"
         android:background="@color/pink_50"
-        app:itemIconSize="25dp"
+        android:layout_height="wrap_content"
         app:itemIconTint="@color/pink_200"
         app:itemRippleColor="@color/pink_100"
+        app:itemIconSize="27dp"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:menu="@menu/bottom_navigation_menu" />
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
