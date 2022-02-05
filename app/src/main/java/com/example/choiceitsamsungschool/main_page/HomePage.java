@@ -10,46 +10,42 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 
 public class HomePage extends Fragment {
-    private View view;
+    private View home_page;
     private BottomSheetBehavior sheetBehavior;
-    private MaterialButton filterIcon;
+    private MaterialButton button;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        view = inflater.inflate(R.layout.home_page, container, false);
+        home_page = inflater.inflate(R.layout.home_page, container, false);
         Context context = getContext();
 
         Toast.makeText(context, "Получилось вызвать функцию", Toast.LENGTH_LONG).show();
 
-        filterIcon = view.findViewById(R.id.filterIcon);
-        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
+        button = home_page.findViewById(R.id.home_page_button);
+        LinearLayout contentLayout = home_page.findViewById(R.id.home_page_front);
 
         sheetBehavior = BottomSheetBehavior.from(contentLayout);
         sheetBehavior.setFitToContents(false);
         sheetBehavior.setHideable(false);//prevents the bottom sheet from completely hiding off the screen
         sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);//initially state to fully expanded
 
-        filterIcon.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleFilters();
             }
         });
-
-
-        return view;
+        return home_page;
     }
 
     private void toggleFilters() {

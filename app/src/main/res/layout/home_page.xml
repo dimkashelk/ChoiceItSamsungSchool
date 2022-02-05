@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/home_page"
-    android:layout_height="match_parent"
-    android:background="@drawable/bottom_sheet_background">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/backLayout"
+        android:id="@+id/home_page_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/pink_200"
+        android:background="@color/pink_100"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/searchTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Главная страница" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="НАСТРОЙКИ" />
     </LinearLayout>
 
-    <!--This is the backdrop's content with a BottomSheetBehaviour applied to it-->
-    <LinearLayout
-        android:id="@+id/contentLayout"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/home_page_front"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_sheet_background"
@@ -38,9 +36,8 @@
             android:elevation="4dp"
             android:orientation="horizontal">
 
-            <!-- иконки -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/filterIcon"
+                android:id="@+id/home_page_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Опустить"
@@ -49,7 +46,7 @@
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swiperefresh"
+            android:id="@+id/home_page_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/pink_50">
