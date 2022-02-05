@@ -34,8 +34,10 @@
             android:background="@drawable/bottom_sheet_background"
             android:clickable="true"
             android:outlineSpotShadowColor="@android:color/transparent"
+            android:outlineAmbientShadowColor="@android:color/transparent"
             android:elevation="4dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:focusable="true">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_page_button"

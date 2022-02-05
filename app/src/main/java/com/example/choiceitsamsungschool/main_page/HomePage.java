@@ -29,8 +29,6 @@ public class HomePage extends Fragment {
         home_page = inflater.inflate(R.layout.home_page, container, false);
         Context context = getContext();
 
-        Toast.makeText(context, "Получилось вызвать функцию", Toast.LENGTH_LONG).show();
-
         button = home_page.findViewById(R.id.home_page_button);
         LinearLayout contentLayout = home_page.findViewById(R.id.home_page_front);
 
@@ -42,15 +40,15 @@ public class HomePage extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleFilters();
+                changeState();
             }
         });
         return home_page;
     }
 
-    private void toggleFilters() {
+    private void changeState() {
         if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
