@@ -16,6 +16,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     private MainActivity mainActivity;
     private HomePage homePage;
     private FriendsPage friendsPage;
+    private CreatePage createPage;
 
     public NavigationItemListener(MainActivity mainActivity, BottomNavigationView bottomNavigationView) {
         this.mainActivity = mainActivity;
@@ -24,6 +25,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
 
         homePage = new HomePage();
         friendsPage = new FriendsPage();
+        createPage = new CreatePage();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -36,9 +38,9 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
             case R.id.page_friends:
                 manager.beginTransaction().replace(R.id.content, friendsPage).commit();
                 break;
-//                    case R.id.page_create:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content, createBackFragment).commit();
-//                        break;
+            case R.id.page_create:
+                manager.beginTransaction().replace(R.id.content, createPage).commit();
+                break;
 //                    case R.id.page_search:
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.content, searchBackFragment).commit();
 //                        break;

@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new NavigationItemListener(this, bottomNavigationView));
-        bottomNavigationView.setSelectedItemId(R.id.page_friends);
+        bottomNavigationView.setSelectedItemId(R.id.page_main);
 
 //        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
 //        editor_authorize_data = authorize_data.edit();
