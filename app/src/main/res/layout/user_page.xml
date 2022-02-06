@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_page">
+        app:layout_constraintTop_toTopOf="@id/user_page">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/user_page_button"
