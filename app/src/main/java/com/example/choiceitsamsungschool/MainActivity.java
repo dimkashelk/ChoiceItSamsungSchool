@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -26,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.main_page.AppActivity;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.NavigationItemListener;
 import com.example.choiceitsamsungschool.welcome_page.TextInputLayoutTextWatcher;
@@ -135,20 +137,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_page);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        Intent app_page = new Intent(this, AppActivity.class);
+        app_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(app_page);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new NavigationItemListener(this, bottomNavigationView));
-        bottomNavigationView.setSelectedItemId(R.id.page_main);
+        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
+        editor_authorize_data = authorize_data.edit();
 
-//        authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
-//        editor_authorize_data = authorize_data.edit();
-//
-//        checkAllPermission();
-//
-//        apiServer = new APIServer(this);
-//
+        checkAllPermission();
+
+        apiServer = new APIServer(this);
+
 //        initializeUI();
     }
 

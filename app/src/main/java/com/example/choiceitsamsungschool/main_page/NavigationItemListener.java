@@ -13,14 +13,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class NavigationItemListener implements BottomNavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNavigationView;
     private FragmentManager manager;
-    private MainActivity mainActivity;
+    private AppActivity mainActivity;
     private HomePage homePage;
     private FriendsPage friendsPage;
     private CreatePage createPage;
     private SearchPage searchPage;
     private UserPage userPage;
 
-    public NavigationItemListener(MainActivity mainActivity, BottomNavigationView bottomNavigationView) {
+    public NavigationItemListener(AppActivity mainActivity, BottomNavigationView bottomNavigationView) {
         this.mainActivity = mainActivity;
         this.bottomNavigationView = bottomNavigationView;
         manager = mainActivity.getSupportFragmentManager();
