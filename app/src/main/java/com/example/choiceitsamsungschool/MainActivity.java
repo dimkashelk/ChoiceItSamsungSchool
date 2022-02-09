@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
         editor_authorize_data = authorize_data.edit();
 
-        startActivity(new Intent(this, WelcomePage.class));
+        Intent welcome_page = new Intent(this, WelcomePage.class);
+        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(welcome_page);
     }
 
     private void checkAllPermission() {
