@@ -41,6 +41,7 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                     return null;
                 }
                 Gson gson = new Gson();
+                // TODO: проверка  стасуса авторизации
                 JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
                 return jsonObject.get("token").getAsString();
             } else {
