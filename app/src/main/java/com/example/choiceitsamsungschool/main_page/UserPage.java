@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class UserPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -34,6 +35,9 @@ public class UserPage extends Fragment {
 
             button = user_page.findViewById(R.id.user_page_button);
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
+
+            RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
+            imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
 
             sheetBehavior = BottomSheetBehavior.from(contentLayout);
             sheetBehavior.setFitToContents(false);
