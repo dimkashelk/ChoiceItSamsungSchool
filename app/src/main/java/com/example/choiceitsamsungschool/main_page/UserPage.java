@@ -23,9 +23,11 @@ public class UserPage extends Fragment {
     private View user_page;
     private BottomSheetBehavior sheetBehavior;
     private MaterialButton button;
+    private LinearLayout friends;
 
     @Nullable
     @Override
+    @SuppressLint({"CutPasteId", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -35,6 +37,13 @@ public class UserPage extends Fragment {
 
             button = user_page.findViewById(R.id.user_page_button);
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
+            friends = user_page.findViewById(R.id.user_page_friends_list);
+
+            ViewGroup parent = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+
+            for (int i = 0; i < 10; i++) {
+                parent.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            }
 
             RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
             imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
