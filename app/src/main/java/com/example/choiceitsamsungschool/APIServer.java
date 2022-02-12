@@ -15,6 +15,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 public class APIServer {
+    private static APIServer apiServer = null;
     public static final String EMAIL = "email";
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
@@ -35,9 +36,20 @@ public class APIServer {
     private final OkHttpClient client;
     private MainActivity mainActivity;
 
-    APIServer(MainActivity mainActivity) {
+    public APIServer(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         client = new OkHttpClient();
+    }
+
+    public static APIServer getSingletonAPIServer(MainActivity mainActivity) {
+        if (apiServer == null) {
+            apiServer = new APIServer(mainActivity);
+        }
+        return apiServer;
+    }
+
+    public static APIServer getSingletonAPIServer() {
+        return apiServer;
     }
 
     private boolean checkInternetPermission() {
