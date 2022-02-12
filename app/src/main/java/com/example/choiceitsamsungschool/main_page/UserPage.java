@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
@@ -24,6 +25,7 @@ public class UserPage extends Fragment {
     private BottomSheetBehavior sheetBehavior;
     private MaterialButton button;
     private LinearLayout friends;
+    private APIServer apiServer;
 
     @Nullable
     @Override
@@ -34,6 +36,8 @@ public class UserPage extends Fragment {
         if (page == null) {
             user_page = inflater.inflate(R.layout.user_page, container, false);
             Context context = getContext();
+
+            this.apiServer = APIServer.getSingletonAPIServer();
 
             button = user_page.findViewById(R.id.user_page_button);
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
