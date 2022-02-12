@@ -14,7 +14,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,16 +21,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.main_page.AppActivity;
-import com.example.choiceitsamsungschool.main_page.HomePage;
-import com.example.choiceitsamsungschool.main_page.NavigationItemListener;
 import com.example.choiceitsamsungschool.welcome_page.TextInputLayoutTextWatcher;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -71,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor_authorize_data;
 
     private APIServer apiServer;
+    private InternalStorage internalStorage;
 
     private View bottomSheetViewCreateAccount;
     private View bottomSheetViewLogin;
@@ -147,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkAllPermission();
 
+        internalStorage = new InternalStorage(this, getFilesDir());
+
         apiServer = new APIServer(this);
 
 //        initializeUI();
@@ -156,6 +154,14 @@ public class MainActivity extends AppCompatActivity {
         // INTERNET
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        }
+        // WRITE
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+        // READ
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
     }
 
@@ -1118,5 +1124,16 @@ public class MainActivity extends AppCompatActivity {
     public void setOkVerifyCodeRePassword() {
         bottomSheetVerifyCodeRePasswordLayout.setError(null);
         bottomSheetVerifyCodeRePasswordLayout.setErrorEnabled(false);
+    }
+
+    public void getInternalStoragePermission() {
+        // WRITE
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+        // READ
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
     }
 }

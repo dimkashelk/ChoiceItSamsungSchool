@@ -27,6 +27,8 @@ public class APIServer {
     public static final String REGISTRATION = "reg";
     public static final String FIND_EMAIL = "find_email";
     public static final String CHECK_VERIFY_CODE = "check_verify_code";
+    public static final String LOAD_FRIENDS = "load_friends";
+    public static final String LOAD_IMAGE = "images";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
