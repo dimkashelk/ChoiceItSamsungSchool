@@ -20,16 +20,27 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
     protected Boolean doInBackground(String... strings) {
         /**
          * LOAD FRIENDS: PARAM, LOGIN, TOKEN
+         * LOAD USER DATA: PARAM, LOGIN, TOKEN
          * */
         RequestBody body;
         Request request;
+        String json;
         switch (strings[0]) {
             case APIServer.LOAD_FRIENDS:
-                String json = "{'login': '" + strings[1] + "', " +
+                json = "{'login': '" + strings[1] + "', " +
                         "'token': '" + strings[2] + "'}";
                 body = RequestBody.create(json, APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_FRIENDS)
+                        .post(body)
+                        .build();
+                break;
+            case APIServer.LOAD_USER_DATA:
+                json = "{'login': '" + strings[1] + "', " +
+                        "'token': '" + strings[2] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_USER_DATA)
                         .post(body)
                         .build();
                 break;
