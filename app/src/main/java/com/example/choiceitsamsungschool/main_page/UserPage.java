@@ -37,7 +37,8 @@ public class UserPage extends Fragment {
             user_page = inflater.inflate(R.layout.user_page, container, false);
             Context context = getContext();
 
-            this.apiServer = APIServer.getSingletonAPIServer();
+            apiServer = APIServer.getSingletonAPIServer();
+            apiServer.setUserPage(this);
 
             button = user_page.findViewById(R.id.user_page_button);
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
