@@ -20,9 +20,7 @@ public class Friend {
     @ColumnInfo(name = "profile_image")
     public String profile_image;
 
-    public Friend(String first_name, String second_name) {
-        this.first_name = first_name;
-        this.second_name = second_name;
+    public Friend() {
     }
 
     public Friend(String first_name, String second_name, String profile_image) {
