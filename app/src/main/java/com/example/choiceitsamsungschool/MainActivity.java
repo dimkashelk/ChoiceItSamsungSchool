@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.main_page.AppActivity;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,9 +32,13 @@ public class MainActivity extends AppCompatActivity {
         authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
         editor_authorize_data = authorize_data.edit();
 
-        Intent welcome_page = new Intent(this, WelcomePage.class);
-        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(welcome_page);
+//        Intent welcome_page = new Intent(this, WelcomePage.class);
+//        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(welcome_page);
+
+        Intent app_page = new Intent(this, AppActivity.class);
+        app_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(app_page);
     }
 
     public void checkAllPermission() {
