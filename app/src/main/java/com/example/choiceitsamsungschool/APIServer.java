@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
+import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -20,7 +21,7 @@ public class APIServer {
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
 
-    public static final String URL = "https://example.com/api/";
+    public static final String URL = "http://dimkashelk.asuscomm.com:150/api/";
     public static final String CHECK_LOGIN = "check_login";
     public static final String CHECK_EMAIL = "check_email";
     public static final String CHECK_EMAIL_LOGIN = "check_email_login";
@@ -34,10 +35,10 @@ public class APIServer {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final OkHttpClient client;
-    private MainActivity mainActivity;
+    private WelcomePage welcomePage;
 
-    public APIServer(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public APIServer(MainActivity welcomePage) {
+        this.welcomePage = welcomePage;
         client = new OkHttpClient();
     }
 
@@ -53,11 +54,11 @@ public class APIServer {
     }
 
     private boolean checkInternetPermission() {
-        return ContextCompat.checkSelfPermission(mainActivity, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(welcomePage, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void getInternetPermission() {
-        ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.INTERNET}, 1);
+        ActivityCompat.requestPermissions(welcomePage, new String[]{Manifest.permission.INTERNET}, 1);
     }
 
     public void checkLoginToCreate(String login) {
@@ -71,11 +72,11 @@ public class APIServer {
     }
 
     public void freeLogin() {
-        mainActivity.setOkCreateAccountLogin();
+        welcomePage.setOkCreateAccountLogin();
     }
 
     public void notFreeLogin() {
-        mainActivity.setErrorCreateAccountLogin();
+        welcomePage.setErrorCreateAccountLogin();
     }
 
     public void checkEmailToCreate(String email) {
@@ -89,11 +90,11 @@ public class APIServer {
     }
 
     public void freeEmail() {
-        mainActivity.setOkCreateAccountEmail();
+        welcomePage.setOkCreateAccountEmail();
     }
 
     public void notFreeEmail() {
-        mainActivity.setErrorCreateAccountEmail();
+        welcomePage.setErrorCreateAccountEmail();
     }
 
     public void checkUserLoginPassword(String login, String password) {
@@ -108,11 +109,11 @@ public class APIServer {
 
 
     public void okUserLoginPassword(String login, String token) {
-        mainActivity.setOkLoginUserLoginPassword(login, token);
+        welcomePage.setOkLoginUserLoginPassword(login, token);
     }
 
     public void errorUserLoginPassword() {
-        mainActivity.setErrorLoginUserLoginPassword();
+        welcomePage.setErrorLoginUserLoginPassword();
     }
 
     public void checkUserEmailPassword(String email, String password) {
@@ -136,7 +137,7 @@ public class APIServer {
     }
 
     public void resultCheckingEmailLogin(boolean isFreeEmail, boolean isFreeLogin, String token) {
-        mainActivity.endCheckRegisterData(isFreeEmail, isFreeLogin, token);
+        welcomePage.endCheckRegisterData(isFreeEmail, isFreeLogin, token);
     }
 
     public void findEmail(String email) {
@@ -150,11 +151,11 @@ public class APIServer {
     }
 
     public void foundEmail() {
-        mainActivity.foundEmailForForgotPassword();
+        welcomePage.foundEmailForForgotPassword();
     }
 
     public void notFoundEmail() {
-        mainActivity.notFoundEmailForForgotPassword();
+        welcomePage.notFoundEmailForForgotPassword();
     }
 
     public void checkVerifyCode(String email, String code, String new_password) {
@@ -168,11 +169,11 @@ public class APIServer {
     }
 
     public void okVerifyCode(String token) {
-        mainActivity.okVerifyCode(token);
+        welcomePage.okVerifyCode(token);
     }
 
     public void wrongVerifyCode() {
-        mainActivity.wrongVerifyCode();
+        welcomePage.wrongVerifyCode();
     }
 
     public void registration(String firstName, String secondName, String shortName, String email, String password) {

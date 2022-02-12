@@ -16,8 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChoiceItSamsungSchool">
         <activity
-            android:name=".main_page.AppActivity"
-            android:exported="false" />
+            android:name=".welcome_page.WelcomePage"
+            android:clearTaskOnLaunch="true"
+            android:exported="false"
+            android:launchMode="singleTop" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
