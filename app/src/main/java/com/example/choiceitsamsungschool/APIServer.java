@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
@@ -36,21 +37,30 @@ public class APIServer {
 
     private final OkHttpClient client;
     private WelcomePage welcomePage;
+    private UserPage userPage;
 
-    public APIServer(MainActivity welcomePage) {
+    public APIServer() {
+        client = new OkHttpClient();
+    }
+
+    public APIServer(WelcomePage welcomePage) {
         this.welcomePage = welcomePage;
         client = new OkHttpClient();
     }
 
-    public static APIServer getSingletonAPIServer(MainActivity mainActivity) {
+    public static APIServer getSingletonAPIServer() {
         if (apiServer == null) {
-            apiServer = new APIServer(mainActivity);
+            apiServer = new APIServer();
         }
         return apiServer;
     }
 
-    public static APIServer getSingletonAPIServer() {
-        return apiServer;
+    public void setWelcomePage(WelcomePage welcomePage) {
+        this.welcomePage = welcomePage;
+    }
+
+    public void setUserPage(UserPage userPage) {
+        this.userPage = userPage;
     }
 
     private boolean checkInternetPermission() {

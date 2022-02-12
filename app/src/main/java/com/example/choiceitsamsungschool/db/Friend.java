@@ -11,6 +11,9 @@ public class Friend {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @ColumnInfo(name = "friend_id")
+    public String friend_id;
+
     @ColumnInfo(name = "first_name")
     public String first_name;
 
@@ -23,7 +26,8 @@ public class Friend {
     public Friend() {
     }
 
-    public Friend(String first_name, String second_name, String profile_image) {
+    public Friend(String friend_id, String first_name, String second_name, String profile_image) {
+        this.friend_id = friend_id;
         this.first_name = first_name;
         this.second_name = second_name;
         this.profile_image = profile_image;
