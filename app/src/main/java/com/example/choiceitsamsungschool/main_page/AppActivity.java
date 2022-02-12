@@ -2,8 +2,12 @@ package com.example.choiceitsamsungschool.main_page;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
+import com.example.choiceitsamsungschool.InternalStorage;
+import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

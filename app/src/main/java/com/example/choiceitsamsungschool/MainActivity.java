@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Patterns;
@@ -143,14 +144,12 @@ public class MainActivity extends AppCompatActivity {
 
         checkAllPermission();
 
-        internalStorage = new InternalStorage(this, getFilesDir());
-
         apiServer = new APIServer(this);
 
 //        initializeUI();
     }
 
-    private void checkAllPermission() {
+    public void checkAllPermission() {
         // INTERNET
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
