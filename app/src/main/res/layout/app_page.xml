@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constrainedHeight="true"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        android:layout_width="match_parent"
+        android:id="@+id/bottomNavigationView"
+        android:layout_gravity="bottom"
+        android:background="@color/pink_50"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/pink_200"
+        app:itemRippleColor="@color/pink_100"
+        app:itemIconSize="27dp"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintTop_toBottomOf="@+id/content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>

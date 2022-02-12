@@ -16,6 +16,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 public class APIServer {
+    private static APIServer apiServer = null;
     public static final String EMAIL = "email";
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
@@ -28,15 +29,28 @@ public class APIServer {
     public static final String REGISTRATION = "reg";
     public static final String FIND_EMAIL = "find_email";
     public static final String CHECK_VERIFY_CODE = "check_verify_code";
+    public static final String LOAD_FRIENDS = "load_friends";
+    public static final String LOAD_IMAGE = "images";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final OkHttpClient client;
     private WelcomePage welcomePage;
 
-    public APIServer(WelcomePage welcomePage) {
+    public APIServer(MainActivity welcomePage) {
         this.welcomePage = welcomePage;
         client = new OkHttpClient();
+    }
+
+    public static APIServer getSingletonAPIServer(MainActivity mainActivity) {
+        if (apiServer == null) {
+            apiServer = new APIServer(mainActivity);
+        }
+        return apiServer;
+    }
+
+    public static APIServer getSingletonAPIServer() {
+        return apiServer;
     }
 
     private boolean checkInternetPermission() {
