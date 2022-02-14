@@ -21,9 +21,6 @@ public class Friend {
     @ColumnInfo(name = "second_name")
     public String second_name;
 
-    @ColumnInfo(name = "profile_image")
-    public String profile_image;
-
     @Ignore
     public String image_url;
 
@@ -34,6 +31,5 @@ public class Friend {
         this.friend_id = friend_id;
         this.first_name = first_name;
         this.second_name = second_name;
-        this.profile_image = profile_image;
     }
 }
