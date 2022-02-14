@@ -44,9 +44,9 @@ public class APIServer {
 
     private final OkHttpClient client;
     private InternalStorage internalStorage;
-    private MainActivity mainActivity;
-    private WelcomePage welcomePage;
-    private UserPage userPage;
+    public static MainActivity mainActivity;
+    public static WelcomePage welcomePage;
+    public static UserPage userPage;
 
     private String token;
     private int count_friends = 0;
@@ -80,8 +80,8 @@ public class APIServer {
         this.token = token;
     }
 
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public static void setMainActivity(MainActivity mainActivity) {
+        APIServer.mainActivity = mainActivity;
     }
 
     private boolean checkInternetPermission() {
@@ -224,9 +224,9 @@ public class APIServer {
     }
 
     public void loadUserData() {
-        if (checkInternetPermission()) {
+//        if (checkInternetPermission()) {
             loadFriends();
-        }
+//        }
     }
 
     private void loadFriends() {

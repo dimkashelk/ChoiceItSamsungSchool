@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
         editor_authorize_data = authorize_data.edit();
 
+        APIServer.setMainActivity(this);
+
 //        Intent welcome_page = new Intent(this, WelcomePage.class);
 //        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //        startActivity(welcome_page);
@@ -71,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getToken() {
-        return authorize_data.getString("token", null);
+        return authorize_data.getString("token", "");
     }
 
     public String getLogin() {
-        return authorize_data.getString("login", null);
+        return authorize_data.getString("login", "");
     }
 }
