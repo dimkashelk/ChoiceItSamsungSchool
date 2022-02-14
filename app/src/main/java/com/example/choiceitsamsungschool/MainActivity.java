@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.main_page.AppActivity;
-import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,5 +64,17 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
+    }
+
+    public SharedPreferences getAuthorize_data() {
+        return authorize_data;
+    }
+
+    public String getToken() {
+        return authorize_data.getString("token", null);
+    }
+
+    public String getLogin() {
+        return authorize_data.getString("login", null);
     }
 }

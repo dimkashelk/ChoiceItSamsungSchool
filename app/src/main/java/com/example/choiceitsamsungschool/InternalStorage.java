@@ -1,21 +1,22 @@
 package com.example.choiceitsamsungschool;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class InternalStorage {
-    private MainActivity mainActivity;
+    public static final String PROFILE_IMAGE = "profile";
 
     private String internalStorageDir;
     private String profile_dir = "/profile/";
     private final String _profile = "_profile";
     private final String format = ".png";
 
-    public InternalStorage(MainActivity mainActivity, File filesDir) {
-        this.mainActivity = mainActivity;
+    private static InternalStorage internalStorage = null;
+
+    public InternalStorage(File filesDir) {
         internalStorageDir = filesDir.getAbsolutePath();
 
         File profile = new File(internalStorageDir + profile_dir);
@@ -24,7 +25,14 @@ public class InternalStorage {
         }
     }
 
-    public void save_user_profile_image(Bitmap image, String id) {
+    public static InternalStorage getInternalStorage(File filesDir) {
+        if (internalStorage == null) {
+            internalStorage = new InternalStorage(filesDir);
+        }
+        return internalStorage;
+    }
+
+    public void saveUserProfileImage(Bitmap image, String id) {
         try {
             String file_dir = internalStorageDir + profile_dir;
             File dir = new File(file_dir);
@@ -33,8 +41,26 @@ public class InternalStorage {
             image.compress(Bitmap.CompressFormat.PNG, 85, fOut);
             fOut.flush();
             fOut.close();
-        } catch (Exception e) {
-            mainActivity.getInternalStoragePermission();
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void removeFriendsProfileImages(String id) {
+        try {
+            String file_dir = internalStorageDir + profile_dir;
+            File dir = new File(file_dir);
+            File file = new File(dir, id + _profile + format);
+            file.delete();
+        } catch (Exception ignored) {
+        }
+    }
+
+    public Drawable load(String path, String mode) {
+        switch (mode) {
+            case InternalStorage.PROFILE_IMAGE:
+                return Drawable.createFromPath(path);
+            default:
+                return null;
         }
     }
 }

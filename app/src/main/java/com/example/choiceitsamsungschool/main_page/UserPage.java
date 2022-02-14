@@ -13,10 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Friend;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.Vector;
 
 public class UserPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -26,6 +30,8 @@ public class UserPage extends Fragment {
     private MaterialButton button;
     private LinearLayout friends;
     private APIServer apiServer;
+    private LayoutInflater inflater;
+    private InternalStorage internalStorage;
 
     @Nullable
     @Override
@@ -35,10 +41,12 @@ public class UserPage extends Fragment {
 
         if (page == null) {
             user_page = inflater.inflate(R.layout.user_page, container, false);
+            this.inflater = inflater;
             Context context = getContext();
 
             apiServer = APIServer.getSingletonAPIServer();
             apiServer.setUserPage(this);
+            apiServer.loadUserData();
 
             button = user_page.findViewById(R.id.user_page_button);
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
@@ -46,10 +54,9 @@ public class UserPage extends Fragment {
 
             ViewGroup parent = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
 
-            for (int i = 0; i < 10; i++) {
-                parent.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
-            }
-
+//            for (int i = 0; i < 10; i++) {
+//                parent.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+//            }
             RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
             imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
 
@@ -81,5 +88,20 @@ public class UserPage extends Fragment {
 
     public View getUser_page() {
         return user_page;
+    }
+
+    public void updateFriendsList(Vector<Friend> friends) {
+        ViewGroup parent = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+        parent.removeAllViews();
+        for (Friend friend : friends) {
+            parent.addView(
+                    new FriendCard(getContext(),
+                            String.valueOf(friend.friend_id),
+                            internalStorage.load(friend.friend_id,
+                                    InternalStorage.PROFILE_IMAGE),
+                            inflater,
+                            null).getPage()
+            );
+        }
     }
 }

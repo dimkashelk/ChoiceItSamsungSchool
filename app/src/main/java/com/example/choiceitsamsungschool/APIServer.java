@@ -3,15 +3,21 @@ package com.example.choiceitsamsungschool;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.main_page.LoadData;
+import com.example.choiceitsamsungschool.main_page.LoadImage;
 import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
+
+import java.util.Vector;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -37,10 +43,14 @@ public class APIServer {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final OkHttpClient client;
+    private InternalStorage internalStorage;
+    private MainActivity mainActivity;
     private WelcomePage welcomePage;
     private UserPage userPage;
 
     private String token;
+    private int count_friends = 0;
+    private Vector<Friend> user_friends_list;
 
     public APIServer() {
         client = new OkHttpClient();
@@ -68,6 +78,10 @@ public class APIServer {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     private boolean checkInternetPermission() {
@@ -210,6 +224,34 @@ public class APIServer {
     }
 
     public void loadUserData() {
+        if (checkInternetPermission()) {
+            loadFriends();
+        }
+    }
 
+    private void loadFriends() {
+        String token = mainActivity.getToken();
+        String login = mainActivity.getLogin();
+        LoadData loader = new LoadData(this);
+        loader.execute(APIServer.LOAD_FRIENDS, login, token);
+    }
+
+    public void setFriendsList(Vector<Friend> friends) {
+        String token = mainActivity.getToken();
+        String login = mainActivity.getLogin();
+        count_friends = friends.size();
+        for (int i = 0; i < friends.size(); i++) {
+            LoadImage loader = new LoadImage(this);
+            loader.execute(APIServer.LOAD_IMAGE, friends.get(i).friend_id, login, token);
+        }
+        user_friends_list = friends;
+    }
+
+    public synchronized void setFriendProfileImage(Bitmap bitmap, String id) {
+        internalStorage.saveUserProfileImage(bitmap, id);
+        count_friends -= 1;
+        if (count_friends == 0) {
+            userPage.updateFriendsList(user_friends_list);
+        }
     }
 }

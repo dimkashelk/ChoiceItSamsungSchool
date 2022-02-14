@@ -301,8 +301,13 @@
                                     android:id="@+id/user_page_friends_list"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_gravity="center"
                                     android:orientation="horizontal">
-
+                                    <ProgressBar
+                                        android:id="@+id/progressBar"
+                                        android:visibility="visible"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
                                 </LinearLayout>
                             </HorizontalScrollView>
                         </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.choiceitsamsungschool.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -22,6 +23,9 @@ public class Friend {
 
     @ColumnInfo(name = "profile_image")
     public String profile_image;
+
+    @Ignore
+    public String image_url;
 
     public Friend() {
     }
