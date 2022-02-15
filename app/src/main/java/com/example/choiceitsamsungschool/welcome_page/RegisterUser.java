@@ -1,6 +1,7 @@
 package com.example.choiceitsamsungschool.welcome_page;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.google.gson.Gson;
@@ -36,10 +37,10 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
     protected Boolean doInBackground(String... strings) {
         try {
             String json = "{'login': '" + shortName + "', " +
-                    "'password': '" + password + "'" +
+                    "'password': '" + password + "', " +
                     "'first_name': '" + firstName + "', " +
                     "'second_name': '" + secondName + "', " +
-                    "'email': '" + email + "', " + "}";
+                    "'email': '" + email + "' " + "}";
             RequestBody body = RequestBody.create(json, APIServer.JSON);
             Request request = new Request.Builder()
                     .url(APIServer.URL + APIServer.REGISTRATION)
@@ -63,6 +64,7 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
             }
             return true;
         } catch (Exception e) {
+            Log.e("reg user", e.getLocalizedMessage());
             return false;
         }
     }
@@ -70,15 +72,13 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
     @Override
     protected void onPostExecute(Boolean s) {
         super.onPostExecute(s);
-        if (emailOk && shortNameOk) {
-            apiServer.resultCheckingEmailLogin(emailOk, shortNameOk, token);
-        } else {
-            if (!emailOk) {
-                apiServer.notFreeEmail();
-            }
-            if (!shortNameOk) {
-                apiServer.notFreeLogin();
+        if (s) {
+            if (emailOk && shortNameOk) {
+                apiServer.resultCheckingEmailLogin(emailOk, shortNameOk, token);
+            } else {
+                apiServer.stopLoading(emailOk, shortNameOk);
             }
         }
+        apiServer.stopLoading(false, false);
     }
 }

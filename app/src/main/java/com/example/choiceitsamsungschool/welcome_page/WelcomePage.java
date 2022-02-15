@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -919,6 +920,7 @@ public class WelcomePage extends AppCompatActivity {
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
+            Toast.makeText(this, token, Toast.LENGTH_LONG).show();
             // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
         }
     }
@@ -1096,5 +1098,9 @@ public class WelcomePage extends AppCompatActivity {
     public void setOkVerifyCodeRePassword() {
         bottomSheetVerifyCodeRePasswordLayout.setError(null);
         bottomSheetVerifyCodeRePasswordLayout.setErrorEnabled(false);
+    }
+
+    public void stopLoading() {
+        bottomSheetCreateAccountButton.revertAnimation();
     }
 }

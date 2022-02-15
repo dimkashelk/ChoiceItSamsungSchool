@@ -41,9 +41,12 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                     return null;
                 }
                 Gson gson = new Gson();
-                // TODO: проверка  стасуса авторизации
                 JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-                return jsonObject.get("token").getAsString();
+                if (jsonObject.get("ok").getAsBoolean()) {
+                    return jsonObject.get("token").getAsString();
+                } else {
+                    return null;
+                }
             } else {
                 email = strings[0];
                 String password = strings[1];
@@ -60,8 +63,12 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                 }
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-                login = jsonObject.get("login").getAsString();
-                return jsonObject.get("token").getAsString();
+                if (jsonObject.get("ok").getAsBoolean()) {
+                    login = jsonObject.get("login").getAsString();
+                    return jsonObject.get("token").getAsString();
+                } else {
+                    return null;
+                }
             }
         } catch (Exception e) {
             return null;
