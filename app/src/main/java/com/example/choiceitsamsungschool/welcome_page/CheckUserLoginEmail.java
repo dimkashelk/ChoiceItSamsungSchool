@@ -1,5 +1,7 @@
 package com.example.choiceitsamsungschool.welcome_page;
 
+import static com.example.choiceitsamsungschool.APIServer.JSON;
+
 import android.os.AsyncTask;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -33,7 +35,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
         switch (mode) {
             case APIServer.LOGIN: {
                 String json = "{'login': '" + params[0] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                body = RequestBody.create(json, JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_LOGIN)
                         .post(body)
@@ -42,7 +44,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             }
             case APIServer.EMAIL: {
                 String json = "{'email': '" + params[0] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                body = RequestBody.create(json, JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_EMAIL)
                         .post(body)
@@ -51,7 +53,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             }
             case APIServer.FIND_EMAIL: {
                 String json = "{'email': '" + params[0] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                body = RequestBody.create(json, JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.FIND_EMAIL)
                         .post(body)
@@ -61,7 +63,7 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             default: {
                 // CHECK VERIFY CODE
                 String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "', 'password': '" + params[2] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                body = RequestBody.create(json, JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_VERIFY_CODE)
                         .post(body)

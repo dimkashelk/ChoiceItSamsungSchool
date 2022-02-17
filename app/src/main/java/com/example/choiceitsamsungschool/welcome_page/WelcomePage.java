@@ -747,7 +747,13 @@ public class WelcomePage extends AppCompatActivity {
     }
 
     public boolean checkUserPassword() {
-        if (bottomSheetCreateAccountPassword.getText().toString().equals("")) {
+        if (bottomSheetCreateAccountPassword.getText().toString().equals("") ||
+                bottomSheetCreateAccountPassword.getText().toString().length() < 8) {
+            bottomSheetCreateAccountPasswordLayout.setError(getResources().getString(
+                    R.string.error_password
+            ));
+            bottomSheetCreateAccountPasswordLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetCreateAccountPasswordOk = false;
             return false;
         }
@@ -835,9 +841,11 @@ public class WelcomePage extends AppCompatActivity {
             bottomSheetLoginLoginOk = true;
             return true;
         } else {
-            bottomSheetLoginLoginLayout.setError(getResources().getString(
-                    R.string.error_login
-            ));
+            bottomSheetLoginLoginLayout.setError(
+                    getResources().getString(R.string.error_login) +
+                            '\n' +
+                            getResources().getString(R.string.error_email)
+            );
             bottomSheetLoginLoginLayout.startAnimation(shake);
             vibrate(250);
             bottomSheetLoginLoginOk = false;

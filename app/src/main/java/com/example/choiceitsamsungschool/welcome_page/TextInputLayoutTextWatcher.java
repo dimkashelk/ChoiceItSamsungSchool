@@ -38,17 +38,6 @@ public class TextInputLayoutTextWatcher implements TextWatcher {
             case WelcomePage.BOTTOM_SHEET_CREATE_ACCOUNT_SHORT_NAME_LAYOUT:
                 layout.setErrorEnabled(!welcomeActivity.checkUserShortName(false));
                 break;
-            case WelcomePage.BOTTOM_SHEET_CREATE_ACCOUNT_EMAIL_LAYOUT:
-                layout.setErrorEnabled(!welcomeActivity.checkUserEmail(false));
-                break;
-            case WelcomePage.BOTTOM_SHEET_CREATE_ACCOUNT_PASSWORD_LAYOUT:
-                layout.setErrorEnabled(!welcomeActivity.checkUserPassword());
-                if (!welcomeActivity.checkUserRePassword(true)) {
-                    welcomeActivity.setErrorCreateAccountRePassword(true);
-                } else {
-                    welcomeActivity.setOkCreateAccountRePassword();
-                }
-                break;
             case WelcomePage.BOTTOM_SHEET_CREATE_ACCOUNT_RE_PASSWORD_LAYOUT:
                 layout.setErrorEnabled(!welcomeActivity.checkUserRePassword(true));
                 break;

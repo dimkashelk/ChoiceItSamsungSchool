@@ -1,6 +1,9 @@
 package com.example.choiceitsamsungschool.welcome_page;
 
+import static com.example.choiceitsamsungschool.APIServer.JSON;
+
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.google.gson.Gson;
@@ -29,9 +32,10 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
             if (mode.equals(APIServer.LOGIN)) {
                 login = strings[0];
                 String password = strings[1];
-                String json = "{'login': '" + login + "', " +
-                        "'password': '" + password + "'}";
-                RequestBody body = RequestBody.create(json, APIServer.JSON);
+                String json = "{" +
+                        "\"login\": \"" + login + "\"," +
+                        "\"password\": \"" + password + "\" }";
+                RequestBody body = RequestBody.create(json, JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)
                         .post(body)
@@ -52,7 +56,7 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                 String password = strings[1];
                 String json = "{'email': '" + login + "', " +
                         "'password': '" + password + "'}";
-                RequestBody body = RequestBody.create(json, APIServer.JSON);
+                RequestBody body = RequestBody.create(json, JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)
                         .post(body)
@@ -71,6 +75,7 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                 }
             }
         } catch (Exception e) {
+            Log.e("auth error", e.getLocalizedMessage());
             return null;
         }
     }
@@ -84,6 +89,4 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
             apiServer.errorUserLoginPassword();
         }
     }
-
-
 }
