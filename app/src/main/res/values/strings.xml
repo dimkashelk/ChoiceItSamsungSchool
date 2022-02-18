@@ -49,4 +49,8 @@
     <string name="create_survey">Создать опрос</string>
     <string name="search">Поиск</string>
     <string name="my_page">Моя страница</string>
+    <string name="survey">Опросы</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="your_friends">Ваши друзья</string>
+    <string name="your_survey">Ваши опросы</string>
 </resources>
