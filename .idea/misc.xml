@@ -15,6 +15,10 @@
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/et_custom.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_arrow_left.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_arrow_right.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_favourites_not_filled.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_favourities_fill.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_heart_fill.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_heart_not_filled.xml" value="0.235" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_welcome.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/input_custom.xml" value="0.3828125" />
@@ -31,6 +35,7 @@
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/dop.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/friend_card.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/search_page.xml" value="0.41427247451343835" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/survey_card.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/test.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/user_page.xml" value="0.33" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/welcome_page.xml" value="0.36666666666666664" />

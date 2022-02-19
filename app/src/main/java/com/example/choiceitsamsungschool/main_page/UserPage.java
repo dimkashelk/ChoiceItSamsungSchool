@@ -52,11 +52,17 @@ public class UserPage extends Fragment {
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
             friends = user_page.findViewById(R.id.user_page_friends_list);
 
-            ViewGroup parent = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+            ViewGroup parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
 
-//            for (int i = 0; i < 10; i++) {
-//                parent.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
-//            }
+            for (int i = 0; i < 10; i++) {
+                parent_friends.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            }
+
+            ViewGroup parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
+
+            for (int i = 0; i < 10; i++) {
+                parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            }
             RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
             imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
 
