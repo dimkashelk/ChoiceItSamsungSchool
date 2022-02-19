@@ -84,11 +84,14 @@ public class UserPage extends Fragment {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void changeState() {
         if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            button.setIcon(getResources().getDrawable(R.drawable.ic_close, null));
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            button.setIcon(getResources().getDrawable(R.drawable.ic_menu, null));
         }
     }
 
