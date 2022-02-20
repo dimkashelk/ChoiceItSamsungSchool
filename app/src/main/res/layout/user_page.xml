@@ -36,6 +36,13 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+    <!--    <com.google.android.material.appbar.MaterialToolbar-->
+    <!--        android:id="@+id/user_tool_bar"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/user_content_layout"
@@ -60,9 +67,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="center"
+                android:gravity="center"
+                app:tabIndicatorColor="@color/pink_400"
+                app:tabRippleColor="@color/pink_300"
+                app:tabSelectedTextColor="@color/pink_400"
+                app:tabTextColor="@color/pink_200"
                 app:tabMode="fixed" />
 
-            <androidx.viewpager2.widget.ViewPager2
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/user_page_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constrainedHeight="true"

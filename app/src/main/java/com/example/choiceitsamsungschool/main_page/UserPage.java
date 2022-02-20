@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.InternalStorage;
@@ -18,6 +19,7 @@ import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.tabs.TabLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.Vector;
@@ -64,13 +66,12 @@ public class UserPage extends Fragment {
                 parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
             }
 
-            ViewGroup parent_favorite_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list_favorite);
+            ViewPager viewPager = user_page.findViewById(R.id.user_page_view_pager);
+            viewPager.setAdapter(new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), context));
 
-            for (int i = 0; i < 10; i++) {
-                SurveyCard card = new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null);
-                card.setFavorite();
-                parent_favorite_survey.addView(card.getPage());
-            }
+            TabLayout tabLayout = user_page.findViewById(R.id.user_page_tab_layout);
+            tabLayout.setupWithViewPager(viewPager);
+
             RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
             imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
 
