@@ -1,5 +1,6 @@
 package com.example.choiceitsamsungschool.main_page;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.choiceitsamsungschool.R;
+import com.google.android.material.button.MaterialButton;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class SurveyCard extends View {
@@ -14,6 +16,7 @@ public class SurveyCard extends View {
     private Drawable image;
     private View page;
     private UserPage userPage;
+    private MaterialButton like, favorite;
 
     public SurveyCard(Context context, String survey_id, Drawable image, LayoutInflater inflater, UserPage userPage) {
         super(context);
@@ -29,14 +32,21 @@ public class SurveyCard extends View {
         RoundedImageView surveyImage = page.findViewById(R.id.survey_card_image);
         surveyImage.setImageDrawable(image);
 
-        setOnClickListener(v -> openSurvey());
+        like = page.findViewById(R.id.survey_card_like);
+        favorite = page.findViewById(R.id.survey_card_favorite);
+        page.setOnClickListener(v -> openSurvey());
     }
 
-    private void openSurvey() {
+    public void openSurvey() {
         Toast.makeText(getContext(), "Открыли страницу опроса", Toast.LENGTH_LONG).show();
     }
 
     public View getPage() {
         return page;
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void setFavorite() {
+        favorite.setIcon(getResources().getDrawable(R.drawable.ic_favourites_fill, null));
     }
 }

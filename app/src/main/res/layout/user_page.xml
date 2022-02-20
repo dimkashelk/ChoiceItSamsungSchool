@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:id="@+id/user_page"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/pink_100">
 
     <LinearLayout
         android:id="@+id/user_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pink_100"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +19,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/user_page_button"
             android:layout_width="67dp"
+            android:backgroundTint="@color/pink_100"
             android:layout_height="wrap_content"
             android:outlineAmbientShadowColor="@android:color/transparent"
             android:outlineSpotShadowColor="@android:color/transparent"
@@ -48,39 +49,25 @@
             android:id="@+id/user_page_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/pink_100"
             android:orientation="vertical"
+            android:layout_marginBottom="60dp"
             app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="@id/user_content_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_content_layout">
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/user_page_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:checkedButton="@id/user_page_favorites_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:singleSelection="true">
+                app:tabMode="fixed" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/user_page_favorites_button"
-                    style="@style/ToggleButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="@string/favorite" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/user_page_archive_button"
-                    style="@style/ToggleButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="@string/archive" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_page_tab_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
