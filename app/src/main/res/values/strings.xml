@@ -53,4 +53,6 @@
     <string name="edit_profile">Редактировать профиль</string>
     <string name="your_friends">Ваши друзья</string>
     <string name="your_survey">Ваши опросы</string>
+    <string name="favorite">Избранное</string>
+    <string name="archive">Архив</string>
 </resources>

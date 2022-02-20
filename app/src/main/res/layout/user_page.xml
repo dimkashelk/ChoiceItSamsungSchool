@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@id/user_page"
         app:layout_constraintTop_toBottomOf="@id/user_tool_bar">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_page_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,7 +54,34 @@
             app:layout_constraintBottom_toBottomOf="@id/user_content_layout"
             app:layout_constraintTop_toBottomOf="@id/user_content_layout">
 
-        </LinearLayout>
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:checkedButton="@id/user_page_favorites_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/user_page_favorites_button"
+                    style="@style/ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/favorite" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/user_page_archive_button"
+                    style="@style/ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/archive" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/user_page_front"
