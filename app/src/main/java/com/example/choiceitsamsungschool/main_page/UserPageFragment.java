@@ -10,11 +10,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.R;
 
-import java.util.Vector;
-
 public class UserPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
-    public Vector<SurveyCard> cards = new Vector<>();
 
     private int mPage;
 
@@ -38,26 +35,17 @@ public class UserPageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_page_favorites, container, false);
         ViewGroup parent_favorite_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
-        for (int i = 0; i < 10; i++) {
-            parent_favorite_survey.addView(new SurveyCard(getActivity().getApplicationContext(), String.valueOf(i), getActivity().getApplicationContext().getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+        if (mPage == 0) {
+            // Favorite
+            for (int i = 0; i < 10; i++) {
+                parent_favorite_survey.addView(new SurveyCard(getActivity().getApplicationContext(), String.valueOf(i), getActivity().getApplicationContext().getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            }
+        } else {
+            // Archive
+            for (int i = 0; i < 1; i++) {
+                parent_favorite_survey.addView(new SurveyCard(getActivity().getApplicationContext(), String.valueOf(i), getActivity().getApplicationContext().getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            }
         }
         return view;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
