@@ -2,11 +2,16 @@ package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +24,6 @@ import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -35,6 +39,8 @@ public class UserPage extends Fragment {
     private APIServer apiServer;
     private LayoutInflater inflater;
     private InternalStorage internalStorage;
+    private AnimatedVectorDrawable menu;
+    private AnimatedVectorDrawable close;
 
     @Nullable
     @Override
@@ -52,7 +58,11 @@ public class UserPage extends Fragment {
             apiServer.loadUserData();
 
             toolbar = user_page.findViewById(R.id.user_tool_bar);
-            toolbar.setOnClickListener(v -> changeState());
+            toolbar.setNavigationOnClickListener(v -> changeState());
+
+            menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
+            close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
+
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
             friends = user_page.findViewById(R.id.user_page_friends_list);
 
@@ -93,8 +103,12 @@ public class UserPage extends Fragment {
     private void changeState() {
         if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            toolbar.setNavigationIcon(menu);
+            menu.start();
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            toolbar.setNavigationIcon(close);
+            close.start();
         }
     }
 
@@ -115,5 +129,15 @@ public class UserPage extends Fragment {
                             null).getPage()
             );
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
