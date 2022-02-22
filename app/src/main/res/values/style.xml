@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppSearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="queryBackground">@android:color/transparent</item>
-        <item name="searchIcon">@drawable/ic_search_list</item>
-        <item name="closeIcon">@drawable/ic_close</item>
-        <item name="android:imeActionId">6</item>
-    </style>
+
 </resources>
