@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<style name="ToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-    <item name="strokeColor">@color/toggle_button_color_selector</item>
-    <item name="strokeWidth">2dp</item>
-    <item name="android:textColor">@color/black</item>
-    <item name="cornerRadius">15dp</item>
-</style>
+    <style name="AppSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="searchIcon">@drawable/ic_search_list</item>
+        <item name="closeIcon">@drawable/ic_close</item>
+        <item name="android:imeActionId">6</item>
+    </style>
 </resources>

@@ -7,42 +7,18 @@
     android:layout_height="match_parent"
     android:background="@color/pink_100">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/user_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        app:collapseIcon="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/user_page">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/user_page_button"
-            android:layout_width="67dp"
-            android:backgroundTint="@color/pink_100"
-            android:layout_height="wrap_content"
-            android:outlineAmbientShadowColor="@android:color/transparent"
-            android:outlineSpotShadowColor="@android:color/transparent"
-            android:shadowColor="@android:color/transparent"
-            app:icon="@drawable/ic_menu"
-            app:rippleColor="@android:color/transparent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_medium"
-            android:gravity="center_vertical"
-            android:text="\@user_login"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-    <!--    <com.google.android.material.appbar.MaterialToolbar-->
-    <!--        android:id="@+id/user_tool_bar"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar_menu"
+        app:navigationIcon="@drawable/ic_menu"
+        app:navigationIconTint="@color/pink_400"
+        app:title="\@user_page" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/user_content_layout"

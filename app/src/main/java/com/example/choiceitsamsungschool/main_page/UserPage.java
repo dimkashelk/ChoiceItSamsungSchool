@@ -17,6 +17,7 @@ import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -29,7 +30,7 @@ public class UserPage extends Fragment {
     private static UserPage page = null;
     private View user_page;
     private BottomSheetBehavior sheetBehavior;
-    private MaterialButton button;
+    private MaterialToolbar toolbar;
     private LinearLayout friends;
     private APIServer apiServer;
     private LayoutInflater inflater;
@@ -50,7 +51,8 @@ public class UserPage extends Fragment {
             apiServer.setUserPage(this);
             apiServer.loadUserData();
 
-            button = user_page.findViewById(R.id.user_page_button);
+            toolbar = user_page.findViewById(R.id.user_tool_bar);
+            toolbar.setOnClickListener(v -> changeState());
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
             friends = user_page.findViewById(R.id.user_page_friends_list);
 
@@ -80,12 +82,6 @@ public class UserPage extends Fragment {
             sheetBehavior.setHideable(false);
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    changeState();
-                }
-            });
             page = this;
             return user_page;
         } else {
@@ -97,10 +93,8 @@ public class UserPage extends Fragment {
     private void changeState() {
         if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_close, null));
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_menu, null));
         }
     }
 
