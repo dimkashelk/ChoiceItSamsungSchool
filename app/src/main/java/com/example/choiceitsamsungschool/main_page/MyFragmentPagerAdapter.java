@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[]{"Избранное", "Архив"};
+    final int PAGE_COUNT = 3;
+    private String tabTitles[] = new String[]{"Настройки", "Избранное", "Архив"};
     private Context context;
 
     public MyFragmentPagerAdapter(@NonNull FragmentManager fm, Context context) {
