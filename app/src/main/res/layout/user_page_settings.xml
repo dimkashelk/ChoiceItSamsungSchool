@@ -14,7 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="top">
+            android:layout_gravity="top"
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:id="@+id/settings_page_user_info_layout"
@@ -42,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:text="@string/first_name"
-                        android:textSize="18sp" />
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_first_name_layout"
@@ -80,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:text="@string/second_name"
-                        android:textSize="18sp" />
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_second_name_layout"
@@ -118,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:text="@string/short_name"
-                        android:textSize="18sp" />
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_login_layout"
@@ -181,7 +182,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:text="Старый пароль"
-                        android:textSize="18sp" />
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_old_password_layout"
@@ -219,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
                         android:text="Новый пароль"
-                        android:textSize="18sp" />
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_password_layout"
@@ -253,11 +254,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_regular"
-                        android:text="@string/re_type_password"
-                        android:textSize="18sp" />
+                        android:text="Повторите\nпароль"
+                        android:textSize="17sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/settings_page_edit_re_password_layout"
