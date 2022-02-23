@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.R;
-
-import java.util.Vector;
 
 public class UserPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -45,9 +42,7 @@ public class UserPageFragment extends Fragment {
             }
         } else if (mPage == 1) {
             // Favorite
-            for (int i = 0; i < 1; i++) {
-                parent_favorite_survey.addView(new SurveyCard(getActivity().getApplicationContext(), String.valueOf(i), getActivity().getApplicationContext().getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
-            }
+            view = UserPageFavorites.get(getActivity().getApplicationContext(), inflater, container);
         } else {
             // Archive
             view = UserPageArchive.get(getActivity().getApplicationContext(), inflater, container);
