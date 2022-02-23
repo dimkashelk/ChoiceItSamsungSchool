@@ -42,13 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textAlignment="center"
-                android:gravity="center"
                 app:tabIndicatorColor="@color/pink_400"
                 app:tabRippleColor="@color/pink_300"
                 app:tabSelectedTextColor="@color/pink_400"
-                app:tabTextColor="@color/pink_200"
-                app:tabMode="fixed" />
+                app:tabTextColor="@color/pink_200" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/user_page_view_pager"
