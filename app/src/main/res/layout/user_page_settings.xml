@@ -205,13 +205,14 @@
                         app:boxCornerRadiusTopEnd="15dp"
                         app:boxCornerRadiusTopStart="15dp"
                         app:errorContentDescription="Пароль не совпадает"
+                        app:endIconMode="password_toggle"
                         app:errorTextColor="@color/pink_700">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_old_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
+                            android:inputType="textPassword"
                             android:maxLines="1"
                             android:textSize="17sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -244,6 +245,7 @@
                         app:boxCornerRadiusBottomStart="15dp"
                         app:boxCornerRadiusTopEnd="15dp"
                         app:boxCornerRadiusTopStart="15dp"
+                        app:endIconMode="password_toggle"
                         app:errorContentDescription="@string/error_first_name"
                         app:errorTextColor="@color/pink_700">
 
@@ -251,7 +253,7 @@
                             android:id="@+id/settings_page_edit_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
+                            android:inputType="textPassword"
                             android:maxLines="1"
                             android:textSize="17sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -285,13 +287,14 @@
                         app:boxCornerRadiusTopEnd="15dp"
                         app:boxCornerRadiusTopStart="15dp"
                         app:errorContentDescription="@string/error_login"
+                        app:endIconMode="password_toggle"
                         app:errorTextColor="@color/pink_700">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_re_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
+                            android:inputType="textPassword"
                             android:maxLines="1"
                             android:textSize="17sp" />
                     </com.google.android.material.textfield.TextInputLayout>
