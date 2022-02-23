@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.choiceitsamsungschool.R;
-
 public class UserPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
@@ -33,13 +31,10 @@ public class UserPageFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_page_favorites, container, false);
-        ViewGroup parent_favorite_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
+        View view;
         if (mPage == 0) {
             // Settings
-            for (int i = 0; i < 10; i++) {
-                parent_favorite_survey.addView(new SurveyCard(getActivity().getApplicationContext(), String.valueOf(i), getActivity().getApplicationContext().getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
-            }
+            view = UserPageSettings.get(getActivity().getApplicationContext(), inflater, container);
         } else if (mPage == 1) {
             // Favorite
             view = UserPageFavorites.get(getActivity().getApplicationContext(), inflater, container);
