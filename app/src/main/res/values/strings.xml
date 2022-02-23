@@ -55,4 +55,11 @@
     <string name="your_survey">Ваши опросы</string>
     <string name="favorite">Избранное</string>
     <string name="archive">Архив</string>
+    <string name="basic_parameters">Основные параметры</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="wrong_password">Неверный пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="re_enter_password">Повторите\nпароль</string>
+    <string name="reset_all">Сбросить все</string>
+    <string name="save_changes">Сохранить изменения</string>
 </resources>
