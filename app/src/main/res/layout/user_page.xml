@@ -17,6 +17,7 @@
         app:menu="@menu/toolbar_menu"
         app:navigationIcon="@drawable/ic_menu"
         app:navigationIconTint="@color/pink_400"
+        android:gravity="center_vertical"
         app:title="\@user_page" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -32,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginBottom="60dp"
+            android:background="@drawable/bottom_sheet_background"
+            android:paddingBottom="60dp"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_content_layout">
@@ -41,6 +43,7 @@
                 android:id="@+id/user_page_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:tabGravity="start"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabIndicatorColor="@color/pink_400"
                 app:tabRippleColor="@color/pink_300"
