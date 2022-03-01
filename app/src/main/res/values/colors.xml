@@ -16,4 +16,7 @@
     <color name="pink_500">#E91E63</color>
     <color name="pink_600">#D81B60</color>
     <color name="pink_700">#C2185B</color>
+
+    <color name="ted_image_picker_primary">@color/pink_400</color>
+    <color name="ted_image_picker_primary_pressed">@color/pink_300</color>
 </resources>

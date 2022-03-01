@@ -29,6 +29,10 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.Vector;
 
+import gun0912.tedimagepicker.TedImagePickerActivity;
+import gun0912.tedimagepicker.builder.TedImagePicker;
+import gun0912.tedimagepicker.builder.type.MediaType;
+
 public class UserPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static UserPage page = null;
@@ -49,6 +53,8 @@ public class UserPage extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (page == null) {
+            UserPageSettings.userPage = this;
+
             user_page = inflater.inflate(R.layout.user_page, container, false);
             this.inflater = inflater;
             Context context = getContext();
@@ -139,5 +145,17 @@ public class UserPage extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startChooseImage() {
+        TedImagePicker.with(getContext()).
+                title("Выберите изображение").
+                buttonText("Выбрать").
+                mediaType(MediaType.IMAGE).
+                image().
+                start(uri -> {
+                    Toast.makeText(page.getContext(), "Выбрали", Toast.LENGTH_SHORT).show();
+                });
+        // TODO: change user profile image
     }
 }
