@@ -23,7 +23,7 @@
             android:outlineAmbientShadowColor="@android:color/transparent"
             android:outlineSpotShadowColor="@android:color/transparent"
             android:shadowColor="@android:color/transparent"
-            app:icon="@drawable/ic_menu"
+            app:icon="@drawable/ic_menu_big"
             app:rippleColor="@android:color/transparent" />
 
         <TextView

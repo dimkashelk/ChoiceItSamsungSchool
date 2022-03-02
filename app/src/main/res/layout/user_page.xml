@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu"
-        app:navigationIcon="@drawable/ic_menu"
+        app:navigationIcon="@drawable/ic_menu_big"
         app:navigationIconTint="@color/pink_400"
         android:gravity="center_vertical"
         app:title="\@user_page" />
