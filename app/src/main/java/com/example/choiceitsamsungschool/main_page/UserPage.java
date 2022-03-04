@@ -28,11 +28,11 @@ import com.example.choiceitsamsungschool.db.Friend;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.IOException;
 import java.util.Vector;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import gun0912.tedimagepicker.builder.TedImagePicker;
 import gun0912.tedimagepicker.builder.listener.OnSelectedListener;
 import gun0912.tedimagepicker.builder.type.MediaType;
@@ -94,7 +94,7 @@ public class UserPage extends Fragment {
             TabLayout tabLayout = user_page.findViewById(R.id.user_page_tab_layout);
             tabLayout.setupWithViewPager(viewPager);
 
-            RoundedImageView imageView = user_page.findViewById(R.id.user_page_image);
+            CircleImageView imageView = user_page.findViewById(R.id.user_page_image);
             imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
 
             sheetBehavior = BottomSheetBehavior.from(contentLayout);
