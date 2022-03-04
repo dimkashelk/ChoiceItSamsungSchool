@@ -21,9 +21,13 @@ public class User {
     @ColumnInfo(name = "profile_image")
     public String profile_image;
 
-    public User(String first_name, String second_name, String profile_image) {
+    @ColumnInfo
+    public String login;
+
+    public User(String first_name, String second_name, String profile_image, String login) {
         this.first_name = first_name;
         this.second_name = second_name;
         this.profile_image = profile_image;
+        this.login = login;
     }
 }
