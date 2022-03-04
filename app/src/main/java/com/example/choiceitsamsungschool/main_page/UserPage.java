@@ -2,8 +2,11 @@ package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,10 +30,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.io.IOException;
 import java.util.Vector;
 
-import gun0912.tedimagepicker.TedImagePickerActivity;
 import gun0912.tedimagepicker.builder.TedImagePicker;
+import gun0912.tedimagepicker.builder.listener.OnSelectedListener;
 import gun0912.tedimagepicker.builder.type.MediaType;
 
 public class UserPage extends Fragment {
@@ -153,9 +157,16 @@ public class UserPage extends Fragment {
                 buttonText("Выбрать").
                 mediaType(MediaType.IMAGE).
                 image().
-                start(uri -> {
-                    Toast.makeText(page.getContext(), "Выбрали", Toast.LENGTH_SHORT).show();
+                start(new OnSelectedListener() {
+                    @Override
+                    public void onSelected(@NonNull Uri uri) {
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                            UserPageSettings.changeUserImage(bitmap);
+                        } catch (IOException e) {
+                            Toast.makeText(getContext(), "Не получилось открыть изображение, попробуйте ещё раз", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 });
-        // TODO: change user profile image
     }
 }
