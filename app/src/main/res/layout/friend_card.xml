@@ -14,20 +14,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/friend_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_margin="5dp"
-            android:layout_weight="3"
-            android:scaleType="fitCenter"
-            app:riv_corner_radius="500dp" />
+            android:layout_margin="5dp" />
 
         <TextView
             android:id="@+id/friend_first_name"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_weight="1"
             android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
             android:text="Имя"
@@ -38,7 +34,6 @@
             android:id="@+id/friend_second_name"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_weight="1"
             android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
             android:layout_marginBottom="5dp"

@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.choiceitsamsungschool.R;
-import com.makeramen.roundedimageview.RoundedImageView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendCard extends View {
     private String friend_id;
@@ -23,7 +24,7 @@ public class FriendCard extends View {
         this.userPage = userPage;
 
         page = inflater.inflate(R.layout.friend_card, null);
-        RoundedImageView imageView = page.findViewById(R.id.friend_image);
+        CircleImageView imageView = page.findViewById(R.id.friend_image);
         imageView.setImageDrawable(image);
 
         setOnClickListener(new OnClickListener() {
