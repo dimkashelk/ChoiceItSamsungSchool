@@ -11,6 +11,8 @@ import com.example.choiceitsamsungschool.R;
 import com.google.android.material.button.MaterialButton;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SurveyCard extends View {
     private String survey_id;
     private Drawable image;
@@ -26,7 +28,7 @@ public class SurveyCard extends View {
         this.userPage = userPage;
 
         page = inflater.inflate(R.layout.survey_card, null);
-        RoundedImageView userImage = page.findViewById(R.id.survey_card_user_image);
+        CircleImageView userImage = page.findViewById(R.id.survey_card_user_image);
         userImage.setImageDrawable(image);
 
         RoundedImageView surveyImage = page.findViewById(R.id.survey_card_image);
