@@ -30,6 +30,7 @@ import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.User;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -111,11 +112,21 @@ public class UserPage extends Fragment {
             TextView full_name = user_page.findViewById(R.id.user_page_full_name);
             full_name.setText(user.second_name + " " + user.first_name);
 
+
+            MaterialButton change_data = user_page.findViewById(R.id.user_page_change_data);
+            change_data.setOnClickListener(v -> editProfile());
+
             page = this;
             return user_page;
         } else {
             return page.getUser_page();
         }
+    }
+
+    private void editProfile() {
+        changeState();
+        TabLayout tabLayout = user_page.findViewById(R.id.user_page_tab_layout);
+        tabLayout.getTabAt(0).select();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
