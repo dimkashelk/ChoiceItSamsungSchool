@@ -1,16 +1,19 @@
 package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.AppDatabase;
+import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.User;
 import com.google.android.material.textfield.TextInputEditText;
@@ -370,5 +373,18 @@ public class UserPageSettings extends View {
         old_password_layout.setEnabled(true);
         new_password_layout.setEnabled(true);
         re_new_password_layout.setEnabled(true);
+    }
+
+
+    public static void changeState() {
+        first_name_layout.clearFocus();
+        second_name_layout.clearFocus();
+        login_layout.clearFocus();
+
+        old_password_layout.clearFocus();
+        new_password_layout.clearFocus();
+        re_new_password_layout.clearFocus();
+
+        InputMethodManager imm = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
     }
 }

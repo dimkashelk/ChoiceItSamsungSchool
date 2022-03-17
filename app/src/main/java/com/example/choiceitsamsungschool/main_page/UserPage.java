@@ -1,6 +1,7 @@
 package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.InternalStorage;
+import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.User;
@@ -53,6 +56,7 @@ public class UserPage extends Fragment {
     private InternalStorage internalStorage;
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
+    private InputMethodManager manager;
 
     @Nullable
     @Override
@@ -116,6 +120,8 @@ public class UserPage extends Fragment {
             MaterialButton change_data = user_page.findViewById(R.id.user_page_change_data);
             change_data.setOnClickListener(v -> editProfile());
 
+            manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
+
             page = this;
             return user_page;
         } else {
@@ -136,6 +142,8 @@ public class UserPage extends Fragment {
             toolbar.setNavigationIcon(menu);
             menu.start();
         } else {
+            UserPageSettings.changeState();
+            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             toolbar.setNavigationIcon(close);
             close.start();
