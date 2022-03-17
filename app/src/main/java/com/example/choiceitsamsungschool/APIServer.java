@@ -273,5 +273,6 @@ public class APIServer {
     public void authorize(String login, String token) {
         Authorize authorize = new Authorize(login, token);
         authorize.setMainActivity(mainActivity);
+        authorize.execute();
     }
 }

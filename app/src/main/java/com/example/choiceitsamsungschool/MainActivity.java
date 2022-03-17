@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.loading_page);
+
         checkAllPermission();
 
         authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase appDatabase = AppDatabase.getDatabase(getBaseContext());
         appDatabase.userDao().removeAllUsers();
         appDatabase.userDao().addUser(default_user);
-        Toast.makeText(getBaseContext(), String.valueOf(appDatabase.userDao().getAllUsers().size()), Toast.LENGTH_SHORT).show();
 
         APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
     }
