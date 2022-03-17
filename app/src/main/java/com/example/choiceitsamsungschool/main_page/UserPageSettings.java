@@ -193,6 +193,14 @@ public class UserPageSettings extends View {
         CircularProgressButton button = page.findViewById(R.id.settings_page_save);
         button.startAnimation();
 
+        first_name_layout.setEnabled(false);
+        second_name_layout.setEnabled(false);
+        login_layout.setEnabled(false);
+
+        old_password_layout.setEnabled(false);
+        new_password_layout.setEnabled(false);
+        re_new_password_layout.setEnabled(false);
+
         APIServer apiServer = APIServer.getSingletonAPIServer();
 
         saver.execute(apiServer.getLogin(), apiServer.getToken());
@@ -350,5 +358,13 @@ public class UserPageSettings extends View {
         Toast.makeText(page.getContext(), text, Toast.LENGTH_SHORT).show();
         CircularProgressButton button = page.findViewById(R.id.settings_page_save);
         button.revertAnimation();
+
+        first_name_layout.setEnabled(true);
+        second_name_layout.setEnabled(true);
+        login_layout.setEnabled(true);
+
+        old_password_layout.setEnabled(true);
+        new_password_layout.setEnabled(true);
+        re_new_password_layout.setEnabled(true);
     }
 }
