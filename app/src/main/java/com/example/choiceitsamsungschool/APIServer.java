@@ -28,7 +28,7 @@ public class APIServer {
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
 
-    public static final String URL = "http://dimkashelk.asuscomm.com:150/api/";
+    public static final String URL = "https://dimkashelk.asuscomm.com:150/api/";
     public static final String CHECK_LOGIN = "check_login";
     public static final String CHECK_EMAIL = "check_email";
     public static final String CHECK_EMAIL_LOGIN = "check_email_login";
@@ -39,6 +39,7 @@ public class APIServer {
     public static final String LOAD_FRIENDS = "friends";
     public static final String LOAD_IMAGE = "images";
     public static final String LOAD_USER_DATA = "user";
+    public static final String UPDATE_USER_DATA = "update_user_data";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -253,5 +254,18 @@ public class APIServer {
         if (count_friends == 0) {
             userPage.updateFriendsList(user_friends_list);
         }
+    }
+
+    public String getToken() {
+        return mainActivity.getToken();
+    }
+
+    public String getLogin() {
+        return mainActivity.getLogin();
+    }
+
+    public void setLoginToken(String login, String token) {
+        mainActivity.setLogin(login);
+        mainActivity.setToken(token);
     }
 }

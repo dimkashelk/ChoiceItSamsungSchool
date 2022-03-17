@@ -79,4 +79,12 @@ public class MainActivity extends AppCompatActivity {
     public String getLogin() {
         return authorize_data.getString("login", "");
     }
+
+    public void setLogin(String login) {
+        editor_authorize_data.putString("login", login);
+    }
+
+    public void setToken(String token) {
+        editor_authorize_data.putString("token", token);
+    }
 }
