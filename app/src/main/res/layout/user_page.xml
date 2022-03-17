@@ -122,7 +122,7 @@
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/user_page_image"
-                                android:layout_width="150dp"
+                                android:layout_width="100dp"
                                 android:layout_height="match_parent"
                                 android:padding="3dp"
                                 app:layout_constrainedHeight="true"
@@ -149,6 +149,7 @@
                                     android:text="Фамилия имя"
                                     android:textSize="18sp"
                                     app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
