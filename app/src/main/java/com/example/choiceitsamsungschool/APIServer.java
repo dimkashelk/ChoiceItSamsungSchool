@@ -33,6 +33,7 @@ public class APIServer {
     public static final String CHECK_EMAIL = "check_email";
     public static final String CHECK_EMAIL_LOGIN = "check_email_login";
     public static final String AUTHORIZATION = "auth";
+    public static final String AUTH = "authorization";
     public static final String REGISTRATION = "reg";
     public static final String FIND_EMAIL = "find_email";
     public static final String CHECK_VERIFY_CODE = "check_verify_code";
@@ -267,5 +268,10 @@ public class APIServer {
     public void setLoginToken(String login, String token) {
         mainActivity.setLogin(login);
         mainActivity.setToken(token);
+    }
+
+    public void authorize(String login, String token) {
+        Authorize authorize = new Authorize(login, token);
+        authorize.setMainActivity(mainActivity);
     }
 }

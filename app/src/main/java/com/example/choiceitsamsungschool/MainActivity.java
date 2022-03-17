@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.db.User;
 import com.example.choiceitsamsungschool.main_page.AppActivity;
+import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
         APIServer.setMainActivity(this);
 
-//        Intent welcome_page = new Intent(this, WelcomePage.class);
-//        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(welcome_page);
+        User default_user = new User("Дмитрий", "Шелковников", "", "dimkashelk");
+        AppDatabase appDatabase = AppDatabase.getDatabase(getBaseContext());
+        appDatabase.userDao().removeAllUsers();
+        appDatabase.userDao().addUser(default_user);
+        Toast.makeText(getBaseContext(), String.valueOf(appDatabase.userDao().getAllUsers().size()), Toast.LENGTH_SHORT).show();
 
-        Intent app_page = new Intent(this, AppActivity.class);
-        app_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(app_page);
+        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
     }
 
     public void checkAllPermission() {
@@ -86,5 +89,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void setToken(String token) {
         editor_authorize_data.putString("token", token);
+    }
+
+    public void login() {
+        Intent app_page = new Intent(this, AppActivity.class);
+        app_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(app_page);
+    }
+
+    public void logout() {
+        Intent welcome_page = new Intent(this, WelcomePage.class);
+        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(welcome_page);
     }
 }
