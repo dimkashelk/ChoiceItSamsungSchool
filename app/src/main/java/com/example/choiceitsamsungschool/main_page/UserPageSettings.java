@@ -118,6 +118,8 @@ public class UserPageSettings extends View {
         }
         SaveUserChanges saver = new SaveUserChanges();
 
+        User user = AppDatabase.getDatabase(page.getContext()).userDao().getAllUsers().get(0);
+
         first_name_layout.setErrorEnabled(false);
         second_name_layout.setErrorEnabled(false);
         login_layout.setErrorEnabled(false);
@@ -133,7 +135,12 @@ public class UserPageSettings extends View {
         if (!first_name.getText().toString().equals("") &&
                 !second_name.getText().toString().equals("") &&
                 !login_name.getText().toString().equals("")) {
-            if (is_first_name_ok && is_second_name_ok && is_login_ok) {
+            if (is_first_name_ok &&
+                    is_second_name_ok &&
+                    is_login_ok &&
+                    (!user.first_name.equals(first_name.getText().toString()) ||
+                            !user.second_name.equals(second_name.getText().toString()) ||
+                            !user.login.equals(login_name.getText().toString()))) {
                 saver.setFirst_name(first_name.getText().toString());
                 saver.setSecond_name(second_name.getText().toString());
                 saver.setLogin(login_name.getText().toString());
