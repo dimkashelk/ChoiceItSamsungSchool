@@ -116,6 +116,7 @@ public class UserPage extends Fragment {
             TextView full_name = user_page.findViewById(R.id.user_page_full_name);
             full_name.setText(user.second_name + " " + user.first_name);
 
+            toolbar.setTitle("@" + user.login);
 
             MaterialButton change_data = user_page.findViewById(R.id.user_page_change_data);
             change_data.setOnClickListener(v -> editProfile());
