@@ -25,9 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
     private APIServer apiServer;
 
+    private static MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mainActivity = this;
 
         setContentView(R.layout.loading_page);
 
@@ -103,5 +107,9 @@ public class MainActivity extends AppCompatActivity {
         Intent welcome_page = new Intent(this, WelcomePage.class);
         welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(welcome_page);
+    }
+
+    public static MainActivity get() {
+        return mainActivity;
     }
 }
