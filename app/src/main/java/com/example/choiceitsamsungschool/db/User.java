@@ -24,6 +24,12 @@ public class User {
     @ColumnInfo
     public String login;
 
+    @ColumnInfo
+    public int count_friends = 0;
+
+    @ColumnInfo
+    public int count_survey = 0;
+
     public User(String first_name, String second_name, String profile_image, String login) {
         this.first_name = first_name;
         this.second_name = second_name;
