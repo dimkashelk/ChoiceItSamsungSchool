@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.User;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
@@ -52,7 +55,7 @@ public class UserPage extends Fragment {
 
     @Nullable
     @Override
-    @SuppressLint({"CutPasteId", "UseCompatLoadingForDrawables"})
+    @SuppressLint({"CutPasteId", "UseCompatLoadingForDrawables", "SetTextI18n"})
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -101,6 +104,12 @@ public class UserPage extends Fragment {
             sheetBehavior.setFitToContents(false);
             sheetBehavior.setHideable(false);
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+            // user info
+            AppDatabase appDatabase = AppDatabase.getDatabase(context);
+            User user = appDatabase.userDao().getAllUsers().get(0);
+            TextView full_name = user_page.findViewById(R.id.user_page_full_name);
+            full_name.setText(user.second_name + " " + user.first_name);
 
             page = this;
             return user_page;
