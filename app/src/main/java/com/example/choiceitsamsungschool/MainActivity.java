@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         appDatabase.userDao().removeAllUsers();
         appDatabase.userDao().addUser(default_user);
 
-        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
+//        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
+        login();
     }
 
     public void checkAllPermission() {

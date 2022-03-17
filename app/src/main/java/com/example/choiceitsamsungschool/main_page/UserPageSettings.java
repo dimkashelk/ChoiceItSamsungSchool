@@ -53,6 +53,14 @@ public class UserPageSettings extends View {
     private static boolean profile_image_to_save = false;
     private static Bitmap profile_image = null;
 
+    private static TextInputLayout first_name_layout;
+    private static TextInputLayout second_name_layout;
+    private static TextInputLayout login_layout;
+
+    private static TextInputLayout old_password_layout;
+    private static TextInputLayout new_password_layout;
+    private static TextInputLayout re_new_password_layout;
+
     public UserPageSettings(Context context) {
         super(context);
     }
@@ -69,6 +77,14 @@ public class UserPageSettings extends View {
             page.findViewById(R.id.settings_page_save).setOnClickListener(v -> saveChanges());
 
             apiServer = APIServer.getSingletonAPIServer();
+
+            first_name_layout = page.findViewById(R.id.settings_page_edit_first_name_layout);
+            second_name_layout = page.findViewById(R.id.settings_page_edit_second_name_layout);
+            login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
+
+            old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
+            new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
+            re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
         }
         return page;
     }
@@ -83,10 +99,6 @@ public class UserPageSettings extends View {
         TextInputEditText second_name = page.findViewById(R.id.settings_page_edit_second_name);
         TextInputEditText login_name = page.findViewById(R.id.settings_page_edit_login);
 
-        TextInputLayout first_name_layout = page.findViewById(R.id.settings_page_edit_first_name_layout);
-        TextInputLayout second_name_layout = page.findViewById(R.id.settings_page_edit_second_name_layout);
-        TextInputLayout login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
-
         first_name_layout.setErrorEnabled(false);
         second_name_layout.setErrorEnabled(false);
         login_layout.setErrorEnabled(false);
@@ -94,10 +106,6 @@ public class UserPageSettings extends View {
         TextInputEditText old_password = page.findViewById(R.id.settings_page_edit_old_password);
         TextInputEditText new_password = page.findViewById(R.id.settings_page_edit_password);
         TextInputEditText re_new_password = page.findViewById(R.id.settings_page_edit_re_password);
-
-        TextInputLayout old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
-        TextInputLayout new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
-        TextInputLayout re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
 
         old_password_layout.setErrorEnabled(false);
         new_password_layout.setErrorEnabled(false);
@@ -156,6 +164,7 @@ public class UserPageSettings extends View {
                 saver.setOld_password(old_password.getText().toString());
                 saver.setNew_password(new_password.getText().toString());
             }
+            return;
         } else {
             if (is_old_password_empty &&
                     is_new_password_empty &&
@@ -194,9 +203,9 @@ public class UserPageSettings extends View {
         TextInputEditText new_password = page.findViewById(R.id.settings_page_edit_password);
         TextInputEditText re_new_password = page.findViewById(R.id.settings_page_edit_re_password);
 
-        TextInputLayout old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
-        TextInputLayout new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
-        TextInputLayout re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
+        old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
+        new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
+        re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
 
         old_password_layout.setErrorEnabled(false);
         new_password_layout.setErrorEnabled(false);
@@ -297,6 +306,10 @@ public class UserPageSettings extends View {
         second_name.setText(current_user.second_name);
         login_name.setText(current_user.login);
 
+        first_name_layout.setErrorEnabled(false);
+        second_name_layout.setErrorEnabled(false);
+        login_layout.setErrorEnabled(false);
+
         TextInputEditText old_password = page.findViewById(R.id.settings_page_edit_old_password);
         TextInputEditText new_password = page.findViewById(R.id.settings_page_edit_password);
         TextInputEditText re_new_password = page.findViewById(R.id.settings_page_edit_re_password);
@@ -304,6 +317,10 @@ public class UserPageSettings extends View {
         old_password.setText("");
         new_password.setText("");
         re_new_password.setText("");
+
+        old_password_layout.setErrorEnabled(false);
+        new_password_layout.setErrorEnabled(false);
+        re_new_password_layout.setErrorEnabled(false);
     }
 
     public static void changeUserImage(Bitmap image) {
@@ -318,13 +335,13 @@ public class UserPageSettings extends View {
     }
 
     public static void freeLogin() {
-        TextInputLayout login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
+        login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
         login_layout.setErrorEnabled(false);
     }
 
 
     public static void notFreeLogin() {
-        TextInputLayout login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
+        login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
         login_layout.setErrorEnabled(true);
         login_layout.setError("Логин занят, используйте другой");
     }
