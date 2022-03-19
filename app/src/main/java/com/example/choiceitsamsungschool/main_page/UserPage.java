@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,10 @@ public class UserPage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
+    private static Vector<SurveyCard> friends_list = new Vector<>();
+    private static Vector<SurveyCard> user_surveys = new Vector<>();
+    private static Vector<SurveyCard> favorites_surveys = new Vector<>();
+    private static Vector<SurveyCard> archive_surveys = new Vector<>();
 
     @Nullable
     @Override
@@ -86,14 +92,33 @@ public class UserPage extends Fragment {
 
             ViewGroup parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
 
-            for (int i = 0; i < 10; i++) {
-                parent_friends.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            if (friends_list.size() != 0) {
+                for (int i = 0; i < 10; i++) {
+                    parent_friends.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+                }
+            } else {
+                ProgressBar progressBar = new ProgressBar(context);
+                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                progressBar.setLayoutParams(params);
+                parent_friends.addView(progressBar);
+                parent_friends.setForegroundGravity(Gravity.CENTER);
             }
 
             ViewGroup parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
 
-            for (int i = 0; i < 10; i++) {
-                parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+            if (user_surveys.size() != 0) {
+                for (int i = 0; i < 10; i++) {
+                    parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+                }
+            } else {
+                ProgressBar progressBar = new ProgressBar(context);
+                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                progressBar.setLayoutParams(params);
+                parent_survey.addView(progressBar);
             }
 
             ViewPager viewPager = user_page.findViewById(R.id.user_page_view_pager);
@@ -201,5 +226,29 @@ public class UserPage extends Fragment {
 
     public void setLoginToken(String login, String token) {
 
+    }
+
+    public static Vector<SurveyCard> getUser_surveys() {
+        return user_surveys;
+    }
+
+    public static void setUser_surveys(Vector<SurveyCard> user_surveys) {
+        UserPage.user_surveys = user_surveys;
+    }
+
+    public static Vector<SurveyCard> getFavorites_surveys() {
+        return favorites_surveys;
+    }
+
+    public static void setFavorites_surveys(Vector<SurveyCard> favorites_surveys) {
+        UserPage.favorites_surveys = favorites_surveys;
+    }
+
+    public static Vector<SurveyCard> getArchive_surveys() {
+        return archive_surveys;
+    }
+
+    public static void setArchive_surveys(Vector<SurveyCard> archive_surveys) {
+        UserPage.archive_surveys = archive_surveys;
     }
 }
