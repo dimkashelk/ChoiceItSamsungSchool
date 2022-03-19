@@ -14,7 +14,7 @@ import com.example.choiceitsamsungschool.db.UserDao;
 @Database(entities = {
         User.class,
         Friend.class
-}, version = 16, exportSchema = false)
+}, version = 17, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;

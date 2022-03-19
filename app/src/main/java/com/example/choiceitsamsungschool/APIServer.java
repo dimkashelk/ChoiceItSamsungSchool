@@ -239,12 +239,14 @@ public class APIServer {
     }
 
     public void setFriendsList(Vector<Friend> friends) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
         String token = mainActivity.getToken();
         String login = mainActivity.getLogin();
         count_friends = friends.size();
         for (int i = 0; i < friends.size(); i++) {
             LoadImage loader = new LoadImage(this);
             loader.execute(APIServer.LOAD_IMAGE, friends.get(i).friend_id, login, token);
+            appDatabase.friendDao().addFriend(friends.get(i));
         }
         user_friends_list = friends;
     }
