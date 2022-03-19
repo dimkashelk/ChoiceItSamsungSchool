@@ -29,16 +29,10 @@ public class UserPageFavorites extends View {
 
             Vector<SurveyCard> cards = UserPage.getFavorites_surveys();
             if (cards.size() != 0) {
+                parent_favorites_survey.removeAllViews();
                 for (int i = 0; i < 5; i++) {
                     parent_favorites_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
                 }
-            } else {
-                ProgressBar progressBar = new ProgressBar(context);
-                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                progressBar.setLayoutParams(params);
-                parent_favorites_survey.addView(progressBar);
             }
             page = view;
         }
