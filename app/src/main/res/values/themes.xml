@@ -3,8 +3,8 @@
     <style name="Theme.ChoiceItSamsungSchool" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_100</item>
-        <item name="colorPrimaryVariant">@color/pink_300</item>
-        <item name="colorOnPrimary">@color/pink_500</item>
+        <item name="colorPrimaryVariant">@color/purple_300</item>
+        <item name="colorOnPrimary">@color/purple_500</item>
         <item name="colorSurface">@android:color/transparent</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,6 +12,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
         <item name="android:textColor">@color/black</item>
@@ -22,7 +23,7 @@
 
     <style name="Base.TextAppearance.MaterialComponents.Button.Outline" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">10dp</item>
-        <item name="strokeColor">@color/pink_200</item>
+        <item name="strokeColor">@color/purple_200</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -31,5 +32,18 @@
 
     <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/purple_400</item>
+        <item name="tabRippleColor">@color/purple_200</item>
+        <item name="tabSelectedTextColor">@color/purple_400</item>
+        <item name="tabTextColor">@color/purple_100</item>
+    </style>
+
+    <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="itemIconTint">@color/purple_300</item>
+        <item name="itemRippleColor">@color/purple_100</item>
+        <item name="itemIconSize">27dp</item>
     </style>
 </resources>

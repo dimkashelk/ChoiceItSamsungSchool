@@ -5,7 +5,7 @@
     android:id="@+id/user_page"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/purple_100">
+    android:background="@color/purple_400">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/user_tool_bar"
@@ -16,9 +16,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu"
         app:navigationIcon="@drawable/ic_menu_big"
-        app:navigationIconTint="@color/purple_400"
+        app:navigationIconTint="@color/white"
         android:gravity="center_vertical"
-        app:title="\@user_page" />
+        app:title="\@user_page"
+        app:titleTextColor="@color/white" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/user_content_layout"
@@ -41,14 +42,11 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/user_page_tab_layout"
+                style="@style/TabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabGravity="start"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/purple_400"
-                app:tabRippleColor="@color/pink_300"
-                app:tabSelectedTextColor="@color/purple_400"
-                app:tabTextColor="@color/pink_200" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/user_page_view_pager"
@@ -70,34 +68,33 @@
             app:layout_behavior="com.example.choiceitsamsungschool.main_page.LockedBottomSheetBehavior"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="@id/user_content_layout"
-            app:layout_constraintTop_toBottomOf="@id/user_content_layout">
+            app:layout_constraintTop_toBottomOf="@id/user_content_layout"
+            android:outlineAmbientShadowColor="@color/purple_100"
+            android:outlineSpotShadowColor="@color/purple_100">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/bottom_sheet_background"
+                android:backgroundTint="@android:color/transparent"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:focusable="true"
-                android:orientation="horizontal"
-                android:outlineAmbientShadowColor="@android:color/transparent"
-                android:outlineSpotShadowColor="@android:color/transparent">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserrat_regular"
                     android:gravity="center_vertical"
-                    android:text="Профиль"
+                    android:paddingStart="20dp"
+                    android:text="@string/profile"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/user_page_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+                android:layout_height="match_parent">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
@@ -248,10 +245,11 @@
                             android:layout_marginLeft="8pt"
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="8pt"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/montserrat_medium"
                             android:text="@string/edit_profile"
                             android:textColor="@color/black"
                             android:textSize="12sp"
+                            android:textAllCaps="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/user_page_info_layout" />
