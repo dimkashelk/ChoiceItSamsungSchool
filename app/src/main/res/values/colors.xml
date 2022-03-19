@@ -13,6 +13,8 @@
     <color name="pink_600">#D81B60</color>
     <color name="purple_700">#FF3700B3</color>
 
+    <color name="dark_grey">#121212</color>
+
     <color name="ted_image_picker_primary">@color/purple_400</color>
     <color name="ted_image_picker_primary_pressed">@color/purple_300</color>
 </resources>

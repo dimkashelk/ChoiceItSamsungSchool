@@ -96,14 +96,6 @@ public class UserPage extends Fragment {
                 for (int i = 0; i < 10; i++) {
                     parent_friends.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
                 }
-            } else {
-                ProgressBar progressBar = new ProgressBar(context);
-                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                progressBar.setLayoutParams(params);
-                parent_friends.addView(progressBar);
-                parent_friends.setForegroundGravity(Gravity.CENTER);
             }
 
             ViewGroup parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
@@ -112,13 +104,6 @@ public class UserPage extends Fragment {
                 for (int i = 0; i < 10; i++) {
                     parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
                 }
-            } else {
-                ProgressBar progressBar = new ProgressBar(context);
-                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
-                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                progressBar.setLayoutParams(params);
-                parent_survey.addView(progressBar);
             }
 
             ViewPager viewPager = user_page.findViewById(R.id.user_page_view_pager);
