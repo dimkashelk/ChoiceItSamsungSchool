@@ -5,7 +5,7 @@
     android:id="@+id/user_page"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/pink_100">
+    android:background="@color/purple_100">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/user_tool_bar"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu"
         app:navigationIcon="@drawable/ic_menu_big"
-        app:navigationIconTint="@color/pink_400"
+        app:navigationIconTint="@color/purple_400"
         android:gravity="center_vertical"
         app:title="\@user_page" />
 
@@ -45,9 +45,9 @@
                 android:layout_height="wrap_content"
                 app:tabGravity="start"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/pink_400"
+                app:tabIndicatorColor="@color/purple_400"
                 app:tabRippleColor="@color/pink_300"
-                app:tabSelectedTextColor="@color/pink_400"
+                app:tabSelectedTextColor="@color/purple_400"
                 app:tabTextColor="@color/pink_200" />
 
             <androidx.viewpager.widget.ViewPager
@@ -97,7 +97,7 @@
                 android:id="@+id/user_page_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/pink_50">
+                android:background="@color/white">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
@@ -293,7 +293,7 @@
                                     app:icon="@drawable/ic_arrow_right"
                                     app:iconGravity="end"
                                     app:iconTint="@color/black"
-                                    app:rippleColor="@color/pink_100" />
+                                    app:rippleColor="@color/purple_100" />
 
                                 <HorizontalScrollView
                                     android:id="@+id/user_page_friends_list_scroll"
@@ -308,11 +308,6 @@
                                         android:layout_gravity="center"
                                         android:orientation="horizontal">
 
-                                        <!--                                        <ProgressBar-->
-                                        <!--                                            android:id="@+id/progressBar"-->
-                                        <!--                                            android:layout_width="match_parent"-->
-                                        <!--                                            android:layout_height="match_parent"-->
-                                        <!--                                            android:visibility="visible" />-->
                                     </LinearLayout>
                                 </HorizontalScrollView>
                             </LinearLayout>

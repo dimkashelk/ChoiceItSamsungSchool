@@ -4,10 +4,10 @@
     android:id="@+id/survey_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/pink_100"
+    android:background="@color/purple_100"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/pink_100"
+    app:cardBackgroundColor="@color/purple_100"
     app:cardCornerRadius="15dp"
     app:cardUseCompatPadding="true">
 
