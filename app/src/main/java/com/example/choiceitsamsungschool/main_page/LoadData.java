@@ -21,6 +21,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
     private Vector<Friend> friends;
     private APIServer apiServer;
     private String method;
+    private Boolean logout = false;
 
     public LoadData(APIServer apiServer) {
         this.apiServer = apiServer;
@@ -75,6 +76,10 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
             }
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
+            if (!jsonObject.get("status").getAsBoolean()) {
+                logout = true;
+                return false;
+            }
             switch (strings[0]) {
                 case APIServer.LOAD_FRIENDS:
                     count_friends = jsonObject.get("count").getAsInt();
@@ -101,6 +106,10 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
             switch (method) {
                 case APIServer.LOAD_FRIENDS:
                     apiServer.setFriendsList(friends);
+            }
+        } else {
+            if (logout) {
+                apiServer.logout();
             }
         }
     }

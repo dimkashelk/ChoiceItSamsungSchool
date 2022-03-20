@@ -41,6 +41,7 @@ public class APIServer {
     public static final String LOAD_IMAGE = "images";
     public static final String LOAD_USER_DATA = "user";
     public static final String UPDATE_USER_DATA = "update_user_data";
+    private static final String LOAD_USER_SURVEYS = "user_surveys";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -226,9 +227,15 @@ public class APIServer {
     }
 
     public void loadUserData() {
-//        if (checkInternetPermission()) {
-            loadFriends();
-//        }
+        loadFriends();
+        loadUserSurveys();
+    }
+
+    private void loadUserSurveys() {
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        LoadData loader = new LoadData(this);
+        loader.execute(APIServer.LOAD_USER_SURVEYS, login, token);
     }
 
     private void loadFriends() {
@@ -276,5 +283,9 @@ public class APIServer {
         Authorize authorize = new Authorize(login, token);
         authorize.setMainActivity(mainActivity);
         authorize.execute();
+    }
+
+    public void logout() {
+        mainActivity.logout();
     }
 }
