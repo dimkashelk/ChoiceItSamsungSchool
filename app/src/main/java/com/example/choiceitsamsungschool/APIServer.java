@@ -9,14 +9,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
 import com.example.choiceitsamsungschool.main_page.UserPage;
+import com.example.choiceitsamsungschool.main_page.UserPageArchive;
+import com.example.choiceitsamsungschool.main_page.UserPageFavorites;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
+import java.util.List;
 import java.util.Vector;
 
 import okhttp3.MediaType;
@@ -41,11 +45,10 @@ public class APIServer {
     public static final String LOAD_IMAGE = "images";
     public static final String LOAD_USER_DATA = "user";
     public static final String UPDATE_USER_DATA = "update_user_data";
-    private static final String LOAD_USER_SURVEYS = "user_surveys";
+    public static final String LOAD_USER_SURVEYS = "user_surveys";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-    private final OkHttpClient client;
     private InternalStorage internalStorage;
     public static MainActivity mainActivity;
     public static WelcomePage welcomePage;
@@ -53,15 +56,17 @@ public class APIServer {
 
     private String token;
     private int count_friends = 0;
+    private int count_surveys = 0;
+    private int count_surveys_favorites = 0;
+    private int count_surveys_archive = 0;
     private Vector<Friend> user_friends_list;
 
     public APIServer() {
-        client = new OkHttpClient();
+
     }
 
     public APIServer(WelcomePage welcomePage) {
         this.welcomePage = welcomePage;
-        client = new OkHttpClient();
     }
 
     public static APIServer getSingletonAPIServer() {
@@ -287,5 +292,48 @@ public class APIServer {
 
     public void logout() {
         mainActivity.logout();
+    }
+
+    public void setUserSurveys(Vector<Survey> surveys) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        String token = mainActivity.getToken();
+        String login = mainActivity.getLogin();
+        for (int i = 0; i < surveys.size(); i++) {
+            if (surveys.get(i).is_archive) {
+                count_surveys_archive++;
+            } else if (surveys.get(i).is_favorites) {
+                count_surveys_favorites++;
+            } else {
+                count_surveys++;
+            }
+            LoadImage loader = new LoadImage(this);
+            loader.execute(APIServer.LOAD_IMAGE, surveys.get(i).survey_id, login, token);
+            appDatabase.surveyDao().addSurvey(surveys.get(i));
+        }
+    }
+
+    public void setSurveyTitleImage(Bitmap bitmap, String survey_id) {
+        internalStorage.saveSurveyTitleImage(bitmap, survey_id);
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        List<Survey> surveys = appDatabase.surveyDao().getSurvey(survey_id);
+        if (surveys.size() != 0) {
+            Survey survey = surveys.get(0);
+            if (survey.is_favorites) {
+                count_surveys_favorites--;
+                if (count_surveys_favorites == 0) {
+                    UserPageFavorites.updateFavorites();
+                }
+            } else if (survey.is_archive) {
+                count_surveys_archive--;
+                if (count_surveys_archive == 0) {
+                    UserPageArchive.updateArchive();
+                }
+            } else {
+                count_surveys--;
+                if (count_surveys == 0) {
+                    UserPage.get().updateSurvey();
+                }
+            }
+        }
     }
 }

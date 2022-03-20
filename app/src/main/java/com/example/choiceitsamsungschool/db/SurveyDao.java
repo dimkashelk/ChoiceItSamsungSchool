@@ -21,6 +21,18 @@ public interface SurveyDao {
     @Query("select * from Survey where id = :surveyId")
     public List<Survey> getSurvey(long surveyId);
 
+    @Query("select * from Survey where survey_id = :surveyId")
+    public List<Survey> getSurvey(String surveyId);
+
+    @Query("select * from Survey where is_favorites")
+    public List<Survey> getFavorites();
+
+    @Query("select * from Survey where is_archive")
+    public List<Survey> getArchives();
+
+    @Query("select * from Survey where not is_archive and not is_favorites")
+    public List<Survey> getSurveys();
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateSurvey(Survey survey);
 

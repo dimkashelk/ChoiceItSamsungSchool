@@ -16,7 +16,7 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        internalStorage = InternalStorage.getInternalStorage(getFilesDir());
+        internalStorage = InternalStorage.getInternalStorage();
 
         setContentView(R.layout.app_page);
 

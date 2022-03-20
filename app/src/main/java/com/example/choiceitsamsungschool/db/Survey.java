@@ -21,8 +21,14 @@ public class Survey {
     @ColumnInfo(name = "description")
     public String description;
 
-    @Ignore
-    public String image_url;
+    @ColumnInfo
+    public String title_image_url;
+
+    @ColumnInfo
+    public Boolean is_archive = false;
+
+    @ColumnInfo
+    public Boolean is_favorites = false;
 
     public Survey() {
     }

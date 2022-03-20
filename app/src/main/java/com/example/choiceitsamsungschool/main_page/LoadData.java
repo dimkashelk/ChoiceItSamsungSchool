@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -18,7 +19,9 @@ import okhttp3.Response;
 public class LoadData extends AsyncTask<String, Boolean, Boolean> {
     private OkHttpClient client = new OkHttpClient();
     private int count_friends = 0;
+    private int count_surveys = 0;
     private Vector<Friend> friends;
+    private Vector<Survey> surveys;
     private APIServer apiServer;
     private String method;
     private Boolean logout = false;
@@ -84,13 +87,27 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 case APIServer.LOAD_FRIENDS:
                     count_friends = jsonObject.get("count").getAsInt();
                     JsonArray friends_json = jsonObject.getAsJsonArray("friends");
-                    for (int i = 0; i < friends.size(); i++) {
+                    for (int i = 0; i < count_friends; i++) {
                         Friend friend = new Friend();
                         friend.friend_id = friends_json.get(i).getAsJsonObject().get("id").getAsString();
                         friend.first_name = friends_json.get(i).getAsJsonObject().get("first_name").getAsString();
                         friend.second_name = friends_json.get(i).getAsJsonObject().get("second_name").getAsString();
                         friend.image_url = friends_json.get(i).getAsJsonObject().get("image").getAsString();
                         friends.add(friend);
+                    }
+                    break;
+                case APIServer.LOAD_USER_SURVEYS:
+                    count_surveys = jsonObject.get("count").getAsInt();
+                    JsonArray surveys_json = jsonObject.getAsJsonArray("surveys");
+                    for (int i = 0; i < count_surveys; i++) {
+                        Survey survey = new Survey();
+                        survey.survey_id = surveys_json.get(i).getAsJsonObject().get("id").getAsString();
+                        survey.title = surveys_json.get(i).getAsJsonObject().get("title").getAsString();
+                        survey.description = surveys_json.get(i).getAsJsonObject().get("description").getAsString();
+                        survey.title_image_url = surveys_json.get(i).getAsJsonObject().get("title_image_url").getAsString();
+                        survey.is_archive = surveys_json.get(i).getAsJsonObject().get("is_archive").getAsBoolean();
+                        survey.is_favorites = surveys_json.get(i).getAsJsonObject().get("is_favorites").getAsBoolean();
+                        surveys.add(survey);
                     }
                     break;
             }
@@ -106,6 +123,8 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
             switch (method) {
                 case APIServer.LOAD_FRIENDS:
                     apiServer.setFriendsList(friends);
+                case APIServer.LOAD_USER_SURVEYS:
+                    apiServer.setUserSurveys(surveys);
             }
         } else {
             if (logout) {

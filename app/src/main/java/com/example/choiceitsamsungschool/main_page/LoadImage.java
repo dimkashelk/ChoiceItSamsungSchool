@@ -18,6 +18,7 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
     private OkHttpClient client = new OkHttpClient();
     private Bitmap bitmap;
     private String user_id;
+    private String survey_id;
     private APIServer apiServer;
     private String mode;
 
@@ -33,6 +34,11 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
          * @param id_user
          * @param login
          * @param token
+         * Load survey title image:
+         * @param METHOD
+         * @param id_survey
+         * @param login
+         * @param token
          * */
         RequestBody body;
         Request request;
@@ -44,9 +50,20 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                         "'login': '" + strings[2] + "'," +
                         "'token': '" + strings[3] + "'}";
                 body = RequestBody.create(json, APIServer.JSON);
-                user_id = strings[0];
+                user_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_IMAGE + "/" + strings[1])
+                        .post(body)
+                        .build();
+            case APIServer.LOAD_USER_SURVEYS:
+                mode = strings[0];
+                json = "{'is_title': " + true + "," +
+                        "'login': '" + strings[2] + "'," +
+                        "'token': '" + strings[3] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                survey_id = strings[1];
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_USER_SURVEYS + "/" + strings[1])
                         .post(body)
                         .build();
             default:
@@ -59,8 +76,15 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
             if (!response.isSuccessful()) {
                 return false;
             }
-            InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
+            switch (mode) {
+                case APIServer.LOAD_USER_SURVEYS:
+                case APIServer.LOAD_FRIENDS:
+                    InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    break;
+                default:
+                    bitmap = null;
+            }
             return true;
         } catch (Exception e) {
             return false;
@@ -73,6 +97,8 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
             switch (mode) {
                 case APIServer.LOAD_IMAGE:
                     apiServer.setFriendProfileImage(bitmap, user_id);
+                case APIServer.LOAD_USER_SURVEYS:
+                    apiServer.setSurveyTitleImage(bitmap, survey_id);
             }
         }
     }

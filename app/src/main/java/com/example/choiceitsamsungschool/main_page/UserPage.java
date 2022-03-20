@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +30,7 @@ import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.db.User;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -39,6 +38,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,10 +59,13 @@ public class UserPage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
-    private static Vector<SurveyCard> friends_list = new Vector<>();
-    private static Vector<SurveyCard> user_surveys = new Vector<>();
-    private static Vector<SurveyCard> favorites_surveys = new Vector<>();
-    private static Vector<SurveyCard> archive_surveys = new Vector<>();
+    private List<Friend> friends_list;
+    private List<Survey> user_surveys;
+    private List<Survey> favorites_surveys;
+    private List<Survey> archive_surveys;
+    private ViewGroup parent_survey;
+    private ViewGroup parent_friends;
+
 
     @Nullable
     @Override
@@ -73,9 +76,11 @@ public class UserPage extends Fragment {
         if (page == null) {
             UserPageSettings.userPage = this;
 
+            Context context = getContext();
+            AppDatabase appDatabase = AppDatabase.getDatabase(context);
+
             user_page = inflater.inflate(R.layout.user_page, container, false);
             this.inflater = inflater;
-            Context context = getContext();
 
             apiServer = APIServer.getSingletonAPIServer();
             apiServer.setUserPage(this);
@@ -90,19 +95,37 @@ public class UserPage extends Fragment {
             LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
             friends = user_page.findViewById(R.id.user_page_friends_list);
 
-            ViewGroup parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+            parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+            friends_list = appDatabase.friendDao().getAllFriend();
 
             if (friends_list.size() != 0) {
-                for (int i = 0; i < 10; i++) {
-                    parent_friends.addView(new FriendCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+                for (int i = 0; i < friends_list.size(); i++) {
+                    parent_friends.addView(new FriendCard(
+                            context,
+                            friends_list.get(i).friend_id,
+                            InternalStorage.getInternalStorage().load(
+                                    friends_list.get(i).friend_id,
+                                    InternalStorage.PROFILE_IMAGE
+                            ),
+                            inflater,
+                            null).getPage());
                 }
             }
 
-            ViewGroup parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
+            parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
+            user_surveys = appDatabase.surveyDao().getSurveys();
 
             if (user_surveys.size() != 0) {
-                for (int i = 0; i < 10; i++) {
-                    parent_survey.addView(new SurveyCard(context, String.valueOf(i), context.getDrawable(R.mipmap.ic_launcher), inflater, null).getPage());
+                for (int i = 0; i < user_surveys.size(); i++) {
+                    parent_survey.addView(new SurveyCard(
+                            context,
+                            user_surveys.get(i).survey_id,
+                            InternalStorage.getInternalStorage().load(
+                                    user_surveys.get(i).survey_id,
+                                    InternalStorage.SURVEY_TITLE_IMAGE
+                            ),
+                            inflater,
+                            null).getPage());
                 }
             }
 
@@ -121,10 +144,9 @@ public class UserPage extends Fragment {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
             // user info
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
             User user = appDatabase.userDao().getAllUsers().get(0);
             TextView full_name = user_page.findViewById(R.id.user_page_full_name);
-            full_name.setText(user.second_name + " " + user.first_name);
+            full_name.setText(user.first_name + " " + user.second_name);
 
             toolbar.setTitle("@" + user.login);
 
@@ -213,27 +235,24 @@ public class UserPage extends Fragment {
 
     }
 
-    public static Vector<SurveyCard> getUser_surveys() {
-        return user_surveys;
+    public static UserPage get() {
+        return page;
     }
 
-    public static void setUser_surveys(Vector<SurveyCard> user_surveys) {
-        UserPage.user_surveys = user_surveys;
-    }
-
-    public static Vector<SurveyCard> getFavorites_surveys() {
-        return favorites_surveys;
-    }
-
-    public static void setFavorites_surveys(Vector<SurveyCard> favorites_surveys) {
-        UserPage.favorites_surveys = favorites_surveys;
-    }
-
-    public static Vector<SurveyCard> getArchive_surveys() {
-        return archive_surveys;
-    }
-
-    public static void setArchive_surveys(Vector<SurveyCard> archive_surveys) {
-        UserPage.archive_surveys = archive_surveys;
+    public void updateSurvey() {
+        AppDatabase appDatabase = AppDatabase.getDatabase(getContext());
+        user_surveys = appDatabase.surveyDao().getSurveys();
+        parent_survey.removeAllViews();
+        for (int i = 0; i < user_surveys.size(); i++) {
+            parent_survey.addView(new SurveyCard(
+                    page.getContext(),
+                    user_surveys.get(i).survey_id,
+                    InternalStorage.getInternalStorage().load(
+                            user_surveys.get(i).survey_id,
+                            InternalStorage.SURVEY_TITLE_IMAGE
+                    ),
+                    inflater,
+                    null).getPage());
+        }
     }
 }
