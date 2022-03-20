@@ -70,9 +70,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:hint="@string/first_name"
-                        app:errorContentDescription="@string/error_first_name"
-                        app:errorTextColor="@color/purple_400"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/error_first_name">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_first_name"
@@ -105,9 +103,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:hint="@string/second_name"
-                        app:errorContentDescription="@string/error_second_name"
-                        app:errorTextColor="@color/purple_700"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/error_second_name">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_second_name"
@@ -140,9 +136,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:hint="@string/short_name"
-                        app:errorContentDescription="@string/error_login"
-                        app:errorTextColor="@color/purple_700"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/error_login">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_login"
@@ -201,9 +195,7 @@
                         android:layout_marginBottom="5dp"
                         android:hint="@string/old_password"
                         app:endIconMode="password_toggle"
-                        app:errorContentDescription="@string/wrong_password"
-                        app:errorTextColor="@color/purple_700"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/wrong_password">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_old_password"
@@ -237,9 +229,7 @@
                         android:layout_marginBottom="5dp"
                         android:hint="@string/new_password"
                         app:endIconMode="password_toggle"
-                        app:errorContentDescription="@string/error_password"
-                        app:errorTextColor="@color/purple_700"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/error_password">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_password"
@@ -273,9 +263,7 @@
                         android:layout_marginBottom="5dp"
                         android:hint="@string/re_type_password"
                         app:endIconMode="password_toggle"
-                        app:errorContentDescription="@string/error_re_password"
-                        app:errorTextColor="@color/purple_700"
-                        app:hintTextColor="@color/purple_400">
+                        app:errorContentDescription="@string/error_re_password">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/settings_page_edit_re_password"

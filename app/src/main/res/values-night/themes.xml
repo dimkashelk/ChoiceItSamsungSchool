@@ -17,7 +17,7 @@
 
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="colorAccent">@color/purple_700</item>
+        <item name="colorAccent">@color/purple_100</item>
     </style>
 
     <style name="Base.TextAppearance.MaterialComponents.Button.Outline" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
@@ -65,7 +65,9 @@
         <item name="boxCornerRadiusTopEnd">15dp</item>
         <item name="boxCornerRadiusBottomStart">15dp</item>
         <item name="boxCornerRadiusBottomEnd">15dp</item>
-        <item name="colorPrimaryContainer">@color/white</item>
+        <item name="colorPrimaryContainer">@color/purple_300</item>
+        <item name="hintTextColor">@color/purple_100</item>
+        <item name="errorTextColor">@color/purple_100</item>
     </style>
 
     <style name="OutlineButton" parent="Base.TextAppearance.MaterialComponents.Button.Outline">
@@ -80,8 +82,11 @@
         <item name="android:outlineAmbientShadowColor" tools:targetApi="p">@android:color/transparent</item>
         <item name="android:textColor">@color/white</item>
         <item name="rippleColor">@color/purple_400</item>
-        <item name="android:backgroundTint">@color/purple_300</item>
         <item name="cornerRadius">15dp</item>
+    </style>
+
+    <style name="FillButton.LoadingButton" parent="FillButton">
+        <item name="android:backgroundTint">@color/purple_300</item>
     </style>
 
     <style name="ProgressBar">

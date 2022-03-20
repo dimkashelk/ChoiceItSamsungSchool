@@ -64,7 +64,9 @@
         <item name="boxCornerRadiusTopEnd">15dp</item>
         <item name="boxCornerRadiusBottomStart">15dp</item>
         <item name="boxCornerRadiusBottomEnd">15dp</item>
-        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeColor">@color/purple_300</item>
+        <item name="hintTextColor">@color/purple_300</item>
+        <item name="errorTextColor">@color/purple_700</item>
     </style>
 
     <style name="OutlineButton" parent="Base.TextAppearance.MaterialComponents.Button.Outline">
@@ -86,7 +88,7 @@
     </style>
 
     <style name="FillButton.LoadingButton" parent="FillButton">
-        <item name="android:backgroundTint">@color/purple_300</item>
+        <item name="android:backgroundTint">@color/purple_200</item>
     </style>
 
     <style name="ProgressBar">
