@@ -231,10 +231,6 @@ public class UserPage extends Fragment {
                 });
     }
 
-    public void setLoginToken(String login, String token) {
-
-    }
-
     public static UserPage get() {
         return page;
     }
