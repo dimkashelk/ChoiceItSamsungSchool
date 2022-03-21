@@ -11,11 +11,12 @@ import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Survey;
 
 import java.util.List;
+import java.util.Vector;
 
 public class UserPageArchive extends View {
     private static View page = null;
     private static ViewGroup parent_archive_survey = null;
-    private static List<Survey> surveys;
+    private static List<Survey> surveys = new Vector<>();
     private static LayoutInflater inflater;
 
     public UserPageArchive(Context context) {

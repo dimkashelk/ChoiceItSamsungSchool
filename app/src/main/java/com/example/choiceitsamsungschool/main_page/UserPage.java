@@ -59,10 +59,10 @@ public class UserPage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
-    private List<Friend> friends_list;
-    private List<Survey> user_surveys;
-    private List<Survey> favorites_surveys;
-    private List<Survey> archive_surveys;
+    private List<Friend> friends_list = new Vector<>();
+    private List<Survey> user_surveys = new Vector<>();
+    private List<Survey> favorites_surveys = new Vector<>();
+    private List<Survey> archive_surveys = new Vector<>();
     private ViewGroup parent_survey;
     private ViewGroup parent_friends;
 

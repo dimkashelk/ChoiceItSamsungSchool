@@ -20,7 +20,7 @@ import java.util.Vector;
 public class UserPageFavorites extends View {
     private static View page;
     private static ViewGroup parent_favorites_survey = null;
-    private static List<Survey> surveys;
+    private static List<Survey> surveys = new Vector<>();
     private static LayoutInflater inflater;
 
     public UserPageFavorites(Context context) {
