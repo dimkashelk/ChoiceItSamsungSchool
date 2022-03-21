@@ -68,4 +68,6 @@
     <string name="filters">Фильтры</string>
     <string name="news_feed">Лента</string>
     <string name="show_all">Показать все</string>
+    <string name="sort">Сортировать</string>
+    <string name="by_date">По дате</string>
 </resources>
