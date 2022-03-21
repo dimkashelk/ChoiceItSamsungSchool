@@ -70,4 +70,6 @@
     <string name="show_all">Показать все</string>
     <string name="sort">Сортировать</string>
     <string name="by_date">По дате</string>
+    <string name="by_popular">По популярности</string>
+    <string name="by_active">По активности</string>
 </resources>

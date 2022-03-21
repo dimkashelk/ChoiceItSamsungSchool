@@ -231,6 +231,24 @@
                         android:layout_marginStart="25dp"
                         android:text="@string/by_date"
                         app:layout_constraintTop_toBottomOf="@id/home_page_sort_by_title"/>
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/home_page_check_box_active"
+                        style="@style/CheckBoxStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:text="@string/by_active"
+                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_date"/>
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/home_page_check_box_most_popular"
+                        style="@style/CheckBoxStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:text="@string/by_popular"
+                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_active"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
