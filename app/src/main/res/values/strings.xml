@@ -64,4 +64,8 @@
     <string name="save_changes">Сохранить изменения</string>
     <string name="profile">Профиль</string>
     <string name="create">Создать</string>
+    <string name="main_page">Главная</string>
+    <string name="filters">Фильтры</string>
+    <string name="news_feed">Лента</string>
+    <string name="show_all">Показать все</string>
 </resources>

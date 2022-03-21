@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Survey;
+import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
 import com.example.choiceitsamsungschool.main_page.UserPage;
@@ -24,7 +25,6 @@ import java.util.List;
 import java.util.Vector;
 
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
 
 public class APIServer {
     private static APIServer apiServer = null;
@@ -53,6 +53,7 @@ public class APIServer {
     public static MainActivity mainActivity;
     public static WelcomePage welcomePage;
     public static UserPage userPage;
+    public static HomePage homePage;
 
     private String token;
     private int count_friends = 0;
@@ -335,5 +336,9 @@ public class APIServer {
                 }
             }
         }
+    }
+
+    public void setHomePage(HomePage homePage) {
+        APIServer.homePage = homePage;
     }
 }
