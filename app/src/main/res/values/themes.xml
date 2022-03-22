@@ -77,6 +77,10 @@
         <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
+    <style name="OutlineButton.CheckBox" parent="OutlineButton">
+        <item name="strokeWidth">0dp</item>
+    </style>
+
     <style name="FillButton">
         <item name="background">@drawable/button_with_corner_radius_flooded</item>
         <item name="android:outlineSpotShadowColor" tools:targetApi="p">@android:color/transparent

@@ -223,32 +223,92 @@
                         app:layout_constraintTop_toBottomOf="@id/home_page_divider_2"
                         tools:ignore="RtlSymmetry" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/home_page_check_box_date"
-                        style="@style/CheckBoxStyle"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_page_check_box_date_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:text="@string/by_date"
-                        app:layout_constraintTop_toBottomOf="@id/home_page_sort_by_title"/>
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/home_page_sort_by_title">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/home_page_check_box_active"
-                        style="@style/CheckBoxStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:text="@string/by_active"
-                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_date"/>
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/home_page_check_box_date"
+                            style="@style/CheckBoxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="@string/by_date"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/home_page_check_box_most_popular"
-                        style="@style/CheckBoxStyle"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_page_check_box_date_button"
+                            style="@style/OutlineButton.CheckBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/decreasing"
+                            app:icon="@drawable/avd_checkable_expandcollapse_collapsed_to_expanded"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_page_check_box_active_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:text="@string/by_popular"
-                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_active"/>
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_date_layout">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/home_page_check_box_active"
+                            style="@style/CheckBoxStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="@string/by_active"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_page_check_box_active_button"
+                            style="@style/OutlineButton.CheckBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/decreasing"
+                            app:icon="@drawable/avd_checkable_expandcollapse_collapsed_to_expanded"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/home_page_check_box_most_popular_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/home_page_check_box_active_layout">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/home_page_check_box_most_popular"
+                            style="@style/CheckBoxStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:text="@string/by_popular"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_page_check_box_most_popular_button"
+                            style="@style/OutlineButton.CheckBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/decreasing"
+                            app:icon="@drawable/avd_checkable_expandcollapse_collapsed_to_expanded"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,4 +72,6 @@
     <string name="by_date">По дате</string>
     <string name="by_popular">По популярности</string>
     <string name="by_active">По активности</string>
+    <string name="decreasing">Убывание</string>
+    <string name="increasing">Возрастание</string>
 </resources>
