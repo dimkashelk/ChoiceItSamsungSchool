@@ -74,4 +74,6 @@
     <string name="by_active">По активности</string>
     <string name="decreasing">Убывание</string>
     <string name="increasing">Возрастание</string>
+    <string name="from">От</string>
+    <string name="to">До</string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,8 @@ public class HomePage extends Fragment {
     private boolean is_increasing_most_popular = false;
     private boolean is_increasing_active = false;
     private boolean is_increasing_date = false;
+    private NumberPicker from;
+    private NumberPicker to;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
@@ -160,6 +163,28 @@ public class HomePage extends Fragment {
                         icon_collapsed_most_popular.start();
                         is_increasing_most_popular = true;
                     }
+                }
+            });
+
+            from = home_page.findViewById(R.id.home_page_number_picker_from);
+            from.setMinValue(1);
+            from.setMaxValue(15);
+            from.setValue(1);
+            from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    to.setMinValue(newVal);
+                }
+            });
+
+            to = home_page.findViewById(R.id.home_page_number_picker_to);
+            to.setMinValue(1);
+            to.setMaxValue(15);
+            to.setValue(15);
+            to.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    from.setMaxValue(newVal);
                 }
             });
 
