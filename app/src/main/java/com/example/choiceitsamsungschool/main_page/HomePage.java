@@ -188,6 +188,12 @@ public class HomePage extends Fragment {
                 }
             });
 
+            MaterialButton reset_all = home_page.findViewById(R.id.home_page_reset_all);
+            reset_all.setOnClickListener(v -> changeState());
+
+            MaterialButton apply = home_page.findViewById(R.id.home_page_apply);
+            apply.setOnClickListener(v -> changeState());
+
             page = this;
             return home_page;
         } else {
