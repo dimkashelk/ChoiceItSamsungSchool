@@ -42,7 +42,7 @@ public class UserPageArchive extends View {
                                     InternalStorage.SURVEY_TITLE_IMAGE
                             ),
                             inflater,
-                            null).getPage());
+                            UserPage.get()).getPage());
                 }
             }
             page = view;
@@ -65,7 +65,7 @@ public class UserPageArchive extends View {
                                 InternalStorage.SURVEY_TITLE_IMAGE
                         ),
                         inflater,
-                        null).getPage());
+                        UserPage.get()).getPage());
             }
         }
     }

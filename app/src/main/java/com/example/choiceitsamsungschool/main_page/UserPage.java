@@ -125,7 +125,7 @@ public class UserPage extends Fragment {
                                     InternalStorage.SURVEY_TITLE_IMAGE
                             ),
                             inflater,
-                            null).getPage());
+                            this).getPage());
                 }
             }
 
@@ -248,7 +248,7 @@ public class UserPage extends Fragment {
                             InternalStorage.SURVEY_TITLE_IMAGE
                     ),
                     inflater,
-                    null).getPage());
+                    this).getPage());
         }
     }
 }
