@@ -18,19 +18,26 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Friend;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+
+import java.util.List;
+import java.util.Vector;
 
 public class HomePage extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static HomePage page = null;
+    private static List<Friend> friends = new Vector<>();
     private View home_page;
     private BottomSheetBehavior sheetBehavior;
-    private MaterialButton button;
     private LayoutInflater inflater;
     private APIServer apiServer;
     private MaterialToolbar toolbar;
@@ -48,8 +55,9 @@ public class HomePage extends Fragment {
     private boolean is_increasing_date = false;
     private NumberPicker from;
     private NumberPicker to;
+    private static ChipGroup friends_group = null;
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,7 +97,23 @@ public class HomePage extends Fragment {
             sheetBehavior.setHideable(false);
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-            ChipGroup friends_group = home_page.findViewById(R.id.home_page_friends_chips_group);
+            friends_group = home_page.findViewById(R.id.home_page_friends_chips_group);
+
+//            if (friends.size() == 0) {
+//                friends_group.removeAllViews();
+//                for (int i = 0; i < 10; i++) {
+//                    Chip friend = new Chip(context);
+//                    friend.setText(String.valueOf(i) + " " + "chip");
+//                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+//                            context,
+//                            null,
+//                            0,
+//                            R.style.ChipStyle
+//                    );
+//                    friend.setChipDrawable(chipDrawable);
+//                    friends_group.addView(friend);
+//                }
+//            }
 
             MaterialButton show_all_friends = home_page.findViewById(R.id.home_page_show_all_friends);
             show_all_friends.setOnClickListener(new View.OnClickListener() {
@@ -207,15 +231,36 @@ public class HomePage extends Fragment {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             toolbar.setNavigationIcon(menu);
             menu.start();
-            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
         } else {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             toolbar.setNavigationIcon(close);
             close.start();
+            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
         }
     }
 
     public View getHome_page() {
         return home_page;
+    }
+
+    @SuppressLint("SetTextI18n")
+    public static void updateFriendsChips() {
+        AppDatabase appDatabase = AppDatabase.getDatabase(MainActivity.get().getBaseContext());
+        friends = appDatabase.friendDao().getAllFriend();
+        if (friends_group != null) {
+            friends_group.removeAllViews();
+            for (int i = 0; i < friends.size(); i++) {
+                Chip friend = new Chip(page.getContext());
+                friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+                        page.getContext(),
+                        null,
+                        0,
+                        R.style.ChipStyle
+                );
+                friend.setChipDrawable(chipDrawable);
+                friends_group.addView(friend);
+            }
+        }
     }
 }

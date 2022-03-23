@@ -262,6 +262,7 @@ public class APIServer {
             appDatabase.friendDao().addFriend(friends.get(i));
         }
         user_friends_list = friends;
+        HomePage.updateFriendsChips();
     }
 
     public synchronized void setFriendProfileImage(Bitmap bitmap, String id) {
