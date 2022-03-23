@@ -2,7 +2,6 @@ package com.example.choiceitsamsungschool.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -29,6 +28,12 @@ public class Survey {
 
     @ColumnInfo
     public Boolean is_favorites = false;
+
+    @ColumnInfo
+    public Boolean is_news = false;
+
+    @ColumnInfo
+    public String person_url;
 
     public Survey() {
     }

@@ -19,6 +19,7 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
     private Bitmap bitmap;
     private String user_id;
     private String survey_id;
+    private String person_id;
     private APIServer apiServer;
     private String mode;
 
@@ -37,6 +38,11 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
          * Load survey title image:
          * @param METHOD
          * @param id_survey
+         * @param login
+         * @param token
+         * Load person image
+         * @param METHOD
+         * @param person_id
          * @param login
          * @param token
          * */
@@ -66,6 +72,17 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                         .url(APIServer.URL + APIServer.LOAD_USER_SURVEYS + "/" + strings[1])
                         .post(body)
                         .build();
+            case APIServer.LOAD_PERSON:
+                mode = strings[0];
+                json = "{'profile': " + true + "," +
+                        "'login': '" + strings[2] + "'," +
+                        "'token': '" + strings[3] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                person_id = strings[1];
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_PERSON + "/" + strings[1])
+                        .post(body)
+                        .build();
             default:
                 request = new Request.Builder()
                         .url(APIServer.URL)
@@ -77,6 +94,7 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                 return false;
             }
             switch (mode) {
+                case APIServer.LOAD_PERSON:
                 case APIServer.LOAD_USER_SURVEYS:
                 case APIServer.LOAD_FRIENDS:
                     InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
@@ -99,6 +117,8 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                     apiServer.setFriendProfileImage(bitmap, user_id);
                 case APIServer.LOAD_USER_SURVEYS:
                     apiServer.setSurveyTitleImage(bitmap, survey_id);
+                case APIServer.LOAD_PERSON:
+                    apiServer.setPersonImage(bitmap, person_id);
             }
         }
     }

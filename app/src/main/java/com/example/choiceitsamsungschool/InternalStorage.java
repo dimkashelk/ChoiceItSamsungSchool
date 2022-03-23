@@ -99,4 +99,17 @@ public class InternalStorage {
         } catch (Exception ignored) {
         }
     }
+
+    public void savePersonProfileImage(Bitmap bitmap, String person_id) {
+        try {
+            String file_dir = internalStorageDir + profile_dir;
+            File dir = new File(file_dir);
+            File file = new File(dir, person_id + _profile + format);
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception ignored) {
+        }
+    }
 }

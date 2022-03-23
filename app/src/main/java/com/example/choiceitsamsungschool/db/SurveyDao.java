@@ -30,7 +30,7 @@ public interface SurveyDao {
     @Query("select * from Survey where is_archive")
     public List<Survey> getArchives();
 
-    @Query("select * from Survey where not is_archive and not is_favorites")
+    @Query("select * from Survey where not is_archive and not is_favorites and not is_news")
     public List<Survey> getSurveys();
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

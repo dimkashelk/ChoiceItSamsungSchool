@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
@@ -50,13 +52,15 @@ public class HomePage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
-    private boolean is_increasing_most_popular = false;
-    private boolean is_increasing_active = false;
-    private boolean is_increasing_date = false;
-    private NumberPicker from;
-    private NumberPicker to;
+    private static boolean is_increasing_most_popular = false;
+    private static boolean is_increasing_active = false;
+    private static boolean is_increasing_date = false;
+    private static NumberPicker from;
+    private static NumberPicker to;
     private static ChipGroup friends_group = null;
+    private static Vector<Friend> friends_list = new Vector<>();
     private static ViewGroup parent_surveys = null;
+    private static Vector<Survey> surveys_list = new Vector<>();
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -100,11 +104,11 @@ public class HomePage extends Fragment {
 
             friends_group = home_page.findViewById(R.id.home_page_friends_chips_group);
 
-            if (friends.size() != 0) {
+            if (friends.size() == 0) {
                 friends_group.removeAllViews();
-                for (int i = 0; i < friends.size(); i++) {
+                for (int i = 0; i < 10; i++) {
                     Chip friend = new Chip(context);
-                    friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+                    friend.setText(i + " " + "chip");
                     ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
                             context,
                             null,
@@ -113,6 +117,7 @@ public class HomePage extends Fragment {
                     );
                     friend.setChipDrawable(chipDrawable);
                     friends_group.addView(friend);
+                    friends_list.add(new Friend(String.valueOf(i), "First", "Second", ""));
                 }
             }
 
@@ -276,5 +281,49 @@ public class HomePage extends Fragment {
                 friends_group.addView(friend);
             }
         }
+    }
+
+    public static boolean get_increasing_most_popular() {
+        return is_increasing_most_popular;
+    }
+
+    public static boolean get_increasing_active() {
+        return is_increasing_active;
+    }
+
+    public static boolean get_increasing_date() {
+        return is_increasing_date;
+    }
+
+    @SuppressLint("ResourceType")
+    public static List<String> get_selected_friends() {
+        if (friends_group != null) {
+            Vector<String> friend_list = new Vector<>();
+            for (Integer i : friends_group.getCheckedChipIds()) {
+                friend_list.add(friends_list.get(i - 1).friend_id);
+            }
+            return friend_list;
+        }
+        return new Vector<>();
+    }
+
+    public static int get_min_count() {
+        if (page == null) {
+            return 1;
+        } else {
+            return from.getValue();
+        }
+    }
+
+    public static int get_max_count() {
+        if (page == null) {
+            return 15;
+        } else {
+            return to.getValue();
+        }
+    }
+
+    public static void updateNewsFeed() {
+
     }
 }

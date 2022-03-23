@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
@@ -21,6 +22,7 @@ import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
@@ -46,6 +48,8 @@ public class APIServer {
     public static final String LOAD_USER_DATA = "user";
     public static final String UPDATE_USER_DATA = "update_user_data";
     public static final String LOAD_USER_SURVEYS = "user_surveys";
+    public static final String LOAD_USER_NEWS_FEED = "user_news_feed";
+    public static final String LOAD_PERSON = "load_person";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -61,6 +65,8 @@ public class APIServer {
     private int count_surveys_favorites = 0;
     private int count_surveys_archive = 0;
     private Vector<Friend> user_friends_list;
+    private int count_news = 0;
+    private int count_news_persons = 0;
 
     public APIServer() {
 
@@ -235,6 +241,32 @@ public class APIServer {
     public void loadUserData() {
         loadFriends();
         loadUserSurveys();
+        loadUserNewsFeed();
+    }
+
+    private void loadUserNewsFeed() {
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        LoadData loader = new LoadData(this);
+        List<String> strings = HomePage.get_selected_friends();
+        StringBuilder ids = new StringBuilder();
+        for (String s : strings) {
+            ids.append(s).append(",");
+        }
+        if (ids.length() > 0) {
+            ids.deleteCharAt(ids.length() - 1);
+        }
+        loader.execute(
+                APIServer.LOAD_USER_NEWS_FEED,
+                login,
+                token,
+                ids.toString(),
+                String.valueOf(HomePage.get_min_count()),
+                String.valueOf(HomePage.get_max_count()),
+                String.valueOf(HomePage.get_increasing_most_popular()),
+                String.valueOf(HomePage.get_increasing_active()),
+                String.valueOf(HomePage.get_increasing_date())
+        );
     }
 
     private void loadUserSurveys() {
@@ -311,6 +343,12 @@ public class APIServer {
             LoadImage loader = new LoadImage(this);
             loader.execute(APIServer.LOAD_IMAGE, surveys.get(i).survey_id, login, token);
             appDatabase.surveyDao().addSurvey(surveys.get(i));
+
+            List<Person> persons = appDatabase.personDao().getPerson(surveys.get(i).person_url);
+            if (persons.size() == 0 && surveys.get(i).person_url.equals(login)) {
+                LoadData loadData = new LoadData(this);
+                loadData.execute(APIServer.LOAD_PERSON, login, token, surveys.get(i).person_url);
+            }
         }
     }
 
@@ -341,5 +379,43 @@ public class APIServer {
 
     public void setHomePage(HomePage homePage) {
         APIServer.homePage = homePage;
+    }
+
+    public void setNews(Vector<Survey> news) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        String token = mainActivity.getToken();
+        String login = mainActivity.getLogin();
+        count_news = news.size();
+        HashSet<String> persons = new HashSet<>();
+        for (int i = 0; i < news.size(); i++) {
+            LoadImage loader_image = new LoadImage(this);
+            loader_image.execute(APIServer.LOAD_IMAGE, news.get(i).survey_id, login, token);
+            appDatabase.surveyDao().addSurvey(news.get(i));
+            persons.add(news.get(i).person_url);
+        }
+        for (String person : persons) {
+            LoadData loader_person = new LoadData(this);
+            loader_person.execute(APIServer.LOAD_PERSON, login, token, person);
+        }
+    }
+
+    public void addPerson(Person person) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        List<Person> persons = appDatabase.personDao().getPerson(person.person_id);
+        if (persons.size() == 0) {
+            LoadImage loader = new LoadImage(this);
+            loader.execute(APIServer.LOAD_PERSON, person.person_id, login, token);
+            appDatabase.personDao().addPerson(person);
+        }
+    }
+
+    public void setPersonImage(Bitmap bitmap, String person_id) {
+        internalStorage.savePersonProfileImage(bitmap, person_id);
+        count_news_persons--;
+        if (count_news_persons == 0) {
+            HomePage.updateNewsFeed();
+        }
     }
 }
