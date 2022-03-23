@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.AppDatabase;
+import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
@@ -40,7 +40,7 @@ public class HomePage extends Fragment {
     private static List<Friend> friends = new Vector<>();
     private View home_page;
     private BottomSheetBehavior sheetBehavior;
-    private LayoutInflater inflater;
+    private static LayoutInflater inflater;
     private APIServer apiServer;
     private MaterialToolbar toolbar;
     private AnimatedVectorDrawable icon_collapsed_date;
@@ -60,7 +60,7 @@ public class HomePage extends Fragment {
     private static ChipGroup friends_group = null;
     private static Vector<Friend> friends_list = new Vector<>();
     private static ViewGroup parent_surveys = null;
-    private static Vector<Survey> surveys_list = new Vector<>();
+    private static List<Survey> surveys_list = new Vector<>();
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -227,14 +227,17 @@ public class HomePage extends Fragment {
             parent_surveys = (ViewGroup) home_page.findViewById(R.id.home_page_content_layout);
             parent_surveys.removeAllViews();
 
-            for (int i = 0; i < 10; i++) {
-                SurveyCard surveyCard = new SurveyCard(
-                        context,
-                        String.valueOf(i),
-                        getResources().getDrawable(R.mipmap.ic_launcher),
-                        inflater,
-                        this);
-                parent_surveys.addView(surveyCard.getPage());
+            if (surveys_list.size() != 0) {
+                parent_surveys.removeAllViews();
+                for (int i = 0; i < surveys_list.size(); i++) {
+                    SurveyCard surveyCard = new SurveyCard(
+                            context,
+                            surveys_list.get(i).survey_id,
+                            InternalStorage.getInternalStorage().load(surveys_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
+                            inflater,
+                            this);
+                    parent_surveys.addView(surveyCard.getPage());
+                }
             }
 
             page = this;
@@ -324,6 +327,20 @@ public class HomePage extends Fragment {
     }
 
     public static void updateNewsFeed() {
-
+        if (parent_surveys == null) {
+            AppDatabase appDatabase = AppDatabase.getDatabase(MainActivity.get().getBaseContext());
+            surveys_list = appDatabase.surveyDao().getNews();
+        } else {
+            parent_surveys.removeAllViews();
+            for (int i = 0; i < surveys_list.size(); i++) {
+                SurveyCard surveyCard = new SurveyCard(
+                        page.getContext(),
+                        surveys_list.get(i).survey_id,
+                        InternalStorage.getInternalStorage().load(surveys_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
+                        inflater,
+                        page);
+                parent_surveys.addView(surveyCard.getPage());
+            }
+        }
     }
 }

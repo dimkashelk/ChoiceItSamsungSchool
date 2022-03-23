@@ -33,6 +33,9 @@ public interface SurveyDao {
     @Query("select * from Survey where not is_archive and not is_favorites and not is_news")
     public List<Survey> getSurveys();
 
+    @Query("select * from Survey where is_news")
+    public List<Survey> getNews();
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateSurvey(Survey survey);
 
