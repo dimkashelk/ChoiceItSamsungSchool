@@ -119,4 +119,15 @@
         <item name="useMaterialThemeColors">false</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/dark_grey</item>
+    </style>
+
+    <style name="FillButton.CardView" parent="FillButton">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="iconTint">@color/white</item>
+    </style>
 </resources>

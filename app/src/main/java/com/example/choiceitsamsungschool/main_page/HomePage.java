@@ -56,6 +56,7 @@ public class HomePage extends Fragment {
     private NumberPicker from;
     private NumberPicker to;
     private static ChipGroup friends_group = null;
+    private static ViewGroup parent_surveys = null;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -99,21 +100,21 @@ public class HomePage extends Fragment {
 
             friends_group = home_page.findViewById(R.id.home_page_friends_chips_group);
 
-//            if (friends.size() == 0) {
-//                friends_group.removeAllViews();
-//                for (int i = 0; i < 10; i++) {
-//                    Chip friend = new Chip(context);
-//                    friend.setText(String.valueOf(i) + " " + "chip");
-//                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
-//                            context,
-//                            null,
-//                            0,
-//                            R.style.ChipStyle
-//                    );
-//                    friend.setChipDrawable(chipDrawable);
-//                    friends_group.addView(friend);
-//                }
-//            }
+            if (friends.size() != 0) {
+                friends_group.removeAllViews();
+                for (int i = 0; i < friends.size(); i++) {
+                    Chip friend = new Chip(context);
+                    friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+                            context,
+                            null,
+                            0,
+                            R.style.ChipStyle
+                    );
+                    friend.setChipDrawable(chipDrawable);
+                    friends_group.addView(friend);
+                }
+            }
 
             MaterialButton show_all_friends = home_page.findViewById(R.id.home_page_show_all_friends);
             show_all_friends.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +218,19 @@ public class HomePage extends Fragment {
 
             MaterialButton apply = home_page.findViewById(R.id.home_page_apply);
             apply.setOnClickListener(v -> changeState());
+
+            parent_surveys = (ViewGroup) home_page.findViewById(R.id.home_page_content_layout);
+            parent_surveys.removeAllViews();
+
+            for (int i = 0; i < 10; i++) {
+                SurveyCard surveyCard = new SurveyCard(
+                        context,
+                        String.valueOf(i),
+                        getResources().getDrawable(R.mipmap.ic_launcher),
+                        inflater,
+                        this);
+                parent_surveys.addView(surveyCard.getPage());
+            }
 
             page = this;
             return home_page;

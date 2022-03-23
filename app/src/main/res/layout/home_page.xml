@@ -371,7 +371,7 @@
             app:layout_constraintBottom_toBottomOf="@id/home_content_layout"
             app:layout_constraintTop_toBottomOf="@id/home_content_layout">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:backgroundTint="@android:color/transparent"
@@ -387,8 +387,9 @@
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:text="@string/news_feed"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/home_page_refresh"
@@ -399,7 +400,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <LinearLayout
+                        android:id="@+id/home_page_content_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
 
+                        <ProgressBar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>

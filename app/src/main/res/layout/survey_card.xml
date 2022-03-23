@@ -2,12 +2,12 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/survey_card"
+    style="@style/CardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/purple_100"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/purple_100"
     app:cardCornerRadius="15dp"
     app:cardUseCompatPadding="true">
 
@@ -108,6 +108,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/survey_card_like"
+                    style="@style/FillButton.CardView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -115,30 +116,26 @@
                     android:outlineAmbientShadowColor="@android:color/transparent"
                     android:outlineSpotShadowColor="@android:color/transparent"
                     android:text="0"
-                    android:textColor="@color/black"
                     android:textSize="19sp"
                     app:cornerRadius="15dp"
-                    app:rippleColor="@android:color/transparent"
                     app:icon="@drawable/ic_heart_not_filled"
                     app:iconPadding="10dp"
                     app:iconSize="30dp"
-                    app:iconTint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/survey_card_favorite"
+                    style="@style/FillButton.CardView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:outlineAmbientShadowColor="@android:color/transparent"
                     android:outlineSpotShadowColor="@android:color/transparent"
                     app:cornerRadius="15dp"
-                    app:rippleColor="@android:color/transparent"
                     app:icon="@drawable/ic_favourites_not_filled"
                     app:iconGravity="textStart"
                     app:iconSize="30dp"
-                    app:iconTint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
