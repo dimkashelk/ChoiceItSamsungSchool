@@ -5,17 +5,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.AppDatabase;
@@ -27,6 +32,7 @@ import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -41,7 +47,7 @@ public class HomePage extends Fragment {
     private View home_page;
     private BottomSheetBehavior sheetBehavior;
     private static LayoutInflater inflater;
-    private APIServer apiServer;
+    private static APIServer apiServer;
     private MaterialToolbar toolbar;
     private AnimatedVectorDrawable icon_collapsed_date;
     private AnimatedVectorDrawable icon_expanded_date;
@@ -61,8 +67,14 @@ public class HomePage extends Fragment {
     private static Vector<Friend> friends_list = new Vector<>();
     private static ViewGroup parent_surveys = null;
     private static List<Survey> surveys_list = new Vector<>();
+    private MaterialCheckBox check_box_date;
+    private MaterialCheckBox check_box_active;
+    private MaterialCheckBox check_box_most_popular;
+    private MaterialButton is_increasing_date_button;
+    private MaterialButton is_increasing_most_popular_button;
+    private MaterialButton is_increasing_active_button;
 
-    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n", "CutPasteId"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -142,54 +154,54 @@ public class HomePage extends Fragment {
                 }
             });
 
-            MaterialButton button_date = home_page.findViewById(R.id.home_page_check_box_date_button);
-            button_date.setOnClickListener(new View.OnClickListener() {
+            is_increasing_date_button = home_page.findViewById(R.id.home_page_check_box_date_button);
+            is_increasing_date_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (is_increasing_date) {
-                        button_date.setIcon(icon_expanded_date);
-                        button_date.setText(R.string.decreasing);
+                        is_increasing_date_button.setIcon(icon_expanded_date);
+                        is_increasing_date_button.setText(R.string.decreasing);
                         icon_expanded_date.start();
                         is_increasing_date = false;
                     } else {
-                        button_date.setIcon(icon_collapsed_date);
-                        button_date.setText(R.string.increasing);
+                        is_increasing_date_button.setIcon(icon_collapsed_date);
+                        is_increasing_date_button.setText(R.string.increasing);
                         icon_collapsed_date.start();
                         is_increasing_date = true;
                     }
                 }
             });
 
-            MaterialButton button_active = home_page.findViewById(R.id.home_page_check_box_active_button);
-            button_active.setOnClickListener(new View.OnClickListener() {
+            is_increasing_active_button = home_page.findViewById(R.id.home_page_check_box_active_button);
+            is_increasing_active_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (is_increasing_active) {
-                        button_active.setIcon(icon_expanded_active);
-                        button_active.setText(R.string.decreasing);
+                        is_increasing_active_button.setIcon(icon_expanded_active);
+                        is_increasing_active_button.setText(R.string.decreasing);
                         icon_expanded_active.start();
                         is_increasing_active = false;
                     } else {
-                        button_active.setIcon(icon_collapsed_active);
-                        button_active.setText(R.string.increasing);
+                        is_increasing_active_button.setIcon(icon_collapsed_active);
+                        is_increasing_active_button.setText(R.string.increasing);
                         icon_collapsed_active.start();
                         is_increasing_active = true;
                     }
                 }
             });
 
-            MaterialButton button_popular = home_page.findViewById(R.id.home_page_check_box_most_popular_button);
-            button_popular.setOnClickListener(new View.OnClickListener() {
+            is_increasing_most_popular_button = home_page.findViewById(R.id.home_page_check_box_most_popular_button);
+            is_increasing_most_popular_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (is_increasing_most_popular) {
-                        button_popular.setIcon(icon_expanded_most_popular);
-                        button_popular.setText(R.string.decreasing);
+                        is_increasing_most_popular_button.setIcon(icon_expanded_most_popular);
+                        is_increasing_most_popular_button.setText(R.string.decreasing);
                         icon_expanded_most_popular.start();
                         is_increasing_most_popular = false;
                     } else {
-                        button_popular.setIcon(icon_collapsed_most_popular);
-                        button_popular.setText(R.string.increasing);
+                        is_increasing_most_popular_button.setIcon(icon_collapsed_most_popular);
+                        is_increasing_most_popular_button.setText(R.string.increasing);
                         icon_collapsed_most_popular.start();
                         is_increasing_most_popular = true;
                     }
@@ -219,7 +231,7 @@ public class HomePage extends Fragment {
             });
 
             MaterialButton reset_all = home_page.findViewById(R.id.home_page_reset_all);
-            reset_all.setOnClickListener(v -> changeState());
+            reset_all.setOnClickListener(v -> resetAll());
 
             MaterialButton apply = home_page.findViewById(R.id.home_page_apply);
             apply.setOnClickListener(v -> changeState());
@@ -239,6 +251,10 @@ public class HomePage extends Fragment {
                     parent_surveys.addView(surveyCard.getPage());
                 }
             }
+
+            check_box_date = home_page.findViewById(R.id.home_page_check_box_date);
+            check_box_active = home_page.findViewById(R.id.home_page_check_box_active);
+            check_box_most_popular = home_page.findViewById(R.id.home_page_check_box_most_popular);
 
             page = this;
             return home_page;
@@ -271,17 +287,26 @@ public class HomePage extends Fragment {
         friends = appDatabase.friendDao().getAllFriend();
         if (friends_group != null) {
             friends_group.removeAllViews();
-            for (int i = 0; i < friends.size(); i++) {
-                Chip friend = new Chip(page.getContext());
-                friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
-                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
-                        page.getContext(),
-                        null,
-                        0,
-                        R.style.ChipStyle
-                );
-                friend.setChipDrawable(chipDrawable);
-                friends_group.addView(friend);
+            if (friends.size() != 0) {
+                for (int i = 0; i < friends.size(); i++) {
+                    Chip friend = new Chip(page.getContext());
+                    friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+                            page.getContext(),
+                            null,
+                            0,
+                            R.style.ChipStyle
+                    );
+                    friend.setChipDrawable(chipDrawable);
+                    friends_group.addView(friend);
+                }
+            } else {
+                ProgressBar progressBar = new ProgressBar(page.getContext());
+                ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                progressBar.setLayoutParams(params);
+                progressBar.setForegroundGravity(Gravity.CENTER);
+                friends_group.addView(progressBar);
             }
         }
     }
@@ -342,5 +367,31 @@ public class HomePage extends Fragment {
                 parent_surveys.addView(surveyCard.getPage());
             }
         }
+    }
+
+    private void resetAll() {
+        updateFriendsChips();
+        from.setValue(1);
+        from.setMinValue(1);
+        from.setMaxValue(15);
+        to.setValue(15);
+        to.setMinValue(1);
+        to.setMaxValue(15);
+        check_box_date.setChecked(false);
+        check_box_active.setChecked(false);
+        check_box_most_popular.setChecked(false);
+        is_increasing_date_button.setIcon(icon_expanded_date);
+        is_increasing_date_button.setText(R.string.decreasing);
+        icon_expanded_date.start();
+        is_increasing_date = false;
+        is_increasing_active_button.setIcon(icon_expanded_active);
+        is_increasing_active_button.setText(R.string.decreasing);
+        icon_expanded_active.start();
+        is_increasing_active = false;
+        is_increasing_most_popular_button.setIcon(icon_expanded_most_popular);
+        is_increasing_most_popular_button.setText(R.string.decreasing);
+        icon_expanded_most_popular.start();
+        is_increasing_most_popular = false;
+        apiServer.loadUserNewsFeed();
     }
 }

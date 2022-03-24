@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
+import com.example.choiceitsamsungschool.main_page.AppActivity;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
@@ -244,7 +245,9 @@ public class APIServer {
         loadUserNewsFeed();
     }
 
-    private void loadUserNewsFeed() {
+    public void loadUserNewsFeed() {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        appDatabase.surveyDao().removeAllNews();
         String login = mainActivity.getLogin();
         String token = mainActivity.getToken();
         LoadData loader = new LoadData(this);

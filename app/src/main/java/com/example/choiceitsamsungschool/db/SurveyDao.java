@@ -39,6 +39,9 @@ public interface SurveyDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateSurvey(Survey survey);
 
-    @Query("delete from Friend")
+    @Query("delete from Survey")
     void removeAllSurvey();
+
+    @Query("delete from Survey where is_news")
+    void removeAllNews();
 }

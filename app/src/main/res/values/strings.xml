@@ -77,4 +77,5 @@
     <string name="from">От</string>
     <string name="to">До</string>
     <string name="apply">Применить</string>
+    <string name="by_age">По возрасту</string>
 </resources>
