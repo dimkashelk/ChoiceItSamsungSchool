@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -115,12 +116,14 @@ public class HomePage extends Fragment {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
             friends_group = home_page.findViewById(R.id.home_page_friends_chips_group);
+            AppDatabase appDatabase = AppDatabase.getDatabase(context);
+            friends = appDatabase.friendDao().getAllFriend();
 
-            if (friends.size() == 0) {
+            if (friends.size() != 0) {
                 friends_group.removeAllViews();
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < friends.size(); i++) {
                     Chip friend = new Chip(context);
-                    friend.setText(i + " " + "chip");
+                    friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
                     ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
                             context,
                             null,
@@ -129,7 +132,7 @@ public class HomePage extends Fragment {
                     );
                     friend.setChipDrawable(chipDrawable);
                     friends_group.addView(friend);
-                    friends_list.add(new Friend(String.valueOf(i), "First", "Second", ""));
+                    friends_list.add(friends.get(i));
                 }
             }
 
@@ -234,7 +237,7 @@ public class HomePage extends Fragment {
             reset_all.setOnClickListener(v -> resetAll());
 
             MaterialButton apply = home_page.findViewById(R.id.home_page_apply);
-            apply.setOnClickListener(v -> changeState());
+            apply.setOnClickListener(v -> saveChanges());
 
             parent_surveys = (ViewGroup) home_page.findViewById(R.id.home_page_content_layout);
             parent_surveys.removeAllViews();
@@ -392,6 +395,17 @@ public class HomePage extends Fragment {
         is_increasing_most_popular_button.setText(R.string.decreasing);
         icon_expanded_most_popular.start();
         is_increasing_most_popular = false;
+        loadUserNewsFeed();
+    }
+
+    private void loadUserNewsFeed() {
         apiServer.loadUserNewsFeed();
+        parent_surveys.removeAllViews();
+        parent_surveys.addView(new ProgressBar(getContext()));
+    }
+
+    private void saveChanges() {
+        loadUserNewsFeed();
+        changeState();
     }
 }
