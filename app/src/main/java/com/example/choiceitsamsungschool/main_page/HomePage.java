@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +39,8 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.Vector;
@@ -74,6 +78,7 @@ public class HomePage extends Fragment {
     private MaterialButton is_increasing_date_button;
     private MaterialButton is_increasing_most_popular_button;
     private MaterialButton is_increasing_active_button;
+    private TextInputEditText friend_name_field;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n", "CutPasteId"})
     @Nullable
@@ -259,10 +264,39 @@ public class HomePage extends Fragment {
             check_box_active = home_page.findViewById(R.id.home_page_check_box_active);
             check_box_most_popular = home_page.findViewById(R.id.home_page_check_box_most_popular);
 
+            friend_name_field = home_page.findViewById(R.id.home_page_friend_name_input);
+            friend_name_field.addTextChangedListener(new TextInputWatcher(this));
+
             page = this;
             return home_page;
         } else {
             return page.getHome_page();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void filterFriends() {
+        String s = friend_name_field.getText().toString();
+        Vector<Friend> new_list = new Vector<>();
+        for (Friend friend: friends) {
+            String dop = friend.first_name + " " + friend.second_name;
+            if (dop.contains(s)) {
+                new_list.add(friend);
+            }
+        }
+        friends = new_list;
+        friends_group.removeAllViews();
+        for (int i = 0; i < friends.size(); i++) {
+            Chip friend = new Chip(page.getContext());
+            friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+                    page.getContext(),
+                    null,
+                    0,
+                    R.style.ChipStyle
+            );
+            friend.setChipDrawable(chipDrawable);
+            friends_group.addView(friend);
         }
     }
 
@@ -396,6 +430,7 @@ public class HomePage extends Fragment {
         icon_expanded_most_popular.start();
         is_increasing_most_popular = false;
         loadUserNewsFeed();
+        changeState();
     }
 
     private void loadUserNewsFeed() {
