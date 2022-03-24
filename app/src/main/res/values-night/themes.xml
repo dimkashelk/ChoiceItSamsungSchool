@@ -117,7 +117,7 @@
 
     <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="useMaterialThemeColors">false</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
