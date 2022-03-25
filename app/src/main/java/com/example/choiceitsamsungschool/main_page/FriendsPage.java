@@ -88,7 +88,7 @@ public class FriendsPage extends Fragment {
 
             from = friends_page.findViewById(R.id.friends_page_number_picker_from);
             from.setMinValue(1);
-            from.setMaxValue(15);
+            from.setMaxValue(100);
             from.setValue(1);
             from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
