@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -155,6 +156,14 @@ public class UserPage extends Fragment {
 
             manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
+            SwipeRefreshLayout swipeRefreshLayout = user_page.findViewById(R.id.user_page_refresh);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refresh();
+                }
+            });
+
             page = this;
             return user_page;
         } else {
@@ -250,5 +259,9 @@ public class UserPage extends Fragment {
                     inflater,
                     this).getPage());
         }
+    }
+
+    private void refresh() {
+        apiServer.loadUserData();
     }
 }
