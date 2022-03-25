@@ -21,6 +21,12 @@ public class Friend {
     @ColumnInfo(name = "second_name")
     public String second_name;
 
+    @ColumnInfo
+    public Integer age;
+
+    @ColumnInfo
+    public Integer count_surveys;
+
     @Ignore
     public String image_url;
 

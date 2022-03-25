@@ -8,10 +8,17 @@ import com.google.android.material.textfield.TextInputLayout;
 public class TextInputWatcher implements TextWatcher {
     private HomePage homePage;
     private boolean is_homePage = false;
+    private FriendsPage friendsPage;
+    private boolean is_friendsPage = false;
 
     public TextInputWatcher(HomePage homePage) {
         this.homePage = homePage;
         is_homePage = true;
+    }
+
+    public TextInputWatcher(FriendsPage friendsPage) {
+        this.friendsPage = friendsPage;
+        is_friendsPage = true;
     }
 
     @Override
@@ -28,6 +35,9 @@ public class TextInputWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         if (is_homePage) {
             homePage.filterFriends();
+        }
+        if (is_friendsPage) {
+            friendsPage.filterFriends();
         }
     }
 }

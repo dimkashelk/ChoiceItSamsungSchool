@@ -12,6 +12,7 @@ import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.main_page.AppActivity;
+import com.example.choiceitsamsungschool.main_page.FriendsPage;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
@@ -59,6 +60,7 @@ public class APIServer {
     public static WelcomePage welcomePage;
     public static UserPage userPage;
     public static HomePage homePage;
+    public static FriendsPage friendsPage;
 
     private String token;
     private int count_friends = 0;
@@ -420,5 +422,9 @@ public class APIServer {
         if (count_news_persons == 0) {
             HomePage.updateNewsFeed();
         }
+    }
+
+    public void setFriendsPage(FriendsPage friendsPage) {
+        APIServer.friendsPage = friendsPage;
     }
 }

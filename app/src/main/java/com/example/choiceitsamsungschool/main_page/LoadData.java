@@ -1,6 +1,5 @@
 package com.example.choiceitsamsungschool.main_page;
 
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -11,8 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.io.InputStream;
-import java.util.Objects;
 import java.util.Vector;
 
 import okhttp3.OkHttpClient;
@@ -135,6 +132,8 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         friend.first_name = friends_json.get(i).getAsJsonObject().get("first_name").getAsString();
                         friend.second_name = friends_json.get(i).getAsJsonObject().get("second_name").getAsString();
                         friend.image_url = friends_json.get(i).getAsJsonObject().get("image").getAsString();
+                        friend.age = friends_json.get(i).getAsJsonObject().get("age").getAsInt();
+                        friend.count_surveys = friends_json.get(i).getAsJsonObject().get("count_surveys").getAsInt();
                         friends.add(friend);
                     }
                     break;

@@ -21,6 +21,9 @@ public interface FriendDao {
     @Query("select * from Friend where id = :friendId")
     public List<Friend> getFriend(long friendId);
 
+    @Query("select age from Friend")
+    public List<Integer> getAges();
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateFriend(Friend friend);
 
