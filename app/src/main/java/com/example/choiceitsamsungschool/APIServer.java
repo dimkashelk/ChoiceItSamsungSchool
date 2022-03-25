@@ -281,7 +281,7 @@ public class APIServer {
         loader.execute(APIServer.LOAD_USER_SURVEYS, login, token);
     }
 
-    private void loadFriends() {
+    public void loadFriends() {
         String token = mainActivity.getToken();
         String login = mainActivity.getLogin();
         LoadData loader = new LoadData(this);
@@ -307,6 +307,7 @@ public class APIServer {
         count_friends -= 1;
         if (count_friends == 0) {
             userPage.updateFriendsList(user_friends_list);
+            friendsPage.filterFriends();
         }
     }
 

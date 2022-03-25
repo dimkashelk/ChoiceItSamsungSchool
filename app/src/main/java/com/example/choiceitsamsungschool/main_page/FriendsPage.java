@@ -15,6 +15,7 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.AppDatabase;
@@ -142,6 +143,14 @@ public class FriendsPage extends Fragment {
 
             friend_name_layout = friends_page.findViewById(R.id.friends_page_friend_name_input_layout);
 
+            SwipeRefreshLayout swipeRefreshLayout = friends_page.findViewById(R.id.friends_page_refresh);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    updateFriends();
+                }
+            });
+
             page = this;
             return friends_page;
         } else {
@@ -247,5 +256,9 @@ public class FriendsPage extends Fragment {
 
     public View getFriends_page() {
         return friends_page;
+    }
+
+    private void updateFriends() {
+        apiServer.loadFriends();
     }
 }
