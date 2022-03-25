@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 
@@ -267,6 +268,14 @@ public class HomePage extends Fragment {
             friend_name_field = home_page.findViewById(R.id.home_page_friend_name_input);
             friend_name_field.addTextChangedListener(new TextInputWatcher(this));
 
+            SwipeRefreshLayout swipeRefreshLayout = home_page.findViewById(R.id.home_page_refresh);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refresh();
+                }
+            });
+
             page = this;
             return home_page;
         } else {
@@ -442,5 +451,10 @@ public class HomePage extends Fragment {
     private void saveChanges() {
         loadUserNewsFeed();
         changeState();
+    }
+
+    private void refresh() {
+        loadUserNewsFeed();
+        apiServer.loadFriends();
     }
 }
