@@ -83,4 +83,9 @@
     <string name="online">Онлайн</string>
     <string name="offline">Офлайн</string>
     <string name="by_count_surveys">По количеству опросов</string>
+    <string name="parameters">Параметры</string>
+    <string name="persons">Люди</string>
+    <string name="count_questions">Количество вопросов</string>
+    <string name="by_friends">От друзей</string>
+    <string name="results">Результаты</string>
 </resources>
