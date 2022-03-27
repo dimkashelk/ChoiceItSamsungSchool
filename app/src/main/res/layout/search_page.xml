@@ -393,7 +393,7 @@
                         android:layout_gravity="top">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/friends_page_friend_name_input_layout"
+                            android:id="@+id/search_page_friend_name_input_layout"
                             style="@style/OutlineBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -402,11 +402,10 @@
                             android:layout_marginRight="25dp"
                             android:layout_marginBottom="10dp"
                             android:hint="@string/first_name"
-                            app:errorContentDescription="@string/error_first_name"
-                            app:layout_constraintTop_toBottomOf="@id/friends_page_divider_1">
+                            app:errorContentDescription="@string/error_first_name">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/friends_page_friend_name_input"
+                                android:id="@+id/search_page_friend_name_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName"

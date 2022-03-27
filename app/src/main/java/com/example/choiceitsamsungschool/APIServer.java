@@ -11,11 +11,11 @@ import androidx.core.content.ContextCompat;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
-import com.example.choiceitsamsungschool.main_page.AppActivity;
 import com.example.choiceitsamsungschool.main_page.FriendsPage;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
+import com.example.choiceitsamsungschool.main_page.SearchPage;
 import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.main_page.UserPageArchive;
 import com.example.choiceitsamsungschool.main_page.UserPageFavorites;
@@ -52,6 +52,10 @@ public class APIServer {
     public static final String LOAD_USER_SURVEYS = "user_surveys";
     public static final String LOAD_USER_NEWS_FEED = "user_news_feed";
     public static final String LOAD_PERSON = "load_person";
+    public static final String SEARCH = "search";
+    public static final String LOAD_SURVEY = "load_survey";
+    public static final String LOAD_SEARCH_PERSON = "load_search_person";
+    public static final String LOAD_SEARCH_SURVEY = "load_search_survey";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -61,12 +65,15 @@ public class APIServer {
     public static UserPage userPage;
     public static HomePage homePage;
     public static FriendsPage friendsPage;
+    public static SearchPage searchPage;
 
     private String token;
     private int count_friends = 0;
     private int count_surveys = 0;
     private int count_surveys_favorites = 0;
     private int count_surveys_archive = 0;
+    private int count_search_surveys = 0;
+    private int count_search_persons = 0;
     private Vector<Friend> user_friends_list;
     private int count_news = 0;
     private int count_news_persons = 0;
@@ -395,7 +402,7 @@ public class APIServer {
         HashSet<String> persons = new HashSet<>();
         for (int i = 0; i < news.size(); i++) {
             LoadImage loader_image = new LoadImage(this);
-            loader_image.execute(APIServer.LOAD_IMAGE, news.get(i).survey_id, login, token);
+            loader_image.execute(APIServer.LOAD_SURVEY, news.get(i).survey_id, login, token);
             appDatabase.surveyDao().addSurvey(news.get(i));
             persons.add(news.get(i).person_url);
         }
@@ -427,5 +434,86 @@ public class APIServer {
 
     public void setFriendsPage(FriendsPage friendsPage) {
         APIServer.friendsPage = friendsPage;
+    }
+
+    public void setSearchPage(SearchPage searchPage) {
+        APIServer.searchPage = searchPage;
+    }
+
+    public void search() {
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        String value = searchPage.getSearchText();
+        String search_persons = String.valueOf(searchPage.searchPersons());
+        String search_surveys = String.valueOf(searchPage.searchSurveys());
+        String search_friends_surveys = String.valueOf(searchPage.searchFriendsSurveys());
+        String age_from = String.valueOf(searchPage.getAgeFrom());
+        String age_to = String.valueOf(searchPage.getAgeTo());
+        String count_question_from = String.valueOf(searchPage.getCountQuestionsFrom());
+        String count_question_to = String.valueOf(searchPage.getCountQuestionsTo());
+        LoadData searcher = new LoadData(this);
+        searcher.execute(
+                APIServer.SEARCH,
+                login,
+                token,
+                value,
+                search_persons,
+                search_surveys,
+                search_friends_surveys,
+                age_from,
+                age_to,
+                count_question_from,
+                count_question_to
+        );
+    }
+
+    public void setResultSearch(Vector<Person> persons, Vector<Survey> surveys) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        for (Person person : persons) {
+            List<Person> personList = appDatabase.personDao().getPerson(person.person_id);
+            if (personList.size() == 0) {
+                LoadImage loader = new LoadImage(this);
+                loader.execute(
+                        APIServer.LOAD_SEARCH_PERSON,
+                        login,
+                        token,
+                        person.person_id
+                );
+                appDatabase.personDao().addPerson(person);
+                count_search_persons++;
+            }
+        }
+        for (Survey survey : surveys) {
+            List<Survey> surveyList = appDatabase.surveyDao().getSurvey(survey.survey_id);
+            if (surveyList.size() == 0) {
+                LoadImage loader = new LoadImage(this);
+                loader.execute(
+                        APIServer.LOAD_SEARCH_SURVEY,
+                        survey.survey_id,
+                        login,
+                        token
+                );
+                appDatabase.surveyDao().addSurvey(survey);
+                count_search_surveys++;
+            }
+        }
+    }
+
+    public void setSearchProfileImage(Bitmap bitmap, String person_id) {
+        count_search_persons--;
+        internalStorage.savePersonProfileImage(bitmap, person_id);
+        if (count_search_persons == 0 && count_search_surveys == 0) {
+            searchPage.updateResults();
+        }
+    }
+
+    public void setSearchTitleImage(Bitmap bitmap, String survey_id) {
+        count_search_surveys--;
+        internalStorage.savePersonProfileImage(bitmap, survey_id);
+        if (count_search_persons == 0 && count_search_surveys == 0) {
+            searchPage.updateResults();
+        }
     }
 }

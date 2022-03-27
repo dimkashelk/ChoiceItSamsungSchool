@@ -33,6 +33,9 @@ public class Survey {
     public Boolean is_news = false;
 
     @ColumnInfo
+    public Boolean is_search = false;
+
+    @ColumnInfo
     public String person_url;
 
     public Survey() {

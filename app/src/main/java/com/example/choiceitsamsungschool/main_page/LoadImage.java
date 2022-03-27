@@ -72,6 +72,7 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                         .url(APIServer.URL + APIServer.LOAD_USER_SURVEYS + "/" + strings[1])
                         .post(body)
                         .build();
+            case APIServer.LOAD_SEARCH_PERSON:
             case APIServer.LOAD_PERSON:
                 mode = strings[0];
                 json = "{'profile': " + true + "," +
@@ -81,6 +82,18 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                 person_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_PERSON + "/" + strings[1])
+                        .post(body)
+                        .build();
+            case APIServer.LOAD_SEARCH_SURVEY:
+            case APIServer.LOAD_SURVEY:
+                mode = strings[0];
+                json = "{'survey': " + true + "," +
+                        "'login': '" + strings[2] + "'," +
+                        "'token': '" + strings[3] + "'}";
+                body = RequestBody.create(json, APIServer.JSON);
+                person_id = strings[1];
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_SURVEY + "/" + strings[1])
                         .post(body)
                         .build();
             default:
@@ -94,6 +107,9 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                 return false;
             }
             switch (mode) {
+                case APIServer.LOAD_SEARCH_SURVEY:
+                case APIServer.LOAD_SEARCH_PERSON:
+                case APIServer.LOAD_SURVEY:
                 case APIServer.LOAD_PERSON:
                 case APIServer.LOAD_USER_SURVEYS:
                 case APIServer.LOAD_FRIENDS:
@@ -115,10 +131,18 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
             switch (mode) {
                 case APIServer.LOAD_IMAGE:
                     apiServer.setFriendProfileImage(bitmap, user_id);
+                    break;
+                case APIServer.LOAD_SURVEY:
                 case APIServer.LOAD_USER_SURVEYS:
                     apiServer.setSurveyTitleImage(bitmap, survey_id);
+                    break;
                 case APIServer.LOAD_PERSON:
                     apiServer.setPersonImage(bitmap, person_id);
+                    break;
+                case APIServer.LOAD_SEARCH_PERSON:
+                    apiServer.setSearchProfileImage(bitmap, person_id);
+                case APIServer.LOAD_SEARCH_SURVEY:
+                    apiServer.setSearchTitleImage(bitmap, survey_id);
             }
         }
     }

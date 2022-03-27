@@ -24,6 +24,9 @@ public class Person {
     @ColumnInfo(name = "second_name")
     public String second_name;
 
+    @ColumnInfo
+    public boolean is_search = false;
+
     @Ignore
     public Bitmap profile_image;
 

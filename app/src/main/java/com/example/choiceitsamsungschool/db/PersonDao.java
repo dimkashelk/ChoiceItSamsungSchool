@@ -24,6 +24,9 @@ public interface PersonDao {
     @Query("select * from Person where person_id = :personId")
     public List<Person> getPerson(String personId);
 
+    @Query("select * from Person where is_search")
+    public List<Person> getResults();
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updatePerson(Person person);
 

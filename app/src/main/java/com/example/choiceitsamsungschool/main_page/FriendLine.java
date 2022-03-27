@@ -10,15 +10,18 @@ import android.widget.Toast;
 
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Person;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendLine extends View {
     private View page;
-    private Friend friend;
+    private Friend friend = null;
+    private Person person = null;
     private Drawable image;
     private LayoutInflater inflater;
     private FriendsPage friendsPage;
+    private SearchPage searchPage;
 
     public FriendLine(Context context) {
         super(context);
@@ -42,6 +45,26 @@ public class FriendLine extends View {
 
         TextView full_name = page.findViewById(R.id.friend_line_full_name);
         full_name.setText(friend.first_name + " " + friend.second_name);
+    }
+
+    @SuppressLint({"InflateParams", "SetTextI18n"})
+    public FriendLine(Context context, Person person, Drawable image, LayoutInflater inflater, SearchPage searchPage) {
+        super(context);
+
+        this.person = person;
+        this.image = image;
+        this.inflater = inflater;
+        this.searchPage = searchPage;
+
+        page = inflater.inflate(R.layout.friend_line, null);
+
+        page.setOnClickListener(v -> openFriend());
+
+        CircleImageView imageView = page.findViewById(R.id.friend_line_image);
+        imageView.setImageDrawable(image);
+
+        TextView full_name = page.findViewById(R.id.friend_line_full_name);
+        full_name.setText(person.first_name + " " + person.second_name);
     }
 
     public void openFriend() {
