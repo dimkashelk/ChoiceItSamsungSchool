@@ -88,4 +88,13 @@
     <string name="count_questions">Количество вопросов</string>
     <string name="by_friends">От друзей</string>
     <string name="results">Результаты</string>
+    <string name="settings">Настройки</string>
+    <string name="send_to_friends">Отправить друзьям</string>
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="add_to_archive">Добавить в архив</string>
+    <string name="only_for_friends">Только для друзей</string>
+    <string name="statistic">Статистика</string>
+    <string name="anonymous">Анонимная</string>
+    <string name="public_survey">Публичная</string>
+    <string name="select_all">Выбрать всех</string>
 </resources>
