@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
+import com.example.choiceitsamsungschool.main_page.CreatePage;
 import com.example.choiceitsamsungschool.main_page.FriendsPage;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
@@ -66,6 +67,7 @@ public class APIServer {
     public static HomePage homePage;
     public static FriendsPage friendsPage;
     public static SearchPage searchPage;
+    public static CreatePage createPage;
 
     private String token;
     private int count_friends = 0;
@@ -515,5 +517,9 @@ public class APIServer {
         if (count_search_persons == 0 && count_search_surveys == 0) {
             searchPage.updateResults();
         }
+    }
+
+    public void setCreatePage(CreatePage createPage) {
+        APIServer.createPage = createPage;
     }
 }

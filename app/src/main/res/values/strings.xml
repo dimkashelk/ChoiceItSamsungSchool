@@ -97,4 +97,12 @@
     <string name="anonymous">Анонимная</string>
     <string name="public_survey">Публичная</string>
     <string name="select_all">Выбрать всех</string>
+    <string name="new_survey">Новый опрос</string>
+    <string name="remove_all">Убрать выделение</string>
+    <string name="title">Название</string>
+    <string name="error_survey_title"><![CDATA[Название должно содержать только а…я, А…Я, 0–9, !@#$%,^:&amp;?()*/-+[] и пробелы]]></string>
+    <string name="description">Описание</string>
+    <string name="content">Содержание</string>
+    <string name="survey_add">Добавьте от 2 до 16 вариантов, чтобы создать опрос</string>
+    <string name="add">Добавить</string>
 </resources>
