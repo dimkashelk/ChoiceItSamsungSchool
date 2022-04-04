@@ -195,16 +195,6 @@
                         app:layout_constraintTop_toBottomOf="@id/create_page_parameters_title" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/create_page_add_to_archive"
-                        style="@style/CheckBoxStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="25dp"
-                        android:text="@string/add_to_archive"
-                        app:layout_constraintTop_toBottomOf="@id/create_page_add_to_favorites" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/create_page_for_friends_only"
                         style="@style/CheckBoxStyle"
                         android:layout_width="match_parent"
@@ -212,7 +202,7 @@
                         android:layout_marginStart="25dp"
                         android:layout_marginEnd="25dp"
                         android:text="@string/only_for_friends"
-                        app:layout_constraintTop_toBottomOf="@id/create_page_add_to_archive" />
+                        app:layout_constraintTop_toBottomOf="@id/create_page_add_to_favorites" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/create_page_divider_3"
@@ -242,18 +232,19 @@
                         android:layout_marginEnd="25dp"
                         app:layout_constraintTop_toBottomOf="@id/create_page_statistic_title">
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
+                        <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/create_page_is_anonymous"
                             style="@style/CheckBoxStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/anonymous" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
+                        <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/create_page_is_public"
                             style="@style/CheckBoxStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:text="@string/public_survey" />
                     </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,6 +274,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/TextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/montserrat_regular"
@@ -300,7 +292,7 @@
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/create_page_content_layout"
@@ -336,7 +328,6 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine|textCapSentences"
                                 android:textSize="16sp" />
-
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
@@ -367,10 +358,10 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine|textCapSentences"
                                 android:textSize="16sp" />
-
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
+                            style="@style/TextViewStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="25dp"
@@ -421,6 +412,60 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/add" />
                         </LinearLayout>
+
+                        <TextView
+                            style="@style/TextViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="25dp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="@string/time"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/create_page_date_picker_text"
+                            style="@style/TextViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="25dp"
+                            android:textSize="16sp"
+                            android:text="@string/no_limits" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/create_page_change_date_button"
+                                style="@style/FillButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/change" />
+                        </LinearLayout>
+
+                        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                            android:id="@+id/create_page_create_survey_button"
+                            style="@style/FillButton.LoadingButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="25dp"
+                            android:layout_marginBottom="15dp"
+                            android:text="@string/create"
+                            app:initialCornerAngle="15dp"
+                            app:spinning_bar_color="@color/purple_500"
+                            app:spinning_bar_padding="6dp"
+                            app:spinning_bar_width="4dp" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

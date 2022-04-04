@@ -17,6 +17,7 @@ import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
 import com.example.choiceitsamsungschool.main_page.SearchPage;
+import com.example.choiceitsamsungschool.main_page.UploadSurvey;
 import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.main_page.UserPageArchive;
 import com.example.choiceitsamsungschool.main_page.UserPageFavorites;
@@ -57,6 +58,7 @@ public class APIServer {
     public static final String LOAD_SURVEY = "load_survey";
     public static final String LOAD_SEARCH_PERSON = "load_search_person";
     public static final String LOAD_SEARCH_SURVEY = "load_search_survey";
+    public static final String UPLOAD_SURVEY = "upload_survey";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -521,5 +523,44 @@ public class APIServer {
 
     public void setCreatePage(CreatePage createPage) {
         APIServer.createPage = createPage;
+    }
+
+    public void successfulUpload() {
+        createPage.successfulUpload();
+    }
+
+    public void unsuccessfulUpload() {
+        createPage.unsuccessfulUpload();
+    }
+
+    public void createSurvey(
+            String title,
+            String description,
+            List<Bitmap> images,
+            int day,
+            int month,
+            int year,
+            boolean add_to_favorites,
+            boolean only_for_friends,
+            boolean anonymous_statistic,
+            List<String> friends
+    ) {
+        UploadSurvey upload = new UploadSurvey(
+                this,
+                title,
+                description,
+                images,
+                day,
+                month,
+                year,
+                add_to_favorites,
+                only_for_friends,
+                anonymous_statistic,
+                friends
+        );
+        upload.execute(
+                MainActivity.get().getLogin(),
+                MainActivity.get().getToken()
+        );
     }
 }

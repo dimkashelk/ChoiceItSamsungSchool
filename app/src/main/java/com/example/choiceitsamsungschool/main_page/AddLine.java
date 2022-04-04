@@ -2,9 +2,12 @@ package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.button.MaterialButton;
@@ -20,26 +23,28 @@ public class AddLine extends View {
     private final static String DIGITS = "0123456789";
     private final static String SYMBOLS = "!@#$%,^:&?()*/-+[]";
 
-    private Drawable image;
+    private Bitmap image;
     private View page;
     private CreatePage createPage;
     private MaterialButton delete;
     private AddLine addLine;
     private TextInputLayout titleInputLayout;
     private TextInputEditText titleInput;
+    private Context context;
 
     @SuppressLint("InflateParams")
-    public AddLine(Context context, Drawable image, LayoutInflater inflater, CreatePage createPage) {
+    public AddLine(Context context, Bitmap image, LayoutInflater inflater, CreatePage createPage) {
         super(context);
 
         this.image = image;
         this.createPage = createPage;
         this.addLine = this;
+        this.context = context;
 
         page = inflater.inflate(R.layout.add_line, null);
 
         CircleImageView imageView = page.findViewById(R.id.add_line_image);
-        imageView.setImageDrawable(image);
+        imageView.setImageDrawable(new BitmapDrawable(getResources(), image));
 
         delete = page.findViewById(R.id.add_line_delete);
         delete.setOnClickListener(v -> createPage.deleteLine(addLine));
@@ -64,5 +69,17 @@ public class AddLine extends View {
             }
         }
         titleInputLayout.setErrorEnabled(false);
+    }
+
+    public boolean isEmptyTitle() {
+        return titleInput.getText().toString().isEmpty();
+    }
+
+    public Bitmap getBitmap() {
+        return image;
+    }
+
+    public void startShake(Animation animation) {
+        titleInputLayout.startAnimation(animation);
     }
 }

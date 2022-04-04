@@ -5,18 +5,20 @@
         <item name="colorPrimary">@color/purple_100</item>
         <item name="colorPrimaryVariant">@color/purple_300</item>
         <item name="colorOnPrimary">@color/purple_500</item>
-        <item name="colorSurface">@android:color/transparent</item>
+        <item name="colorSurface">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_400</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/purple_400</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:textColor">@color/black</item>
         <item name="android:layout_gravity">center_vertical</item>
+
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
+        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
     </style>
 
 
@@ -138,5 +140,23 @@
         <item name="rippleColor">@android:color/transparent</item>
         <item name="android:textColor">@color/black</item>
         <item name="iconTint">@color/black</item>
+    </style>
+
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
+        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Snackbar" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/purple_400</item>
+    </style>
+
+    <style name="DatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_400</item>
     </style>
 </resources>

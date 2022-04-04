@@ -105,4 +105,7 @@
     <string name="content">Содержание</string>
     <string name="survey_add">Добавьте от 2 до 16 вариантов, чтобы создать опрос</string>
     <string name="add">Добавить</string>
+    <string name="time">Время доступа</string>
+    <string name="no_limits">Без ограничений</string>
+    <string name="change">Изменить</string>
 </resources>
