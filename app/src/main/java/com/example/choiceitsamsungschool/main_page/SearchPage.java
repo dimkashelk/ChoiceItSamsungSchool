@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -76,9 +77,6 @@ public class SearchPage extends Fragment {
 
             manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-            search_page = inflater.inflate(R.layout.search_page, container, false);
-            SearchPage.inflater = inflater;
-
             apiServer = APIServer.getSingletonAPIServer();
             apiServer.setSearchPage(this);
             apiServer.loadUserData();
@@ -104,8 +102,8 @@ public class SearchPage extends Fragment {
 
             age_to_picker = search_page.findViewById(R.id.search_page_number_picker_age_to);
             age_to_picker.setMinValue(1);
-            age_to_picker.setValue(100);
             age_to_picker.setMaxValue(100);
+            age_to_picker.setValue(100);
             age_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -118,22 +116,22 @@ public class SearchPage extends Fragment {
             count_questions_from_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_from);
             count_questions_from_picker.setMinValue(1);
             count_questions_from_picker.setValue(1);
-            count_questions_from_picker.setMaxValue(1);
+            count_questions_from_picker.setMaxValue(15);
             count_questions_from_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    count_questions_to_picker.setMaxValue(newVal);
+                    count_questions_to_picker.setMinValue(newVal);
                 }
             });
 
             count_questions_to_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_to);
             count_questions_to_picker.setMinValue(1);
-            count_questions_to_picker.setValue(15);
             count_questions_to_picker.setMaxValue(15);
+            count_questions_to_picker.setValue(15);
             count_questions_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    count_questions_to_picker.setMaxValue(newVal);
+                    count_questions_from_picker.setMaxValue(newVal);
                 }
             });
 

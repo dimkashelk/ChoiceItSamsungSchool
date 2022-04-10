@@ -352,7 +352,7 @@
             android:gravity="bottom"
             android:orientation="vertical"
             app:behavior_peekHeight="60dp"
-            app:layout_behavior="com.example.choiceitsamsungschool.main_page.LockedBottomSheetBehavior"
+            app:layout_behavior=".main_page.LockedBottomSheetBehavior"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="@id/search_content_layout"
             app:layout_constraintTop_toBottomOf="@id/search_content_layout">
@@ -401,14 +401,14 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="25dp"
                             android:layout_marginBottom="10dp"
-                            android:hint="@string/first_name"
+                            android:hint="@string/request"
                             app:errorContentDescription="@string/error_first_name">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/search_page_friend_name_input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
+                                android:inputType="textPersonName|textCapSentences"
                                 android:maxLines="1"
                                 android:textSize="16sp" />
 

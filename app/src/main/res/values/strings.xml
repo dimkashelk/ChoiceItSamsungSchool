@@ -108,4 +108,5 @@
     <string name="time">Время доступа</string>
     <string name="no_limits">Без ограничений</string>
     <string name="change">Изменить</string>
+    <string name="request">Запрос</string>
 </resources>
