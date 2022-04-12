@@ -33,7 +33,7 @@ public class Friend {
     public Friend() {
     }
 
-    public Friend(String friend_id, String first_name, String second_name, String profile_image) {
+    public Friend(String friend_id, String first_name, String second_name) {
         this.friend_id = friend_id;
         this.first_name = first_name;
         this.second_name = second_name;

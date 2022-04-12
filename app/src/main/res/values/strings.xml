@@ -109,4 +109,5 @@
     <string name="no_limits">Без ограничений</string>
     <string name="change">Изменить</string>
     <string name="request">Запрос</string>
+    <string name="surveys">Опросы</string>
 </resources>

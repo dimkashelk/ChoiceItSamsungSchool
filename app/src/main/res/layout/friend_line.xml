@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="25dp"
-    android:paddingEnd="25dp"
-    android:paddingBottom="10dp"
     app:strokeColor="@android:color/transparent"
     app:strokeWidth="0dp"
     app:cardBackgroundColor="@android:color/transparent"
@@ -15,7 +12,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/friend_line_image"
@@ -27,7 +28,8 @@
             style="@style/TextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginStart="25dp"
+            android:gravity="start|center_vertical"
             android:textSize="20sp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

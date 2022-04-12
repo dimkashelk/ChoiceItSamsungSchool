@@ -39,6 +39,9 @@ public interface SurveyDao {
     @Query("select * from Survey where is_search")
     public List<Survey> getResult();
 
+    @Query("select * from Survey where title like '%' || :search || '%'")
+    public List<Survey> getAllSurvey(String search);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateSurvey(Survey survey);
 

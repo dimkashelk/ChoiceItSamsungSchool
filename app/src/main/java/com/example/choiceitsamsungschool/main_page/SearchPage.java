@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -22,6 +24,7 @@ import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -176,8 +179,8 @@ public class SearchPage extends Fragment {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             toolbar.setNavigationIcon(close);
             close.start();
-            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
         }
+        manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
     }
 
     public View getSearch_page() {
@@ -215,6 +218,62 @@ public class SearchPage extends Fragment {
         String s = search_field.getText().toString();
         if (s.length() >= 5) {
             apiServer.search();
+        } else {
+            parent_res.removeAllViews();
+            if (persons_check_box.isChecked()) {
+                filterFriends();
+            }
+            if (surveys_check_box.isChecked()) {
+                filterSurveys();
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    public void filterFriends() {
+        InternalStorage internalStorage = InternalStorage.getInternalStorage();
+        String s = search_field.getText().toString();
+        AppDatabase appDatabase = AppDatabase.getDatabase(getContext());
+        List<Friend> friends_list = appDatabase.friendDao().getAllFriend(s);
+        if (friends_list.size() != 0) {
+            TextView textView = new TextView(getContext());
+            textView.setText(R.string.friends);
+            textView.setTextAppearance(R.style.TextViewStyle);
+            textView.setTextSize(18);
+            parent_res.addView(textView);
+            for (int i = 0; i < friends_list.size(); i++) {
+                parent_res.addView(new FriendLine(
+                        getContext(),
+                        new Person(friends_list.get(i)),
+                        internalStorage.load(friends_list.get(i).friend_id, InternalStorage.PROFILE_IMAGE),
+                        inflater,
+                        this
+                ).getPage());
+            }
+        }
+    }
+
+    public void filterSurveys() {
+        InternalStorage internalStorage = InternalStorage.getInternalStorage();
+        String s = search_field.getText().toString();
+        AppDatabase appDatabase = AppDatabase.getDatabase(getContext());
+        List<Survey> survey_list = appDatabase.surveyDao().getAllSurvey(s);
+        if (survey_list.size() != 0) {
+            TextView textView = new TextView(getContext());
+            textView.setText(R.string.surveys);
+            textView.setTextAppearance(R.style.TextViewStyle);
+            textView.setTextSize(18);
+            parent_res.addView(textView);
+            for (int i = 0; i < survey_list.size(); i++) {
+                parent_res.addView(new SurveyCard(
+                        getContext(),
+                        survey_list.get(i).survey_id,
+                        internalStorage.load(survey_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
+                        inflater,
+                        this
+                ).getPage());
+            }
         }
     }
 
@@ -259,8 +318,8 @@ public class SearchPage extends Fragment {
                     getContext(),
                     res_persons.get(i),
                     InternalStorage.getInternalStorage().load(
-                            InternalStorage.PROFILE_IMAGE,
-                            res_persons.get(i).person_id
+                            res_persons.get(i).person_id,
+                            InternalStorage.PROFILE_IMAGE
                     ),
                     inflater,
                     this
@@ -273,8 +332,8 @@ public class SearchPage extends Fragment {
                     getContext(),
                     res_surveys.get(i).survey_id,
                     InternalStorage.getInternalStorage().load(
-                            InternalStorage.SURVEY_TITLE_IMAGE,
-                            res_surveys.get(i).survey_id
+                            res_surveys.get(i).survey_id,
+                            InternalStorage.SURVEY_TITLE_IMAGE
                     ),
                     inflater,
                     this

@@ -38,4 +38,10 @@ public class Person {
         this.first_name = first_name;
         this.second_name = second_name;
     }
+
+    public Person(Friend friend) {
+        this.person_id = friend.friend_id;
+        this.first_name = friend.first_name;
+        this.second_name = friend.second_name;
+    }
 }
