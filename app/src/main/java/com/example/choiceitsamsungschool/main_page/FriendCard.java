@@ -4,9 +4,13 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Person;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +40,11 @@ public class FriendCard extends View {
     }
 
     private void openFriend() {
-        Toast.makeText(getContext(), "Открыли страницу друга", Toast.LENGTH_LONG).show();
+        AppDatabase appDatabase = AppDatabase.getDatabase(getContext());
+        List<Friend> friend = appDatabase.friendDao().getFriend(friend_id);
+        if (friend.size() != 0) {
+            NavigationItemListener.get().openPersonPage(friend.get(0));
+        }
     }
 
     public View getPage() {

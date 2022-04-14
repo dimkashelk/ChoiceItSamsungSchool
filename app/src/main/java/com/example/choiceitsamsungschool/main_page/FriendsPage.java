@@ -151,6 +151,16 @@ public class FriendsPage extends Fragment {
                 }
             });
 
+            for (int i = 0; i < 10; i++) {
+                friends_group.addView(new FriendLine(
+                        context,
+                        new Friend("1", "First", "Second"),
+                        getResources().getDrawable(R.mipmap.ic_launcher),
+                        inflater,
+                        this
+                ).getPage());
+            }
+
             page = this;
             return friends_page;
         } else {

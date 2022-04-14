@@ -27,6 +27,9 @@ public class Friend {
     @ColumnInfo
     public Integer count_surveys;
 
+    @ColumnInfo
+    public Integer count_friends;
+
     @Ignore
     public String image_url;
 

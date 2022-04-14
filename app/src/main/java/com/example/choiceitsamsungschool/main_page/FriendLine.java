@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
@@ -68,7 +67,11 @@ public class FriendLine extends View {
     }
 
     public void openFriend() {
-        Toast.makeText(getContext(), "Открыли страницу друга", Toast.LENGTH_LONG).show();
+        if (friend != null) {
+            NavigationItemListener.get().openPersonPage(friend);
+        } else {
+            NavigationItemListener.get().openPersonPage(person);
+        }
     }
 
     public View getPage() {

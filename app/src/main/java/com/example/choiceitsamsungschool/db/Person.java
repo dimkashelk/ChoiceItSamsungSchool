@@ -25,6 +25,12 @@ public class Person {
     public String second_name;
 
     @ColumnInfo
+    public int count_friends;
+
+    @ColumnInfo
+    public int count_surveys;
+
+    @ColumnInfo
     public boolean is_search = false;
 
     @Ignore

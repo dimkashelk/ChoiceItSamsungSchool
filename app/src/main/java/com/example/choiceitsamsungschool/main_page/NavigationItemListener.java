@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Friend;
+import com.example.choiceitsamsungschool.db.Person;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NavigationItemListener implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -19,6 +21,8 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     private CreatePage createPage;
     private SearchPage searchPage;
     private UserPage userPage;
+    private static NavigationItemListener listener = null;
+    private Fragment last_fragment;
 
     public NavigationItemListener(AppActivity mainActivity, BottomNavigationView bottomNavigationView) {
         this.mainActivity = mainActivity;
@@ -30,6 +34,8 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
         createPage = new CreatePage();
         searchPage = new SearchPage();
         userPage = new UserPage();
+
+        listener = this;
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -38,20 +44,43 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
         switch (item.getItemId()) {
             case R.id.page_main:
                 manager.beginTransaction().replace(R.id.content, homePage).commit();
+                last_fragment = homePage;
                 break;
             case R.id.page_friends:
                 manager.beginTransaction().replace(R.id.content, friendsPage).commit();
+                last_fragment = friendsPage;
                 break;
             case R.id.page_create:
                 manager.beginTransaction().replace(R.id.content, createPage).commit();
+                last_fragment = createPage;
                 break;
             case R.id.page_search:
                 manager.beginTransaction().replace(R.id.content, searchPage).commit();
+                last_fragment = searchPage;
                 break;
             case R.id.page_user:
                 manager.beginTransaction().replace(R.id.content, userPage).commit();
+                last_fragment = userPage;
                 break;
         }
         return true;
+    }
+
+    public static NavigationItemListener get() {
+        return listener;
+    }
+
+    public void openPersonPage(Person person) {
+        PersonPage personPage = new PersonPage(person);
+        manager.beginTransaction().replace(R.id.content, personPage).commit();
+    }
+
+    public void openPersonPage(Friend friend) {
+        PersonPage personPage = new PersonPage(friend);
+        manager.beginTransaction().replace(R.id.content, personPage).commit();
+    }
+
+    public void closePersonPage() {
+        manager.beginTransaction().replace(R.id.content, last_fragment).commit();
     }
 }
