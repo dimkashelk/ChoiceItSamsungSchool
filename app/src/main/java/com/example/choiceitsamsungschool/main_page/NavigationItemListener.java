@@ -43,6 +43,8 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
 
         viewPager = mainActivity.findViewById(R.id.content);
         viewPager.setOffscreenPageLimit(10);
+        viewPager.setUserInputEnabled(false);
+
         adapter = new ViewPagerAdapter(mainActivity.getSupportFragmentManager(), mainActivity.getLifecycle());
         adapter.addFragment(homePage);
         adapter.addFragment(friendsPage);
