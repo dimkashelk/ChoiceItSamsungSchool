@@ -66,107 +66,103 @@ public class SearchPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (page == null) {
-            search_page = inflater.inflate(R.layout.search_page, container, false);
-            Context context = getContext();
-            SearchPage.inflater = inflater;
+        search_page = inflater.inflate(R.layout.search_page, container, false);
+        Context context = getContext();
+        SearchPage.inflater = inflater;
 
-            LinearLayout contentLayout = search_page.findViewById(R.id.search_page_front);
+        LinearLayout contentLayout = search_page.findViewById(R.id.search_page_front);
 
-            sheetBehavior = BottomSheetBehavior.from(contentLayout);
-            sheetBehavior.setFitToContents(false);
-            sheetBehavior.setHideable(false);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior = BottomSheetBehavior.from(contentLayout);
+        sheetBehavior.setFitToContents(false);
+        sheetBehavior.setHideable(false);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-            manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-            apiServer = APIServer.getSingletonAPIServer();
-            apiServer.setSearchPage(this);
-            apiServer.loadUserData();
+        apiServer = APIServer.getSingletonAPIServer();
+        apiServer.setSearchPage(this);
+        apiServer.loadUserData();
 
-            toolbar = search_page.findViewById(R.id.search_tool_bar);
-            toolbar.setNavigationOnClickListener(v -> changeState());
+        toolbar = search_page.findViewById(R.id.search_tool_bar);
+        toolbar.setNavigationOnClickListener(v -> changeState());
 
-            menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
-            close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
+        menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
+        close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
 
-            persons_check_box = search_page.findViewById(R.id.search_page_persons_check_box);
+        persons_check_box = search_page.findViewById(R.id.search_page_persons_check_box);
 
-            age_from_picker = search_page.findViewById(R.id.search_page_number_picker_age_from);
-            age_from_picker.setMinValue(1);
-            age_from_picker.setValue(1);
-            age_from_picker.setMaxValue(100);
-            age_from_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    age_to_picker.setMinValue(newVal);
-                }
-            });
+        age_from_picker = search_page.findViewById(R.id.search_page_number_picker_age_from);
+        age_from_picker.setMinValue(1);
+        age_from_picker.setValue(1);
+        age_from_picker.setMaxValue(100);
+        age_from_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                age_to_picker.setMinValue(newVal);
+            }
+        });
 
-            age_to_picker = search_page.findViewById(R.id.search_page_number_picker_age_to);
-            age_to_picker.setMinValue(1);
-            age_to_picker.setMaxValue(100);
-            age_to_picker.setValue(100);
-            age_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    age_from_picker.setMaxValue(newVal);
-                }
-            });
+        age_to_picker = search_page.findViewById(R.id.search_page_number_picker_age_to);
+        age_to_picker.setMinValue(1);
+        age_to_picker.setMaxValue(100);
+        age_to_picker.setValue(100);
+        age_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                age_from_picker.setMaxValue(newVal);
+            }
+        });
 
-            surveys_check_box = search_page.findViewById(R.id.search_page_surveys_check_box);
+        surveys_check_box = search_page.findViewById(R.id.search_page_surveys_check_box);
 
-            count_questions_from_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_from);
-            count_questions_from_picker.setMinValue(1);
-            count_questions_from_picker.setValue(1);
-            count_questions_from_picker.setMaxValue(15);
-            count_questions_from_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    count_questions_to_picker.setMinValue(newVal);
-                }
-            });
+        count_questions_from_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_from);
+        count_questions_from_picker.setMinValue(1);
+        count_questions_from_picker.setValue(1);
+        count_questions_from_picker.setMaxValue(15);
+        count_questions_from_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                count_questions_to_picker.setMinValue(newVal);
+            }
+        });
 
-            count_questions_to_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_to);
-            count_questions_to_picker.setMinValue(1);
-            count_questions_to_picker.setMaxValue(15);
-            count_questions_to_picker.setValue(15);
-            count_questions_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    count_questions_from_picker.setMaxValue(newVal);
-                }
-            });
+        count_questions_to_picker = search_page.findViewById(R.id.search_page_number_picker_count_questions_to);
+        count_questions_to_picker.setMinValue(1);
+        count_questions_to_picker.setMaxValue(15);
+        count_questions_to_picker.setValue(15);
+        count_questions_to_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                count_questions_from_picker.setMaxValue(newVal);
+            }
+        });
 
-            by_friends_check_box = search_page.findViewById(R.id.search_page_by_friends_surveys);
+        by_friends_check_box = search_page.findViewById(R.id.search_page_by_friends_surveys);
 
-            reset_all = search_page.findViewById(R.id.search_page_reset_all);
-            reset_all.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    resetAll();
-                }
-            });
+        reset_all = search_page.findViewById(R.id.search_page_reset_all);
+        reset_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetAll();
+            }
+        });
 
-            apply_changes = search_page.findViewById(R.id.search_page_apply);
-            apply_changes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applyChanges();
-                }
-            });
+        apply_changes = search_page.findViewById(R.id.search_page_apply);
+        apply_changes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applyChanges();
+            }
+        });
 
-            search_field = search_page.findViewById(R.id.search_page_friend_name_input);
-            search_layout = search_page.findViewById(R.id.search_page_friend_name_input_layout);
-            search_field.addTextChangedListener(new TextInputWatcher(this));
+        search_field = search_page.findViewById(R.id.search_page_friend_name_input);
+        search_layout = search_page.findViewById(R.id.search_page_friend_name_input_layout);
+        search_field.addTextChangedListener(new TextInputWatcher(this));
 
-            parent_res = search_page.findViewById(R.id.search_page_content_layout);
+        parent_res = search_page.findViewById(R.id.search_page_content_layout);
 
-            page = this;
-            return search_page;
-        } else {
-            return page.getSearch_page();
-        }
+        page = this;
+        return search_page;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
