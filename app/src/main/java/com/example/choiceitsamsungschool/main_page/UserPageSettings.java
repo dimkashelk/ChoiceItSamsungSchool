@@ -77,41 +77,39 @@ public class UserPageSettings extends View {
     }
 
     public static View get(Context context, LayoutInflater inflater, ViewGroup container) {
-        if (page == null) {
-            View view = inflater.inflate(R.layout.user_page_settings, container, false);
-            page = view;
+        View view = inflater.inflate(R.layout.user_page_settings, container, false);
+        page = view;
 
-            page.findViewById(R.id.settings_page_edit_profile_image).setOnClickListener(v -> userPage.startChooseImage());
+        page.findViewById(R.id.settings_page_edit_profile_image).setOnClickListener(v -> userPage.startChooseImage());
 
-            page.findViewById(R.id.settings_page_reset).setOnClickListener(v -> resetAll());
+        page.findViewById(R.id.settings_page_reset).setOnClickListener(v -> resetAll());
 
-            page.findViewById(R.id.settings_page_save).setOnClickListener(v -> saveChanges());
+        page.findViewById(R.id.settings_page_save).setOnClickListener(v -> saveChanges());
 
-            apiServer = APIServer.getSingletonAPIServer();
+        apiServer = APIServer.getSingletonAPIServer();
 
-            first_name = page.findViewById(R.id.settings_page_edit_first_name);
-            second_name = page.findViewById(R.id.settings_page_edit_second_name);
-            login_name = page.findViewById(R.id.settings_page_edit_login);
+        first_name = page.findViewById(R.id.settings_page_edit_first_name);
+        second_name = page.findViewById(R.id.settings_page_edit_second_name);
+        login_name = page.findViewById(R.id.settings_page_edit_login);
 
-            first_name_layout = page.findViewById(R.id.settings_page_edit_first_name_layout);
-            second_name_layout = page.findViewById(R.id.settings_page_edit_second_name_layout);
-            login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
+        first_name_layout = page.findViewById(R.id.settings_page_edit_first_name_layout);
+        second_name_layout = page.findViewById(R.id.settings_page_edit_second_name_layout);
+        login_layout = page.findViewById(R.id.settings_page_edit_login_layout);
 
-            old_password = page.findViewById(R.id.settings_page_edit_old_password);
-            new_password = page.findViewById(R.id.settings_page_edit_password);
-            re_new_password = page.findViewById(R.id.settings_page_edit_re_password);
+        old_password = page.findViewById(R.id.settings_page_edit_old_password);
+        new_password = page.findViewById(R.id.settings_page_edit_password);
+        re_new_password = page.findViewById(R.id.settings_page_edit_re_password);
 
-            old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
-            new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
-            re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
+        old_password_layout = page.findViewById(R.id.settings_page_edit_old_password_layout);
+        new_password_layout = page.findViewById(R.id.settings_page_edit_password_layout);
+        re_new_password_layout = page.findViewById(R.id.settings_page_edit_re_password_layout);
 
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
-            User user = appDatabase.userDao().getAllUsers().get(0);
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
+        User user = appDatabase.userDao().getAllUsers().get(0);
 
-            first_name.setText(user.first_name);
-            second_name.setText(user.second_name);
-            login_name.setText(user.login);
-        }
+        first_name.setText(user.first_name);
+        second_name.setText(user.second_name);
+        login_name.setText(user.login);
         return page;
     }
 

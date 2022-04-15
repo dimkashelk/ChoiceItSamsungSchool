@@ -5,9 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.InternalStorage;
@@ -29,28 +26,26 @@ public class UserPageFavorites extends View {
 
     @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     public static View get(Context context, LayoutInflater inflater, ViewGroup container) {
-        if (page == null) {
-            UserPageFavorites.inflater = inflater;
-            View view = inflater.inflate(R.layout.user_page_favorites, container, false);
+        UserPageFavorites.inflater = inflater;
+        View view = inflater.inflate(R.layout.user_page_favorites, container, false);
 
-            parent_favorites_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
+        parent_favorites_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
 
-            if (surveys.size() != 0) {
-                parent_favorites_survey.removeAllViews();
-                for (int i = 0; i < surveys.size(); i++) {
-                    parent_favorites_survey.addView(new SurveyCard(
-                            context,
-                            surveys.get(i).survey_id,
-                            InternalStorage.getInternalStorage().load(
-                                    surveys.get(i).survey_id,
-                                    InternalStorage.SURVEY_TITLE_IMAGE
-                            ),
-                            inflater,
-                            UserPage.get()).getPage());
-                }
+        if (surveys.size() != 0) {
+            parent_favorites_survey.removeAllViews();
+            for (int i = 0; i < surveys.size(); i++) {
+                parent_favorites_survey.addView(new SurveyCard(
+                        context,
+                        surveys.get(i).survey_id,
+                        InternalStorage.getInternalStorage().load(
+                                surveys.get(i).survey_id,
+                                InternalStorage.SURVEY_TITLE_IMAGE
+                        ),
+                        inflater,
+                        UserPage.get()).getPage());
             }
-            page = view;
         }
+        page = view;
         return page;
     }
 

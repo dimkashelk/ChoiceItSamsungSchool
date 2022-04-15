@@ -24,29 +24,27 @@ public class UserPageArchive extends View {
     }
 
     public static View get(Context context, LayoutInflater inflater, ViewGroup container) {
-        if (page == null) {
-            UserPageArchive.inflater = inflater;
-            View view = inflater.inflate(R.layout.user_page_archive, container, false);
-            parent_archive_survey = (ViewGroup) view.findViewById(R.id.user_page_archive_list);
+        UserPageArchive.inflater = inflater;
+        View view = inflater.inflate(R.layout.user_page_archive, container, false);
+        parent_archive_survey = (ViewGroup) view.findViewById(R.id.user_page_archive_list);
 
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
-            surveys = appDatabase.surveyDao().getArchives();
-            if (surveys.size() != 0) {
-                parent_archive_survey.removeAllViews();
-                for (int i = 0; i < surveys.size(); i++) {
-                    parent_archive_survey.addView(new SurveyCard(
-                            context,
-                            surveys.get(i).survey_id,
-                            InternalStorage.getInternalStorage().load(
-                                    surveys.get(i).survey_id,
-                                    InternalStorage.SURVEY_TITLE_IMAGE
-                            ),
-                            inflater,
-                            UserPage.get()).getPage());
-                }
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
+        surveys = appDatabase.surveyDao().getArchives();
+        if (surveys.size() != 0) {
+            parent_archive_survey.removeAllViews();
+            for (int i = 0; i < surveys.size(); i++) {
+                parent_archive_survey.addView(new SurveyCard(
+                        context,
+                        surveys.get(i).survey_id,
+                        InternalStorage.getInternalStorage().load(
+                                surveys.get(i).survey_id,
+                                InternalStorage.SURVEY_TITLE_IMAGE
+                        ),
+                        inflater,
+                        UserPage.get()).getPage());
             }
-            page = view;
         }
+        page = view;
         return page;
     }
 
