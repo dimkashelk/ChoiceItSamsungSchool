@@ -61,111 +61,107 @@ public class FriendsPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (page == null) {
-            friends_page = inflater.inflate(R.layout.friends_page, container, false);
-            Context context = getContext();
+        friends_page = inflater.inflate(R.layout.friends_page, container, false);
+        Context context = getContext();
 
-            manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-            friends_page = inflater.inflate(R.layout.friends_page, container, false);
-            FriendsPage.inflater = inflater;
+        friends_page = inflater.inflate(R.layout.friends_page, container, false);
+        FriendsPage.inflater = inflater;
 
-            apiServer = APIServer.getSingletonAPIServer();
-            apiServer.setFriendsPage(this);
-            apiServer.loadUserData();
+        apiServer = APIServer.getSingletonAPIServer();
+        apiServer.setFriendsPage(this);
+        apiServer.loadUserData();
 
-            toolbar = friends_page.findViewById(R.id.friends_tool_bar);
-            toolbar.setNavigationOnClickListener(v -> changeState());
+        toolbar = friends_page.findViewById(R.id.friends_tool_bar);
+        toolbar.setNavigationOnClickListener(v -> changeState());
 
-            menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
-            close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
+        menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
+        close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
 
-            LinearLayout contentLayout = friends_page.findViewById(R.id.friends_page_front);
+        LinearLayout contentLayout = friends_page.findViewById(R.id.friends_page_front);
 
-            sheetBehavior = BottomSheetBehavior.from(contentLayout);
-            sheetBehavior.setFitToContents(false);
-            sheetBehavior.setHideable(false);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior = BottomSheetBehavior.from(contentLayout);
+        sheetBehavior.setFitToContents(false);
+        sheetBehavior.setHideable(false);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-            from = friends_page.findViewById(R.id.friends_page_number_picker_from);
-            from.setMinValue(1);
-            from.setMaxValue(100);
-            from.setValue(1);
-            from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    to.setMinValue(newVal);
-                }
-            });
-
-            to = friends_page.findViewById(R.id.friends_page_number_picker_to);
-            to.setMinValue(1);
-            to.setMaxValue(100);
-            to.setValue(100);
-            to.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    from.setMaxValue(newVal);
-                }
-            });
-
-            friends_group = friends_page.findViewById(R.id.friends_page_content_layout);
-
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
-            friends = appDatabase.friendDao().getAllFriend();
-
-            if (friends.size() != 0) {
-                friends_group.removeAllViews();
-                for (int i = 0; i < friends.size(); i++) {
-                    friends_group.addView(new FriendLine(
-                            getContext(),
-                            friends.get(i),
-                            InternalStorage.getInternalStorage().load(
-                                    friends.get(i).friend_id,
-                                    InternalStorage.PROFILE_IMAGE
-                            ),
-                            inflater,
-                            this).getPage());
-                }
+        from = friends_page.findViewById(R.id.friends_page_number_picker_from);
+        from.setMinValue(1);
+        from.setMaxValue(100);
+        from.setValue(1);
+        from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                to.setMinValue(newVal);
             }
+        });
 
-            MaterialButton reset_all = friends_page.findViewById(R.id.friends_page_reset_all);
-            reset_all.setOnClickListener(v -> resetAll());
+        to = friends_page.findViewById(R.id.friends_page_number_picker_to);
+        to.setMinValue(1);
+        to.setMaxValue(100);
+        to.setValue(100);
+        to.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                from.setMaxValue(newVal);
+            }
+        });
 
-            MaterialButton apply = friends_page.findViewById(R.id.friends_page_apply);
-            apply.setOnClickListener(v -> saveChanges());
+        friends_group = friends_page.findViewById(R.id.friends_page_content_layout);
 
-            check_box_age = friends_page.findViewById(R.id.friends_page_check_box_age);
-            check_box_count_surveys = friends_page.findViewById(R.id.friends_page_check_box_count_surveys);
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
+        friends = appDatabase.friendDao().getAllFriend();
 
-            friend_name_field = friends_page.findViewById(R.id.friends_page_friend_name_input);
-            friend_name_field.addTextChangedListener(new TextInputWatcher(this));
-
-            friend_name_layout = friends_page.findViewById(R.id.friends_page_friend_name_input_layout);
-
-            SwipeRefreshLayout swipeRefreshLayout = friends_page.findViewById(R.id.friends_page_refresh);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    updateFriends();
-                }
-            });
-
-            for (int i = 0; i < 10; i++) {
+        if (friends.size() != 0) {
+            friends_group.removeAllViews();
+            for (int i = 0; i < friends.size(); i++) {
                 friends_group.addView(new FriendLine(
-                        context,
-                        new Friend("1", "First", "Second"),
-                        getResources().getDrawable(R.mipmap.ic_launcher),
+                        getContext(),
+                        friends.get(i),
+                        InternalStorage.getInternalStorage().load(
+                                friends.get(i).friend_id,
+                                InternalStorage.PROFILE_IMAGE
+                        ),
                         inflater,
-                        this
-                ).getPage());
+                        this).getPage());
             }
-
-            page = this;
-            return friends_page;
-        } else {
-            return page.getFriends_page();
         }
+
+        MaterialButton reset_all = friends_page.findViewById(R.id.friends_page_reset_all);
+        reset_all.setOnClickListener(v -> resetAll());
+
+        MaterialButton apply = friends_page.findViewById(R.id.friends_page_apply);
+        apply.setOnClickListener(v -> saveChanges());
+
+        check_box_age = friends_page.findViewById(R.id.friends_page_check_box_age);
+        check_box_count_surveys = friends_page.findViewById(R.id.friends_page_check_box_count_surveys);
+
+        friend_name_field = friends_page.findViewById(R.id.friends_page_friend_name_input);
+        friend_name_field.addTextChangedListener(new TextInputWatcher(this));
+
+        friend_name_layout = friends_page.findViewById(R.id.friends_page_friend_name_input_layout);
+
+        SwipeRefreshLayout swipeRefreshLayout = friends_page.findViewById(R.id.friends_page_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateFriends();
+            }
+        });
+
+        for (int i = 0; i < 10; i++) {
+            friends_group.addView(new FriendLine(
+                    context,
+                    new Friend("1", "First", "Second"),
+                    getResources().getDrawable(R.mipmap.ic_launcher),
+                    inflater,
+                    this
+            ).getPage());
+        }
+
+        page = this;
+        return friends_page;
     }
 
     private void saveChanges() {
