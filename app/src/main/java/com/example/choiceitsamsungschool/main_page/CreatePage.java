@@ -102,134 +102,129 @@ public class CreatePage extends Fragment implements SwipeRefreshLayout.OnRefresh
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (page == null) {
+        create_page = inflater.inflate(R.layout.create_page, container, false);
+        Context context = getContext();
+        CreatePage.inflater = inflater;
 
-            create_page = inflater.inflate(R.layout.create_page, container, false);
-            Context context = getContext();
-            CreatePage.inflater = inflater;
+        shake = AnimationUtils.loadAnimation(context, R.anim.shake);
 
-            shake = AnimationUtils.loadAnimation(context, R.anim.shake);
+        LinearLayout contentLayout = create_page.findViewById(R.id.create_page_front);
 
-            LinearLayout contentLayout = create_page.findViewById(R.id.create_page_front);
+        sheetBehavior = BottomSheetBehavior.from(contentLayout);
+        sheetBehavior.setFitToContents(false);
+        sheetBehavior.setHideable(false);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-            sheetBehavior = BottomSheetBehavior.from(contentLayout);
-            sheetBehavior.setFitToContents(false);
-            sheetBehavior.setHideable(false);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-            manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        apiServer = APIServer.getSingletonAPIServer();
+        apiServer.setCreatePage(this);
+        apiServer.loadUserData();
 
-            apiServer = APIServer.getSingletonAPIServer();
-            apiServer.setCreatePage(this);
-            apiServer.loadUserData();
+        toolbar = create_page.findViewById(R.id.create_tool_bar);
+        toolbar.setNavigationOnClickListener(v -> changeState());
 
-            toolbar = create_page.findViewById(R.id.create_tool_bar);
-            toolbar.setNavigationOnClickListener(v -> changeState());
+        menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
+        close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
 
-            menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
-            close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
+        empty_title = create_page.findViewById(R.id.create_page_survey_create_title);
+        empty_title.setOnClickListener(v -> startChooseImage());
 
-            empty_title = create_page.findViewById(R.id.create_page_survey_create_title);
-            empty_title.setOnClickListener(v -> startChooseImage());
+        friend_name = create_page.findViewById(R.id.create_page_friend_name_input);
+        friend_name_layout = create_page.findViewById(R.id.create_page_friend_name_input_layout);
 
-            friend_name = create_page.findViewById(R.id.create_page_friend_name_input);
-            friend_name_layout = create_page.findViewById(R.id.create_page_friend_name_input_layout);
+        friends_group = create_page.findViewById(R.id.create_page_friends_chips_group);
 
-            friends_group = create_page.findViewById(R.id.create_page_friends_chips_group);
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
+        friends_list = appDatabase.friendDao().getAllFriend();
 
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
-            friends_list = appDatabase.friendDao().getAllFriend();
+        if (friends_list.size() != 0) {
+            friends_group.removeAllViews();
+            for (Friend friend : friends_list) {
+                Chip chip = new Chip(context);
+                chip.setText(friend.first_name + " " + friend.second_name);
+                chips_friends.add(chip);
+                friends_group.addView(chip);
+            }
+        }
 
-            if (friends_list.size() != 0) {
-                friends_group.removeAllViews();
-                for (Friend friend : friends_list) {
-                    Chip chip = new Chip(context);
-                    chip.setText(friend.first_name + " " + friend.second_name);
-                    chips_friends.add(chip);
-                    friends_group.addView(chip);
+        select_all = create_page.findViewById(R.id.create_page_select_all_friends);
+        select_all.setOnClickListener(new View.OnClickListener() {
+            private boolean select_all_boolean = true;
+
+            @Override
+            public void onClick(View v) {
+                if (select_all_boolean) {
+                    for (Chip chip : chips_friends) {
+                        chip.setChecked(true);
+                    }
+                    select_all.setText(R.string.remove_all);
+                    select_all_boolean = false;
+                } else {
+                    for (Chip chip : chips_friends) {
+                        chip.setChecked(false);
+                    }
+                    select_all.setText(R.string.select_all);
+                    select_all_boolean = true;
                 }
             }
+        });
 
-            select_all = create_page.findViewById(R.id.create_page_select_all_friends);
-            select_all.setOnClickListener(new View.OnClickListener() {
-                private boolean select_all_boolean = true;
+        show_all = create_page.findViewById(R.id.create_page_show_all_friends);
+        show_all.setOnClickListener(new View.OnClickListener() {
+            private boolean show_all_bool = true;
 
-                @Override
-                public void onClick(View v) {
-                    if (select_all_boolean) {
-                        for (Chip chip : chips_friends) {
-                            chip.setChecked(true);
-                        }
-                        select_all.setText(R.string.remove_all);
-                        select_all_boolean = false;
-                    } else {
-                        for (Chip chip : chips_friends) {
-                            chip.setChecked(false);
-                        }
-                        select_all.setText(R.string.select_all);
-                        select_all_boolean = true;
-                    }
+            @Override
+            public void onClick(View v) {
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) friends_group.getLayoutParams();
+                if (show_all_bool) {
+                    lp.matchConstraintMaxHeight = 0;
+                    friends_group.setLayoutParams(lp);
+                    show_all.setText("Спрятать");
+                    show_all_bool = false;
+                } else {
+                    lp.matchConstraintMaxHeight = 170;
+                    friends_group.setLayoutParams(lp);
+                    show_all.setText("Показать все");
+                    show_all_bool = true;
                 }
-            });
+            }
+        });
 
-            show_all = create_page.findViewById(R.id.create_page_show_all_friends);
-            show_all.setOnClickListener(new View.OnClickListener() {
-                private boolean show_all_bool = true;
+        add_to_favorites = create_page.findViewById(R.id.create_page_add_to_favorites);
+        only_for_friends = create_page.findViewById(R.id.create_page_for_friends_only);
+        anonymous = create_page.findViewById(R.id.create_page_is_anonymous);
+        public_survey = create_page.findViewById(R.id.create_page_is_public);
 
-                @Override
-                public void onClick(View v) {
-                    ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) friends_group.getLayoutParams();
-                    if (show_all_bool) {
-                        lp.matchConstraintMaxHeight = 0;
-                        friends_group.setLayoutParams(lp);
-                        show_all.setText("Спрятать");
-                        show_all_bool = false;
-                    } else {
-                        lp.matchConstraintMaxHeight = 170;
-                        friends_group.setLayoutParams(lp);
-                        show_all.setText("Показать все");
-                        show_all_bool = true;
-                    }
-                }
-            });
+        survey_content = create_page.findViewById(R.id.create_page_survey_content);
 
-            add_to_favorites = create_page.findViewById(R.id.create_page_add_to_favorites);
-            only_for_friends = create_page.findViewById(R.id.create_page_for_friends_only);
-            anonymous = create_page.findViewById(R.id.create_page_is_anonymous);
-            public_survey = create_page.findViewById(R.id.create_page_is_public);
+        add_images = create_page.findViewById(R.id.create_page_add_to_survey);
+        add_images.setOnClickListener(v -> startChooseImage());
 
-            survey_content = create_page.findViewById(R.id.create_page_survey_content);
+        create_survey = create_page.findViewById(R.id.create_page_create_survey_button);
+        create_survey.setOnClickListener(v -> createSurvey());
 
-            add_images = create_page.findViewById(R.id.create_page_add_to_survey);
-            add_images.setOnClickListener(v -> startChooseImage());
+        swipe_refresh = create_page.findViewById(R.id.create_page_refresh);
+        swipe_refresh.setOnRefreshListener(this);
 
-            create_survey = create_page.findViewById(R.id.create_page_create_survey_button);
-            create_survey.setOnClickListener(v -> createSurvey());
+        title = create_page.findViewById(R.id.create_page_title_survey);
+        title_layout = create_page.findViewById(R.id.create_page_title_survey_layout);
 
-            swipe_refresh = create_page.findViewById(R.id.create_page_refresh);
-            swipe_refresh.setOnRefreshListener(this);
+        description = create_page.findViewById(R.id.create_page_description_survey);
+        description_layout = create_page.findViewById(R.id.create_page_description_survey_layout);
 
-            title = create_page.findViewById(R.id.create_page_title_survey);
-            title_layout = create_page.findViewById(R.id.create_page_title_survey_layout);
+        change_date = create_page.findViewById(R.id.create_page_change_date_button);
+        change_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startChooseDate();
+            }
+        });
 
-            description = create_page.findViewById(R.id.create_page_description_survey);
-            description_layout = create_page.findViewById(R.id.create_page_description_survey_layout);
+        datetime = create_page.findViewById(R.id.create_page_date_picker_text);
 
-            change_date = create_page.findViewById(R.id.create_page_change_date_button);
-            change_date.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startChooseDate();
-                }
-            });
-
-            datetime = create_page.findViewById(R.id.create_page_date_picker_text);
-
-            page = this;
-            return create_page;
-        } else {
-            return page.getCreate_page();
-        }
+        page = this;
+        return create_page;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
