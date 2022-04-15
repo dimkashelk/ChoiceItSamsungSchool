@@ -8,7 +8,8 @@
     <group
         android:name="rotationGroup"
         android:pivotX="12"
-        android:pivotY="12">
+        android:pivotY="12"
+        android:rotation="180">
 
         <path
             android:name="iconPath"
