@@ -74,101 +74,97 @@ public class UserPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (page == null) {
-            UserPageSettings.userPage = this;
+        UserPageSettings.userPage = this;
 
-            Context context = getContext();
-            AppDatabase appDatabase = AppDatabase.getDatabase(context);
+        Context context = getContext();
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
 
-            user_page = inflater.inflate(R.layout.user_page, container, false);
-            this.inflater = inflater;
+        user_page = inflater.inflate(R.layout.user_page, container, false);
+        this.inflater = inflater;
 
-            apiServer = APIServer.getSingletonAPIServer();
-            apiServer.setUserPage(this);
-            apiServer.loadUserData();
+        apiServer = APIServer.getSingletonAPIServer();
+        apiServer.setUserPage(this);
+        apiServer.loadUserData();
 
-            toolbar = user_page.findViewById(R.id.user_tool_bar);
-            toolbar.setNavigationOnClickListener(v -> changeState());
+        toolbar = user_page.findViewById(R.id.user_tool_bar);
+        toolbar.setNavigationOnClickListener(v -> changeState());
 
-            menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
-            close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
+        menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
+        close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
 
-            LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
-            friends = user_page.findViewById(R.id.user_page_friends_list);
+        LinearLayout contentLayout = user_page.findViewById(R.id.user_page_front);
+        friends = user_page.findViewById(R.id.user_page_friends_list);
 
-            parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
-            friends_list = appDatabase.friendDao().getAllFriend();
+        parent_friends = (ViewGroup) user_page.findViewById(R.id.user_page_friends_list);
+        friends_list = appDatabase.friendDao().getAllFriend();
 
-            if (friends_list.size() != 0) {
-                for (int i = 0; i < friends_list.size(); i++) {
-                    parent_friends.addView(new FriendCard(
-                            context,
-                            friends_list.get(i).friend_id,
-                            InternalStorage.getInternalStorage().load(
-                                    friends_list.get(i).friend_id,
-                                    InternalStorage.PROFILE_IMAGE
-                            ),
-                            inflater,
-                            null).getPage());
-                }
+        if (friends_list.size() != 0) {
+            for (int i = 0; i < friends_list.size(); i++) {
+                parent_friends.addView(new FriendCard(
+                        context,
+                        friends_list.get(i).friend_id,
+                        InternalStorage.getInternalStorage().load(
+                                friends_list.get(i).friend_id,
+                                InternalStorage.PROFILE_IMAGE
+                        ),
+                        inflater,
+                        null).getPage());
             }
-
-            parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
-            user_surveys = appDatabase.surveyDao().getSurveys();
-
-            if (user_surveys.size() != 0) {
-                for (int i = 0; i < user_surveys.size(); i++) {
-                    parent_survey.addView(new SurveyCard(
-                            context,
-                            user_surveys.get(i).survey_id,
-                            InternalStorage.getInternalStorage().load(
-                                    user_surveys.get(i).survey_id,
-                                    InternalStorage.SURVEY_TITLE_IMAGE
-                            ),
-                            inflater,
-                            this).getPage());
-                }
-            }
-
-            ViewPager viewPager = user_page.findViewById(R.id.user_page_view_pager);
-            viewPager.setAdapter(new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), context));
-
-            TabLayout tabLayout = user_page.findViewById(R.id.user_page_tab_layout);
-            tabLayout.setupWithViewPager(viewPager);
-
-            CircleImageView imageView = user_page.findViewById(R.id.user_page_image);
-            imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
-
-            sheetBehavior = BottomSheetBehavior.from(contentLayout);
-            sheetBehavior.setFitToContents(false);
-            sheetBehavior.setHideable(false);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-            // user info
-            User user = appDatabase.userDao().getAllUsers().get(0);
-            TextView full_name = user_page.findViewById(R.id.user_page_full_name);
-            full_name.setText(user.first_name + " " + user.second_name);
-
-            toolbar.setTitle("@" + user.login);
-
-            MaterialButton change_data = user_page.findViewById(R.id.user_page_change_data);
-            change_data.setOnClickListener(v -> editProfile());
-
-            manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-            SwipeRefreshLayout swipeRefreshLayout = user_page.findViewById(R.id.user_page_refresh);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    refresh();
-                }
-            });
-
-            page = this;
-            return user_page;
-        } else {
-            return page.getUser_page();
         }
+
+        parent_survey = (ViewGroup) user_page.findViewById(R.id.user_page_survey_list);
+        user_surveys = appDatabase.surveyDao().getSurveys();
+
+        if (user_surveys.size() != 0) {
+            for (int i = 0; i < user_surveys.size(); i++) {
+                parent_survey.addView(new SurveyCard(
+                        context,
+                        user_surveys.get(i).survey_id,
+                        InternalStorage.getInternalStorage().load(
+                                user_surveys.get(i).survey_id,
+                                InternalStorage.SURVEY_TITLE_IMAGE
+                        ),
+                        inflater,
+                        this).getPage());
+            }
+        }
+
+        ViewPager viewPager = user_page.findViewById(R.id.user_page_view_pager);
+        viewPager.setAdapter(new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), context));
+
+        TabLayout tabLayout = user_page.findViewById(R.id.user_page_tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        CircleImageView imageView = user_page.findViewById(R.id.user_page_image);
+        imageView.setImageDrawable(context.getDrawable(R.mipmap.ic_launcher));
+
+        sheetBehavior = BottomSheetBehavior.from(contentLayout);
+        sheetBehavior.setFitToContents(false);
+        sheetBehavior.setHideable(false);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        // user info
+        User user = appDatabase.userDao().getAllUsers().get(0);
+        TextView full_name = user_page.findViewById(R.id.user_page_full_name);
+        full_name.setText(user.first_name + " " + user.second_name);
+
+        toolbar.setTitle("@" + user.login);
+
+        MaterialButton change_data = user_page.findViewById(R.id.user_page_change_data);
+        change_data.setOnClickListener(v -> editProfile());
+
+        manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        SwipeRefreshLayout swipeRefreshLayout = user_page.findViewById(R.id.user_page_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
+        page = this;
+        return user_page;
     }
 
     private void editProfile() {
