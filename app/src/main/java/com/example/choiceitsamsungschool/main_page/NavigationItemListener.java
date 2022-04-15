@@ -6,6 +6,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
@@ -21,8 +23,11 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     private CreatePage createPage;
     private SearchPage searchPage;
     private UserPage userPage;
+    private PersonPage personPage;
     private static NavigationItemListener listener = null;
-    private Fragment last_fragment;
+    private int last_fragment;
+    private ViewPager2 viewPager;
+    private ViewPagerAdapter adapter;
 
     public NavigationItemListener(AppActivity mainActivity, BottomNavigationView bottomNavigationView) {
         this.mainActivity = mainActivity;
@@ -34,6 +39,19 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
         createPage = new CreatePage();
         searchPage = new SearchPage();
         userPage = new UserPage();
+        personPage = new PersonPage();
+
+        viewPager = mainActivity.findViewById(R.id.content);
+        viewPager.setOffscreenPageLimit(10);
+        adapter = new ViewPagerAdapter(mainActivity.getSupportFragmentManager(), mainActivity.getLifecycle());
+        adapter.addFragment(homePage);
+        adapter.addFragment(friendsPage);
+        adapter.addFragment(createPage);
+        adapter.addFragment(searchPage);
+        adapter.addFragment(userPage);
+        adapter.addFragment(personPage);
+
+        viewPager.setAdapter(adapter);
 
         listener = this;
     }
@@ -43,24 +61,24 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.page_main:
-                manager.beginTransaction().replace(R.id.content, homePage).commit();
-                last_fragment = homePage;
+                viewPager.setCurrentItem(0, false);
+                last_fragment = 0;
                 break;
             case R.id.page_friends:
-                manager.beginTransaction().replace(R.id.content, friendsPage).commit();
-                last_fragment = friendsPage;
+                viewPager.setCurrentItem(1, false);
+                last_fragment = 1;
                 break;
             case R.id.page_create:
-                manager.beginTransaction().replace(R.id.content, createPage).commit();
-                last_fragment = createPage;
+                viewPager.setCurrentItem(2, false);
+                last_fragment = 2;
                 break;
             case R.id.page_search:
-                manager.beginTransaction().replace(R.id.content, searchPage).commit();
-                last_fragment = searchPage;
+                viewPager.setCurrentItem(3, false);
+                last_fragment = 3;
                 break;
             case R.id.page_user:
-                manager.beginTransaction().replace(R.id.content, userPage).commit();
-                last_fragment = userPage;
+                viewPager.setCurrentItem(4, false);
+                last_fragment = 4;
                 break;
         }
         return true;
@@ -71,16 +89,14 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     }
 
     public void openPersonPage(Person person) {
-        PersonPage personPage = new PersonPage(person);
-        manager.beginTransaction().replace(R.id.content, personPage).commit();
+        viewPager.setCurrentItem(5, false);
     }
 
     public void openPersonPage(Friend friend) {
-        PersonPage personPage = new PersonPage(friend);
-        manager.beginTransaction().replace(R.id.content, personPage).commit();
+        viewPager.setCurrentItem(5, false);
     }
 
     public void closePersonPage() {
-        manager.beginTransaction().replace(R.id.content, last_fragment).commit();
+        viewPager.setCurrentItem(last_fragment, false);
     }
 }

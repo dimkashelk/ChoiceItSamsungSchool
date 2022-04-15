@@ -34,10 +34,10 @@ public class PersonPage extends Fragment {
     private static LayoutInflater inflater;
     private static APIServer apiServer;
     private InputMethodManager manager;
-    private String first_name;
-    private String second_name;
-    private int count_friends;
-    private int count_surveys;
+    private String first_name = "Test";
+    private String second_name = "Test";
+    private int count_friends = 0;
+    private int count_surveys = 0;
     private Drawable bitmap;
     private TextView full_name;
     private CircleImageView image;
@@ -45,6 +45,10 @@ public class PersonPage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private boolean to_close = false;
+
+    public PersonPage() {
+
+    }
 
     public PersonPage(Person person) {
         this.person_id = person.person_id;
@@ -81,7 +85,7 @@ public class PersonPage extends Fragment {
             full_name.setText(first_name + " " + second_name);
 
             image = person_page.findViewById(R.id.person_page_image);
-            image.setImageDrawable(bitmap);
+            // image.setImageDrawable(bitmap);
 
             toolbar = person_page.findViewById(R.id.person_tool_bar);
             toolbar.setNavigationOnClickListener(v -> changeState());
