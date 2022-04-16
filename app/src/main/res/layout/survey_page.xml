@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/survey_page"
+    style="@style/PageBackgroundColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/survey_tool_bar"
+        style="@style/ToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar_menu"
+        app:navigationIcon="@drawable/ic_menu_big"
+        app:navigationIconTint="@color/white"
+        app:title="Заголовок опроса"
+        app:titleTextColor="@color/white" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/survey_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="@id/survey_page"
+        app:layout_constraintTop_toBottomOf="@id/survey_tool_bar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/survey_page_back"
+            style="@style/FrontBackdropBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="60dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/survey_content_layout">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/survey_page_front"
+            style="@style/FrontBackdropBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            app:behavior_peekHeight="60dp"
+            app:layout_behavior=".main_page.LockedBottomSheetBehavior"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="@id/survey_content_layout"
+            app:layout_constraintTop_toBottomOf="@id/survey_content_layout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@android:color/transparent"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/survey_page_progress_title"
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="0/15"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/survey_page_progress"
+                    style="@style/LinearProgressIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/survey_page_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:id="@+id/survey_page_first_layout_relative"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constrainedHeight="true"
+                        app:layout_constraintBottom_toTopOf="@id/survey_page_second_layout_relative"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.yuyakaido.android.cardstackview.CardStackView
+                            android:id="@+id/survey_page_first_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constrainedHeight="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/survey_page_second_layout_relative"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constrainedHeight="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/survey_page_first_layout_relative">
+
+                        <com.yuyakaido.android.cardstackview.CardStackView
+                            android:id="@+id/survey_page_second_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp" />
+
+                    </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

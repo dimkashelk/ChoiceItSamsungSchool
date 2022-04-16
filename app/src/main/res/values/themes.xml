@@ -163,4 +163,8 @@
     <style name="DatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/purple_400</item>
     </style>
+
+    <style name="LinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="indicatorColor">@color/purple_400</item>
+    </style>
 </resources>

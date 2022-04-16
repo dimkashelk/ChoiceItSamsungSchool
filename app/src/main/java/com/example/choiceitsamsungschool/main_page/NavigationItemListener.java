@@ -4,14 +4,13 @@ import android.annotation.SuppressLint;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NavigationItemListener implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +23,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     private SearchPage searchPage;
     private UserPage userPage;
     private PersonPage personPage;
+    private SurveyPage surveyPage;
     private static NavigationItemListener listener = null;
     private int last_fragment;
     private ViewPager2 viewPager;
@@ -40,6 +40,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
         searchPage = new SearchPage();
         userPage = new UserPage();
         personPage = new PersonPage();
+        surveyPage = new SurveyPage();
 
         viewPager = mainActivity.findViewById(R.id.content);
         viewPager.setOffscreenPageLimit(10);
@@ -52,6 +53,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
         adapter.addFragment(searchPage);
         adapter.addFragment(userPage);
         adapter.addFragment(personPage);
+        adapter.addFragment(surveyPage);
 
         viewPager.setAdapter(adapter);
 
@@ -91,11 +93,15 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     }
 
     public void openPersonPage(Person person) {
-        viewPager.setCurrentItem(5, false);
+        viewPager.setCurrentItem(6, false);
     }
 
     public void openPersonPage(Friend friend) {
-        viewPager.setCurrentItem(5, false);
+        viewPager.setCurrentItem(6, false);
+    }
+
+    public void openSurvey(Survey survey) {
+        viewPager.setCurrentItem(6, false);
     }
 
     public void closePersonPage() {
