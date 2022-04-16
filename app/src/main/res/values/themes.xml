@@ -135,6 +135,10 @@
         <item name="strokeColor">@color/purple_400</item>
     </style>
 
+    <style name="CardViewStyle.PersonPage">
+        <item name="strokeWidth">0dp</item>
+    </style>
+
     <style name="FillButton.CardView" parent="FillButton">
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="rippleColor">@android:color/transparent</item>
