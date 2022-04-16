@@ -162,6 +162,7 @@
 
                                     <com.google.android.material.card.MaterialCardView
                                         android:id="@+id/user_page_friends_card"
+                                        style="@style/CardViewStyle.PersonPage"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:outlineAmbientShadowColor="@android:color/transparent"
@@ -200,6 +201,7 @@
 
                                     <com.google.android.material.card.MaterialCardView
                                         android:id="@+id/user_page_survey_card"
+                                        style="@style/CardViewStyle.PersonPage"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:outlineAmbientShadowColor="@android:color/transparent"
@@ -257,6 +259,7 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/user_page_friends_list_card"
+                            style="@style/CardViewStyle.PersonPage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8pt"
