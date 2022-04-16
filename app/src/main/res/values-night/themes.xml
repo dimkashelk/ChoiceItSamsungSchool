@@ -131,6 +131,7 @@
 
     <style name="CardViewStyle.PersonPage">
         <item name="strokeWidth">0dp</item>
+        <item name="cardBackgroundColor">@color/black</item>
     </style>
 
     <style name="FillButton.CardView" parent="FillButton">
