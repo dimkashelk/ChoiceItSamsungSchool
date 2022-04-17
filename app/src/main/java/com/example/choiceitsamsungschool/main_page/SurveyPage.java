@@ -183,7 +183,6 @@ public class SurveyPage extends Fragment {
         if (index_of_spot < first.size()) {
             dop_spots.add(first.get(index_of_spot));
         }
-        Log.i("INDEX", "choose first");
     }
 
     public void chooseSecond() {
@@ -202,13 +201,11 @@ public class SurveyPage extends Fragment {
     public void closeSecond() {
         cardManagerSecond.setSwipeAnimationSetting(left);
         cardStackViewSecond.swipe();
-        Log.i("INDEX", "close second");
     }
 
     @SuppressLint("SetTextI18n")
     public void nextProgress() {
         index_of_spot++;
-        Log.i("INDEX", String.valueOf(index_of_spot));
         if (index_of_spot == first.size() || index_of_spot == second.size()) {
             updateStacks();
         }
@@ -251,7 +248,8 @@ public class SurveyPage extends Fragment {
             dop.add(dop_spots.get(i));
         }
 
-        dop_spots = dop;
+        dop_spots = new ArrayList<>();
+        dop_spots.addAll(dop);
     }
 
     public void finishSurvey() {

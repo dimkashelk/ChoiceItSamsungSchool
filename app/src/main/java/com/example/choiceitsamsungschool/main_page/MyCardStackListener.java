@@ -1,7 +1,6 @@
 package com.example.choiceitsamsungschool.main_page;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
