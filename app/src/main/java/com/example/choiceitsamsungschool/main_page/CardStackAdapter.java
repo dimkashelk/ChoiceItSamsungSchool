@@ -1,5 +1,6 @@
 package com.example.choiceitsamsungschool.main_page;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,16 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public int getItemCount() {
         return spots.size();
+    }
+
+    public Spot getItem(int position) {
+        return spots.get(position);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void addSpot(Spot spot) {
+        spots.add(spot);
+        notifyItemInserted(spots.size() - 1);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

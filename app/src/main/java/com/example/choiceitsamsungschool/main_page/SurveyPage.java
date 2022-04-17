@@ -6,17 +6,17 @@ import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.animation.AccelerateInterpolator;
 import androidx.fragment.app.Fragment;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -55,8 +55,19 @@ public class SurveyPage extends Fragment {
     private CardStackAdapter cardStackAdapterSecond;
     private SwipeAnimationSetting left;
     private SwipeAnimationSetting right;
+    private int index_of_spot = 0;
+    private int count_questions = 15;
+    private int current_question = 1;
+    private int step = (int) (current_question * 1.0 / count_questions * 100);
+    private int current_progress = step;
+    private List<Spot> begin_list_spots = new ArrayList<>();
+    private List<Spot> dop_spots = new ArrayList<>();
+    private List<Spot> all_spots = new ArrayList<>();
+    private List<Spot> first = new ArrayList<>();
+    private List<Spot> second = new ArrayList<>();
+    private boolean is_finished = false;
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,21 +107,39 @@ public class SurveyPage extends Fragment {
         cardStackViewSecond.setLayoutManager(cardManagerSecond);
 
         Drawable drawable = getContext().getDrawable(R.mipmap.ic_launcher);
+        all_spots.add(new Spot(0, "Test", drawable));
+        all_spots.add(new Spot(1, "Test", drawable));
+        all_spots.add(new Spot(2, "Test", drawable));
+        all_spots.add(new Spot(3, "Test", drawable));
+        all_spots.add(new Spot(4, "Test", drawable));
+        all_spots.add(new Spot(5, "Test", drawable));
+        all_spots.add(new Spot(6, "Test", drawable));
+        all_spots.add(new Spot(7, "Test", drawable));
+        all_spots.add(new Spot(8, "Test", drawable));
+        all_spots.add(new Spot(9, "Test", drawable));
+        all_spots.add(new Spot(10, "Test", drawable));
+        all_spots.add(new Spot(11, "Test", drawable));
+        all_spots.add(new Spot(13, "Test", drawable));
+        all_spots.add(new Spot(14, "Test", drawable));
+        all_spots.add(new Spot(15, "Test", drawable));
+        all_spots.add(new Spot(16, "Test", drawable));
 
-        List<Spot> spots = new ArrayList<>();
-        spots.add(new Spot(1, "Test", drawable));
-        spots.add(new Spot(2, "Test", drawable));
-        spots.add(new Spot(3, "Test", drawable));
-        spots.add(new Spot(4, "Test", drawable));
-        spots.add(new Spot(5, "Test", drawable));
-        spots.add(new Spot(6, "Test", drawable));
-        spots.add(new Spot(7, "Test", drawable));
-        spots.add(new Spot(8, "Test", drawable));
-        spots.add(new Spot(9, "Test", drawable));
-        spots.add(new Spot(10, "Test", drawable));
+        int count = all_spots.size() / 2;
+        first = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            first.add(all_spots.get(i));
+        }
+        cardStackAdapterFirst = new CardStackAdapter(first);
 
-        cardStackAdapterFirst = new CardStackAdapter(spots);
-        cardStackAdapterSecond = new CardStackAdapter(spots);
+        second = new ArrayList<>();
+        for (int i = count; i < 2 * count; i++) {
+            second.add(all_spots.get(i));
+        }
+        cardStackAdapterSecond = new CardStackAdapter(second);
+
+        for (int i = 2 * count; i < all_spots.size(); i++) {
+            dop_spots.add(all_spots.get(i));
+        }
 
         cardStackViewFirst.setAdapter(cardStackAdapterFirst);
         cardStackViewSecond.setAdapter(cardStackAdapterSecond);
@@ -128,6 +157,9 @@ public class SurveyPage extends Fragment {
                 .build();
 
         page = this;
+
+        progress.setProgress(current_progress);
+        progress_title.setText(current_question + "/" + count_questions);
         return survey_page;
     }
 
@@ -148,11 +180,18 @@ public class SurveyPage extends Fragment {
     public void chooseFirst() {
         cardManagerFirst.setSwipeAnimationSetting(right);
         cardStackViewFirst.swipe();
+        if (index_of_spot < first.size()) {
+            dop_spots.add(first.get(index_of_spot));
+        }
+        Log.i("INDEX", "choose first");
     }
 
     public void chooseSecond() {
         cardManagerSecond.setSwipeAnimationSetting(right);
         cardStackViewSecond.swipe();
+        if (index_of_spot < second.size()) {
+            dop_spots.add(second.get(index_of_spot));
+        }
     }
 
     public void closeFirst() {
@@ -163,5 +202,60 @@ public class SurveyPage extends Fragment {
     public void closeSecond() {
         cardManagerSecond.setSwipeAnimationSetting(left);
         cardStackViewSecond.swipe();
+        Log.i("INDEX", "close second");
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void nextProgress() {
+        index_of_spot++;
+        Log.i("INDEX", String.valueOf(index_of_spot));
+        if (index_of_spot == first.size() || index_of_spot == second.size()) {
+            updateStacks();
+        }
+
+        if (!is_finished) {
+            current_question += 1;
+            if (current_question == count_questions) {
+                current_progress = 100;
+            } else {
+                current_progress += step;
+            }
+            progress_title.setText(current_question + "/" + count_questions);
+            progress.setProgress(current_progress, true);
+        }
+    }
+
+    public void updateStacks() {
+        if (dop_spots.size() == 1) {
+            finishSurvey();
+            return;
+        }
+
+        index_of_spot = 0;
+        int count = dop_spots.size() / 2;
+
+        first = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            first.add(dop_spots.get(i));
+            cardStackAdapterFirst.addSpot(dop_spots.get(i));
+        }
+
+        second = new ArrayList<>();
+        for (int i = count; i < 2 * count; i++) {
+            second.add(dop_spots.get(i));
+            cardStackAdapterSecond.addSpot(dop_spots.get(i));
+        }
+
+        List<Spot> dop = new ArrayList<>();
+        for (int i = 2 * count; i < dop_spots.size(); i++) {
+            dop.add(dop_spots.get(i));
+        }
+
+        dop_spots = dop;
+    }
+
+    public void finishSurvey() {
+        is_finished = true;
+        Toast.makeText(getContext(), "ФИНИШ!", Toast.LENGTH_SHORT).show();
     }
 }
