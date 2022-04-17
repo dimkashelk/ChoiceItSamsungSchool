@@ -60,18 +60,21 @@ public class SurveyPage extends Fragment {
     private int current_question = 1;
     private int step = (int) (current_question * 1.0 / count_questions * 100);
     private int current_progress = step;
-    private List<Spot> begin_list_spots = new ArrayList<>();
     private List<Spot> dop_spots = new ArrayList<>();
     private List<Spot> all_spots = new ArrayList<>();
     private List<Spot> first = new ArrayList<>();
     private List<Spot> second = new ArrayList<>();
     private boolean is_finished = false;
+    private List<HistoryLine> history = new ArrayList<>();
+    private ViewGroup history_group;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SurveyPage.inflater = inflater;
 
         survey_page = inflater.inflate(R.layout.survey_page, container, false);
         Context context = getContext();
@@ -160,6 +163,9 @@ public class SurveyPage extends Fragment {
 
         progress.setProgress(current_progress);
         progress_title.setText(current_question + "/" + count_questions);
+
+        history_group = survey_page.findViewById(R.id.survey_page_history_list);
+
         return survey_page;
     }
 
@@ -182,6 +188,15 @@ public class SurveyPage extends Fragment {
         cardStackViewFirst.swipe();
         if (index_of_spot < first.size()) {
             dop_spots.add(first.get(index_of_spot));
+            HistoryLine historyLine = new HistoryLine(
+                    getContext(),
+                    first.get(index_of_spot).getDrawable(),
+                    second.get(index_of_spot).getDrawable(),
+                    HistoryLine.LEFT,
+                    inflater,
+                    this
+            );
+            history_group.addView(historyLine.getPage());
         }
     }
 
@@ -190,6 +205,15 @@ public class SurveyPage extends Fragment {
         cardStackViewSecond.swipe();
         if (index_of_spot < second.size()) {
             dop_spots.add(second.get(index_of_spot));
+            HistoryLine historyLine = new HistoryLine(
+                    getContext(),
+                    first.get(index_of_spot).getDrawable(),
+                    second.get(index_of_spot).getDrawable(),
+                    HistoryLine.RIGHT,
+                    inflater,
+                    this
+            );
+            history_group.addView(historyLine.getPage());
         }
     }
 

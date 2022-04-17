@@ -167,4 +167,8 @@
     <style name="LinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
         <item name="indicatorColor">@color/purple_400</item>
     </style>
+
+    <style name="ImageView">
+        <item name="android:backgroundTint">@color/purple_400</item>
+    </style>
 </resources>

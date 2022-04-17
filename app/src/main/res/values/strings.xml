@@ -110,4 +110,7 @@
     <string name="change">Изменить</string>
     <string name="request">Запрос</string>
     <string name="surveys">Опросы</string>
+    <string name="end">Закончить досрочно</string>
+    <string name="begin_again">Пройти заново</string>
+    <string name="history">История</string>
 </resources>
