@@ -1,6 +1,7 @@
 package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         Spot spot = spots.get(position);
         holder.title.setText(spot.getTitle());
         holder.image.setImageDrawable(spot.getDrawable());
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Что-то случилось", Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.card.setOnClickListener(v -> Toast.makeText(v.getContext(), "Что-то случилось", Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -60,7 +56,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         notifyItemInserted(spots.size() - 1);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public RoundedImageView image;
         public MaterialCardView card;
@@ -68,12 +64,9 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            LayoutInflater inflater = LayoutInflater.from(itemView.getContext());
-            View item_spot = inflater.inflate(R.layout.item_spot, null);
-
-            title = item_spot.findViewById(R.id.item_spot_title);
-            image = item_spot.findViewById(R.id.item_spot_image);
-            card = item_spot.findViewById(R.id.item_spot_card);
+            title = itemView.findViewById(R.id.item_spot_title);
+            image = itemView.findViewById(R.id.item_spot_image);
+            card = itemView.findViewById(R.id.item_spot_card);
         }
     }
 }
