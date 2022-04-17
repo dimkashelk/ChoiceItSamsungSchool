@@ -118,13 +118,13 @@ public class SurveyPage extends Fragment {
         right = new SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Right)
                 .setDuration(Duration.Normal.duration)
-                .setInterpolator((Interpolator) new AccelerateInterpolator())
+                .setInterpolator(new android.view.animation.AccelerateInterpolator())
                 .build();
 
         left = new SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Left)
                 .setDuration(Duration.Normal.duration)
-                .setInterpolator((Interpolator) new AccelerateInterpolator())
+                .setInterpolator(new android.view.animation.AccelerateInterpolator())
                 .build();
 
         page = this;
