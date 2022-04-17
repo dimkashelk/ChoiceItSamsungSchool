@@ -10,6 +10,7 @@ import com.yuyakaido.android.cardstackview.Direction;
 public class MyCardStackListener implements CardStackListener {
     private int type;
     private SurveyPage surveyPage;
+    private Direction direction;
 
     public MyCardStackListener(int position, SurveyPage surveyPage) {
         this.type = position;
@@ -18,12 +19,12 @@ public class MyCardStackListener implements CardStackListener {
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-        Log.i("Stack", "dragging");
+        this.direction = direction;
     }
 
     @Override
     public void onCardSwiped(Direction direction) {
-        Log.i("Stack", "swiped");
+        this.direction = direction;
     }
 
     @Override
@@ -44,13 +45,24 @@ public class MyCardStackListener implements CardStackListener {
     @Override
     public void onCardDisappeared(View view, int position) {
         Log.i("Stack", "disappeared");
-        switch (type) {
-            case 1:
-                surveyPage.swipeSecond();
-                break;
-            case 2:
-                surveyPage.swipeFirst();
-                break;
+        if (direction == Direction.Left) {
+            switch (type) {
+                case 1:
+                    surveyPage.chooseSecond();
+                    break;
+                case 2:
+                    surveyPage.chooseFirst();
+                    break;
+            }
+        } else {
+            switch (type) {
+                case 1:
+                    surveyPage.closeSecond();
+                    break;
+                case 2:
+                    surveyPage.closeFirst();
+                    break;
+            }
         }
     }
 }

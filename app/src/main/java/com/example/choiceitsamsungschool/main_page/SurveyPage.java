@@ -145,11 +145,23 @@ public class SurveyPage extends Fragment {
         manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
     }
 
-    public void swipeFirst() {
+    public void chooseFirst() {
+        cardManagerFirst.setSwipeAnimationSetting(right);
         cardStackViewFirst.swipe();
     }
 
-    public void swipeSecond() {
+    public void chooseSecond() {
+        cardManagerSecond.setSwipeAnimationSetting(right);
+        cardStackViewSecond.swipe();
+    }
+
+    public void closeFirst() {
+        cardManagerFirst.setSwipeAnimationSetting(left);
+        cardStackViewFirst.swipe();
+    }
+
+    public void closeSecond() {
+        cardManagerSecond.setSwipeAnimationSetting(left);
         cardStackViewSecond.swipe();
     }
 }
