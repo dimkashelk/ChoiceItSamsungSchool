@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -30,9 +31,11 @@ import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
+import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SurveyPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -103,7 +106,9 @@ public class SurveyPage extends Fragment {
         cardStackViewSecond = survey_page.findViewById(R.id.survey_page_second_layout);
 
         cardManagerFirst = new CardStackLayoutManager(getContext(), new MyCardStackListener(1, this));
+        cardManagerFirst.setSwipeThreshold(0.6f);
         cardManagerSecond = new CardStackLayoutManager(getContext(), new MyCardStackListener(2, this));
+        cardManagerSecond.setSwipeThreshold(0.6f);
 
         cardManagerFirst.setCanScrollHorizontal(true);
         cardManagerFirst.setCanScrollVertical(false);
@@ -335,5 +340,63 @@ public class SurveyPage extends Fragment {
 
     public void changeStateSecond() {
         setSwiped_second(!isSwiped_second());
+    }
+
+    public void freezeFirst() {
+        cardManagerFirst.setSwipeableMethod(SwipeableMethod.Automatic);
+    }
+
+    public void unfreezeFirst() {
+        cardManagerFirst.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
+    }
+
+    public void freezeFirstCardView() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.get().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        freezeFirst();
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        unfreezeFirst();
+                    }
+                });
+            }
+        });
+        thread.start();
+    }
+
+    public void freezeSecond() {
+        cardManagerSecond.setSwipeableMethod(SwipeableMethod.Automatic);
+    }
+
+    public void unfreezeSecond() {
+        cardManagerSecond.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
+    }
+
+    public void freezeSecondCardView() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.get().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        freezeSecond();
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        unfreezeSecond();
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 }

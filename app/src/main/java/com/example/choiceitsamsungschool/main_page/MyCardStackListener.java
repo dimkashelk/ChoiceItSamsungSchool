@@ -22,6 +22,14 @@ public class MyCardStackListener implements CardStackListener {
     @Override
     public void onCardDragging(Direction direction, float ratio) {
         this.direction = direction;
+        switch (type) {
+            case 1:
+                surveyPage.freezeSecond();
+                break;
+            case 2:
+                surveyPage.freezeFirst();
+                break;
+        }
     }
 
     @Override
@@ -132,42 +140,6 @@ public class MyCardStackListener implements CardStackListener {
             }
         });
         thread.start();
-//        if (direction == Direction.Right) {
-//            surveyPage.nextProgress();
-//            switch (type) {
-//                case 1:
-//                    if (!surveyPage.isSwiped_second()) {
-//                        surveyPage.changeStateFirst();
-//                        surveyPage.closeSecond();
-//                        surveyPage.changeStateFirst();
-//                    }
-//                    break;
-//                case 2:
-//                    if (!surveyPage.isSwiped_first()) {
-//                        surveyPage.changeStateFirst();
-//                        surveyPage.closeFirst();
-//                        surveyPage.changeStateFirst();
-//                    }
-//                    break;
-//            }
-//        } else {
-//            switch (type) {
-//                case 1:
-//                    if (!surveyPage.isSwiped_second()) {
-//                        surveyPage.changeStateSecond();
-//                        surveyPage.chooseSecond();
-//                        surveyPage.changeStateSecond();
-//                    }
-//                    break;
-//                case 2:
-//                    if (!surveyPage.isSwiped_first()) {
-//                        surveyPage.changeStateFirst();
-//                        surveyPage.chooseFirst();
-//                        surveyPage.changeStateFirst();
-//                    }
-//                    break;
-//            }
-//        }
     }
 
     @Override
@@ -177,7 +149,14 @@ public class MyCardStackListener implements CardStackListener {
 
     @Override
     public void onCardCanceled() {
-
+        switch (type) {
+            case 1:
+                surveyPage.unfreezeSecond();
+                break;
+            case 2:
+                surveyPage.unfreezeFirst();
+                break;
+        }
     }
 
     @Override
@@ -187,6 +166,13 @@ public class MyCardStackListener implements CardStackListener {
 
     @Override
     public void onCardDisappeared(View view, int position) {
-
+        switch (type) {
+            case 1:
+                surveyPage.unfreezeSecond();
+                break;
+            case 2:
+                surveyPage.unfreezeFirst();
+                break;
+        }
     }
 }
