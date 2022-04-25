@@ -67,6 +67,8 @@ public class SurveyPage extends Fragment {
     private boolean is_finished = false;
     private List<HistoryLine> history = new ArrayList<>();
     private ViewGroup history_group;
+    private boolean swiped_first = false;
+    private boolean swiped_second = false;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -184,27 +186,50 @@ public class SurveyPage extends Fragment {
     }
 
     public void chooseFirst() {
+        Log.i("CardEvent", "Choose First");
         cardManagerFirst.setSwipeAnimationSetting(right);
         cardStackViewFirst.swipe();
         if (index_of_spot < first.size()) {
-            dop_spots.add(first.get(index_of_spot));
-            HistoryLine historyLine = new HistoryLine(
-                    getContext(),
-                    first.get(index_of_spot).getDrawable(),
-                    second.get(index_of_spot).getDrawable(),
-                    HistoryLine.LEFT,
-                    inflater,
-                    this
-            );
-            history_group.addView(historyLine.getPage());
+            if (history_group.getChildCount() != current_question) {
+                dop_spots.add(first.get(index_of_spot));
+                HistoryLine historyLine = new HistoryLine(
+                        getContext(),
+                        first.get(index_of_spot).getDrawable(),
+                        second.get(index_of_spot).getDrawable(),
+                        HistoryLine.LEFT,
+                        inflater,
+                        this
+                );
+                history_group.addView(historyLine.getPage());
+            }
         }
     }
 
     public void chooseSecond() {
+        Log.i("CardEvent", "Choose Second");
         cardManagerSecond.setSwipeAnimationSetting(right);
         cardStackViewSecond.swipe();
         if (index_of_spot < second.size()) {
-            dop_spots.add(second.get(index_of_spot));
+            if (history_group.getChildCount() != current_question) {
+                dop_spots.add(second.get(index_of_spot));
+                HistoryLine historyLine = new HistoryLine(
+                        getContext(),
+                        first.get(index_of_spot).getDrawable(),
+                        second.get(index_of_spot).getDrawable(),
+                        HistoryLine.RIGHT,
+                        inflater,
+                        this
+                );
+                history_group.addView(historyLine.getPage());
+            }
+        }
+    }
+
+    public void closeFirst() {
+        Log.i("CardEvent", "Close First");
+        cardManagerFirst.setSwipeAnimationSetting(left);
+        cardStackViewFirst.swipe();
+        if (history_group.getChildCount() != current_question) {
             HistoryLine historyLine = new HistoryLine(
                     getContext(),
                     first.get(index_of_spot).getDrawable(),
@@ -217,14 +242,21 @@ public class SurveyPage extends Fragment {
         }
     }
 
-    public void closeFirst() {
-        cardManagerFirst.setSwipeAnimationSetting(left);
-        cardStackViewFirst.swipe();
-    }
-
     public void closeSecond() {
+        Log.i("CardEvent", "Close Second");
         cardManagerSecond.setSwipeAnimationSetting(left);
         cardStackViewSecond.swipe();
+        if (history_group.getChildCount() != current_question) {
+            HistoryLine historyLine = new HistoryLine(
+                    getContext(),
+                    first.get(index_of_spot).getDrawable(),
+                    second.get(index_of_spot).getDrawable(),
+                    HistoryLine.LEFT,
+                    inflater,
+                    this
+            );
+            history_group.addView(historyLine.getPage());
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -279,5 +311,29 @@ public class SurveyPage extends Fragment {
     public void finishSurvey() {
         is_finished = true;
         Toast.makeText(getContext(), "ФИНИШ!", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean isSwiped_first() {
+        return swiped_first;
+    }
+
+    public void setSwiped_first(boolean swiped_first) {
+        this.swiped_first = swiped_first;
+    }
+
+    public boolean isSwiped_second() {
+        return swiped_second;
+    }
+
+    public void setSwiped_second(boolean swiped_second) {
+        this.swiped_second = swiped_second;
+    }
+
+    public void changeStateFirst() {
+        setSwiped_first(!isSwiped_first());
+    }
+
+    public void changeStateSecond() {
+        setSwiped_second(!isSwiped_second());
     }
 }

@@ -17,7 +17,6 @@ public class HistoryLine extends View {
     private View page;
     private RoundedImageView left;
     private RoundedImageView right;
-    private String winner;
     private SurveyPage surveyPage;
     private MaterialButton left_res;
     private MaterialButton right_res;
@@ -26,7 +25,6 @@ public class HistoryLine extends View {
     public HistoryLine(Context context, Drawable left, Drawable right, String winner, LayoutInflater inflater, SurveyPage surveyPage) {
         super(context);
 
-        this.winner = winner;
         this.surveyPage = surveyPage;
 
         page = inflater.inflate(R.layout.history_line, null);
