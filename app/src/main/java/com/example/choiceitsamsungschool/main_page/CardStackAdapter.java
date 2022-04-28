@@ -54,6 +54,18 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         notifyItemInserted(spots.size() - 1);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void addAllSpot(List<Spot> list) {
+        spots.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void clear() {
+        spots.clear();
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public RoundedImageView image;

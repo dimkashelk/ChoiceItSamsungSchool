@@ -24,6 +24,7 @@ import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -69,6 +70,7 @@ public class SurveyPage extends Fragment {
     private List<Spot> all_spots = new ArrayList<>();
     private List<Spot> first = new ArrayList<>();
     private List<Spot> second = new ArrayList<>();
+    private List<Spot> all_spots_list = new ArrayList<>();
     private boolean is_finished = false;
     private List<HistoryLine> history = new ArrayList<>();
     private ViewGroup history_group;
@@ -77,6 +79,8 @@ public class SurveyPage extends Fragment {
     private TextView description;
     private TextView count_questions_view;
     private CircularProgressButton start_survey;
+    private MaterialButton reset_all;
+    private MaterialButton end_survey;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -143,6 +147,8 @@ public class SurveyPage extends Fragment {
         all_spots.add(new Spot(15, "Test", drawable));
         all_spots.add(new Spot(16, "Test", drawable));
 
+        all_spots_list.addAll(all_spots);
+
         int count = all_spots.size() / 2;
         first = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -192,6 +198,14 @@ public class SurveyPage extends Fragment {
             @Override
             public void onClick(View v) {
                 startSurvey();
+            }
+        });
+
+        reset_all = survey_page.findViewById(R.id.survey_page_reset_all);
+        reset_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetAll();
             }
         });
 
@@ -432,5 +446,41 @@ public class SurveyPage extends Fragment {
             }
         });
         thread.start();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void resetAll() {
+        all_spots = new ArrayList<>();
+        all_spots.addAll(all_spots_list);
+
+        int count = all_spots.size() / 2;
+
+        cardStackAdapterFirst.clear();
+        first = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            first.add(all_spots.get(i));
+        }
+        cardStackAdapterFirst.addAllSpot(first);
+
+        cardStackAdapterSecond.clear();
+        second = new ArrayList<>();
+        for (int i = count; i < 2 * count; i++) {
+            second.add(all_spots.get(i));
+        }
+        cardStackAdapterSecond.addAllSpot(second);
+
+        for (int i = 2 * count; i < all_spots.size(); i++) {
+            dop_spots.add(all_spots.get(i));
+        }
+
+        index_of_spot = 0;
+        current_question = 1;
+        step = (int) (current_question * 1.0 / count_questions * 100);
+        current_progress = step;
+
+        progress_title.setText(current_question + "/" + count_questions);
+        progress.setProgress(current_progress, true);
+
+        changeState();
     }
 }
