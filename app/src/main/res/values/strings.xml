@@ -113,4 +113,6 @@
     <string name="end">Закончить досрочно</string>
     <string name="begin_again">Пройти заново</string>
     <string name="history">История</string>
+    <string name="make_survey">Пройти опрос</string>
+    <string name="information">Информация</string>
 </resources>

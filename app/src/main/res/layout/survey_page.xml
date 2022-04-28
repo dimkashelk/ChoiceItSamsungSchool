@@ -187,5 +187,152 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/survey_page_main"
+            style="@style/FrontBackdropBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior=".main_page.LockedBottomSheetBehavior"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="@id/survey_content_layout"
+            app:layout_constraintTop_toBottomOf="@id/survey_content_layout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@android:color/transparent"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/survey_page_title"
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/information"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/survey_page_main_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constrainedHeight="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="top">
+
+                            <TextView
+                                android:id="@+id/survey_page_main_description_title"
+                                style="@style/TextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="25dp"
+                                android:text="@string/description"
+                                android:textStyle="bold"
+                                android:textSize="21sp"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/survey_page_main_description"
+                                style="@style/TextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="25dp"
+                                android:textSize="18sp"
+                                app:layout_constraintTop_toBottomOf="@id/survey_page_main_description_title" />
+
+                            <com.google.android.material.divider.MaterialDivider
+                                android:id="@+id/survey_page_divider_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="20dp"
+                                app:layout_constraintTop_toBottomOf="@id/survey_page_main_description" />
+
+                            <TextView
+                                android:id="@+id/survey_page_main_count_questions_title"
+                                style="@style/TextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="25dp"
+                                android:text="@string/count_questions"
+                                android:textStyle="bold"
+                                android:textSize="21sp"
+                                app:layout_constraintTop_toBottomOf="@id/survey_page_divider_1" />
+
+                            <TextView
+                                android:id="@+id/survey_page_main_count_questions"
+                                style="@style/TextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="25dp"
+                                android:textSize="18sp"
+                                app:layout_constraintTop_toBottomOf="@id/survey_page_main_count_questions_title" />
+
+                            <com.google.android.material.divider.MaterialDivider
+                                android:id="@+id/survey_page_divider_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="20dp"
+                                app:layout_constraintTop_toBottomOf="@id/survey_page_main_count_questions" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+                    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                        android:id="@+id/survey_page_start_survey"
+                        style="@style/FillButton.LoadingButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="@string/make_survey"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginEnd="35dp"
+                        app:initialCornerAngle="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:spinning_bar_color="@color/purple_500"
+                        app:spinning_bar_padding="6dp"
+                        app:spinning_bar_width="4dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

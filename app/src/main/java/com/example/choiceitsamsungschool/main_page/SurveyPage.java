@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -37,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
+
 public class SurveyPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static SurveyPage page = null;
@@ -44,6 +45,7 @@ public class SurveyPage extends Fragment {
     private static APIServer apiServer;
     private View survey_page;
     private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehavior sheetBehaviorMain;
     private MaterialToolbar toolbar;
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
@@ -72,6 +74,9 @@ public class SurveyPage extends Fragment {
     private ViewGroup history_group;
     private boolean swiped_first = false;
     private boolean swiped_second = false;
+    private TextView description;
+    private TextView count_questions_view;
+    private CircularProgressButton start_survey;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -89,12 +94,16 @@ public class SurveyPage extends Fragment {
         sheetBehavior = BottomSheetBehavior.from(contentLayout);
         sheetBehavior.setFitToContents(false);
         sheetBehavior.setHideable(false);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout mainLayout = survey_page.findViewById(R.id.survey_page_main);
+        sheetBehaviorMain = BottomSheetBehavior.from(mainLayout);
+        sheetBehaviorMain.setFitToContents(false);
+        sheetBehaviorMain.setHideable(false);
+        sheetBehaviorMain.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
         toolbar = survey_page.findViewById(R.id.survey_tool_bar);
-        toolbar.setNavigationOnClickListener(v -> changeState());
 
         menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
         close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
@@ -173,6 +182,19 @@ public class SurveyPage extends Fragment {
 
         history_group = survey_page.findViewById(R.id.survey_page_history_list);
 
+        description = survey_page.findViewById(R.id.survey_page_main_description);
+        count_questions_view = survey_page.findViewById(R.id.survey_page_main_count_questions);
+        start_survey = survey_page.findViewById(R.id.survey_page_start_survey);
+
+        description.setText("Нет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описания");
+        count_questions_view.setText(String.valueOf(count_questions));
+        start_survey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSurvey();
+            }
+        });
+
         return survey_page;
     }
 
@@ -188,6 +210,18 @@ public class SurveyPage extends Fragment {
             close.start();
         }
         manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
+    }
+
+
+    private void startSurvey() {
+        sheetBehaviorMain.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeState();
+            }
+        });
     }
 
     public void chooseFirst() {
