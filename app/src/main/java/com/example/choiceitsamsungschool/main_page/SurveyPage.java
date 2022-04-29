@@ -406,11 +406,16 @@ public class SurveyPage extends Fragment {
                     @Override
                     public void run() {
                         freezeFirst();
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    }
+                });
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.get().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         unfreezeFirst();
                     }
                 });
@@ -435,11 +440,16 @@ public class SurveyPage extends Fragment {
                     @Override
                     public void run() {
                         freezeSecond();
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    }
+                });
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.get().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         unfreezeSecond();
                     }
                 });
