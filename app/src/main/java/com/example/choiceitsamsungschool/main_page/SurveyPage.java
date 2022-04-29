@@ -283,6 +283,7 @@ public class SurveyPage extends Fragment {
         cardManagerFirst.setSwipeAnimationSetting(left);
         cardStackViewFirst.swipe();
         if (history_group.getChildCount() != current_question) {
+            dop_spots.add(second.get(index_of_spot));
             HistoryLine historyLine = new HistoryLine(
                     getContext(),
                     first.get(index_of_spot).getDrawable(),
@@ -300,6 +301,7 @@ public class SurveyPage extends Fragment {
         cardManagerSecond.setSwipeAnimationSetting(left);
         cardStackViewSecond.swipe();
         if (history_group.getChildCount() != current_question) {
+            dop_spots.add(first.get(index_of_spot));
             HistoryLine historyLine = new HistoryLine(
                     getContext(),
                     first.get(index_of_spot).getDrawable(),
@@ -332,7 +334,7 @@ public class SurveyPage extends Fragment {
     }
 
     public void updateStacks() {
-        if (dop_spots.size() == 1) {
+        if (dop_spots.size() <= 1) {
             finishSurvey();
             return;
         }
