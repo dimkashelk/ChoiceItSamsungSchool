@@ -458,6 +458,11 @@ public class SurveyPage extends Fragment {
         thread.start();
     }
 
+    public void freezeCardViews() {
+        freezeFirstCardView();
+        freezeSecondCardView();
+    }
+
     @SuppressLint("SetTextI18n")
     private void resetAll() {
         all_spots = new ArrayList<>();

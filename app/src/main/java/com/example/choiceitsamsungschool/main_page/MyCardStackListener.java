@@ -48,6 +48,7 @@ public class MyCardStackListener implements CardStackListener {
                                         surveyPage.changeStateFirst();
                                         surveyPage.closeSecond();
                                         surveyPage.nextProgress();
+                                        surveyPage.freezeCardViews();
                                     }
                                 });
                                 try {
@@ -71,6 +72,7 @@ public class MyCardStackListener implements CardStackListener {
                                         surveyPage.changeStateSecond();
                                         surveyPage.closeFirst();
                                         surveyPage.nextProgress();
+                                        surveyPage.freezeCardViews();
                                     }
                                 });
                                 try {
@@ -97,6 +99,7 @@ public class MyCardStackListener implements CardStackListener {
                                         surveyPage.changeStateFirst();
                                         surveyPage.chooseSecond();
                                         surveyPage.nextProgress();
+                                        surveyPage.freezeCardViews();
                                     }
                                 });
                                 try {
@@ -120,6 +123,7 @@ public class MyCardStackListener implements CardStackListener {
                                         surveyPage.changeStateSecond();
                                         surveyPage.chooseFirst();
                                         surveyPage.nextProgress();
+                                        surveyPage.freezeCardViews();
                                     }
                                 });
                                 try {
