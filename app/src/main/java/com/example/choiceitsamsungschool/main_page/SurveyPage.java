@@ -34,6 +34,7 @@ import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -81,6 +82,7 @@ public class SurveyPage extends Fragment {
     private CircularProgressButton start_survey;
     private MaterialButton reset_all;
     private MaterialButton end_survey;
+    private HashMap<Spot, Integer> map_res = new HashMap<>();
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -148,6 +150,10 @@ public class SurveyPage extends Fragment {
         all_spots.add(new Spot(16, "Test", drawable));
 
         all_spots_list.addAll(all_spots);
+
+        for (Spot spot: all_spots_list) {
+            map_res.put(spot, 1);
+        }
 
         int count = all_spots.size() / 2;
         first = new ArrayList<>();
@@ -335,6 +341,9 @@ public class SurveyPage extends Fragment {
 
     public void updateStacks() {
         if (dop_spots.size() <= 1) {
+            if (dop_spots.size() == 1) {
+                map_res.put(dop_spots.get(0), map_res.get(dop_spots.get(0)) + 1);
+            }
             finishSurvey();
             return;
         }
@@ -346,12 +355,14 @@ public class SurveyPage extends Fragment {
         for (int i = 0; i < count; i++) {
             first.add(dop_spots.get(i));
             cardStackAdapterFirst.addSpot(dop_spots.get(i));
+            map_res.put(dop_spots.get(i), map_res.get(dop_spots.get(i)) + 1);
         }
 
         second = new ArrayList<>();
         for (int i = count; i < 2 * count; i++) {
             second.add(dop_spots.get(i));
             cardStackAdapterSecond.addSpot(dop_spots.get(i));
+            map_res.put(dop_spots.get(i), map_res.get(dop_spots.get(i)) + 1);
         }
 
         List<Spot> dop = new ArrayList<>();
@@ -366,6 +377,7 @@ public class SurveyPage extends Fragment {
     public void finishSurvey() {
         is_finished = true;
         Toast.makeText(getContext(), "ФИНИШ!", Toast.LENGTH_SHORT).show();
+        Log.i("Res", String.valueOf(map_res));
     }
 
     public boolean isSwiped_first() {
