@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,6 +47,7 @@ public class SurveyPage extends Fragment {
     private View survey_page;
     private BottomSheetBehavior sheetBehavior;
     private BottomSheetBehavior sheetBehaviorMain;
+    private BottomSheetBehavior sheetBehaviorEnd;
     private MaterialToolbar toolbar;
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
@@ -83,6 +83,7 @@ public class SurveyPage extends Fragment {
     private MaterialButton reset_all;
     private MaterialButton end_survey;
     private HashMap<Spot, Integer> map_res = new HashMap<>();
+    private ViewGroup listView;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -106,6 +107,11 @@ public class SurveyPage extends Fragment {
         sheetBehaviorMain.setFitToContents(false);
         sheetBehaviorMain.setHideable(false);
         sheetBehaviorMain.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout endLayout = survey_page.findViewById(R.id.survey_page_end);
+        sheetBehaviorEnd = BottomSheetBehavior.from(endLayout);
+        sheetBehaviorEnd.setFitToContents(false);
+        sheetBehaviorEnd.setHideable(false);
 
         manager = (InputMethodManager) MainActivity.get().getSystemService(Activity.INPUT_METHOD_SERVICE);
 
@@ -214,6 +220,8 @@ public class SurveyPage extends Fragment {
                 resetAll();
             }
         });
+
+        listView = survey_page.findViewById(R.id.survey_page_res_list);
 
         return survey_page;
     }
@@ -376,8 +384,47 @@ public class SurveyPage extends Fragment {
 
     public void finishSurvey() {
         is_finished = true;
-        Toast.makeText(getContext(), "ФИНИШ!", Toast.LENGTH_SHORT).show();
-        Log.i("Res", String.valueOf(map_res));
+        toolbar.setNavigationOnClickListener(null);
+
+        HashMap<Integer, List<Spot>> dop = new HashMap<>();
+        for (Spot spot : map_res.keySet()) {
+            if (!dop.containsKey(map_res.get(spot))) {
+                dop.put(map_res.get(spot), new ArrayList<>());
+            }
+            dop.get(map_res.get(spot)).add(spot);
+        }
+
+        ArrayList<Integer> keys = new ArrayList<>(dop.keySet());
+        keys.sort((o1, o2) -> o2 - o1);
+
+        int start = 1;
+
+        for (Integer integer : keys) {
+            boolean fl = true;
+            for (Spot spot : dop.get(integer)) {
+                if (fl) {
+                    listView.addView(new ResultLine(
+                            getContext(),
+                            spot,
+                            String.valueOf(start),
+                            getLayoutInflater(),
+                            this
+                    ).getPage());
+                    fl = false;
+                } else {
+                    listView.addView(new ResultLine(
+                            getContext(),
+                            spot,
+                            "",
+                            getLayoutInflater(),
+                            this
+                    ).getPage());
+                }
+            }
+            start++;
+        }
+
+        sheetBehaviorEnd.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     public boolean isSwiped_first() {

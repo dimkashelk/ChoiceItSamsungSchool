@@ -115,4 +115,6 @@
     <string name="history">История</string>
     <string name="make_survey">Пройти опрос</string>
     <string name="information">Информация</string>
+    <string name="close">Закрыть</string>
+    <string name="finish">Закончить опрос</string>
 </resources>
