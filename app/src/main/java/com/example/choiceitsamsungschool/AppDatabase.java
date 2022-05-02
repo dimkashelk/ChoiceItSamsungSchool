@@ -10,6 +10,8 @@ import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.FriendDao;
 import com.example.choiceitsamsungschool.db.Person;
 import com.example.choiceitsamsungschool.db.PersonDao;
+import com.example.choiceitsamsungschool.db.SpotDB;
+import com.example.choiceitsamsungschool.db.SpotDao;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.db.SurveyDao;
 import com.example.choiceitsamsungschool.db.User;
@@ -19,8 +21,9 @@ import com.example.choiceitsamsungschool.db.UserDao;
         User.class,
         Friend.class,
         Survey.class,
-        Person.class
-}, version = 22, exportSchema = false)
+        Person.class,
+        SpotDB.class
+}, version = 23, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -32,6 +35,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SurveyDao surveyDao();
 
     public abstract PersonDao personDao();
+
+    public abstract SpotDao spotDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
