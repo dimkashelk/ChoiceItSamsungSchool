@@ -2,7 +2,9 @@ package com.example.choiceitsamsungschool.main_page;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,10 +15,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.MainActivity;
@@ -84,6 +88,9 @@ public class SurveyPage extends Fragment {
     private MaterialButton end_survey;
     private HashMap<Spot, Integer> map_res = new HashMap<>();
     private ViewGroup listView;
+    private SwipeRefreshLayout page_refresh;
+    private SwipeRefreshLayout main_refresh;
+    private SwipeRefreshLayout end_refresh;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Nullable
@@ -222,6 +229,32 @@ public class SurveyPage extends Fragment {
         });
 
         listView = survey_page.findViewById(R.id.survey_page_res_list);
+
+        page_refresh = survey_page.findViewById(R.id.survey_page_refresh);
+        main_refresh = survey_page.findViewById(R.id.survey_page_main_refresh);
+        end_refresh = survey_page.findViewById(R.id.survey_page_end_refresh);
+
+        page_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                page_refresh.setRefreshing(false);
+            }
+        });
+        main_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                check();
+                main_refresh.setRefreshing(false);
+            }
+        });
+        end_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                end_refresh.setRefreshing(false);
+            }
+        });
 
         return survey_page;
     }
@@ -558,5 +591,30 @@ public class SurveyPage extends Fragment {
         progress.setProgress(current_progress, true);
 
         changeState();
+    }
+
+    private void refresh() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Начать сначала?");
+        builder.setMessage("Хотите начать опрос сначала?");
+        builder.setCancelable(true);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void check() {
+
     }
 }
