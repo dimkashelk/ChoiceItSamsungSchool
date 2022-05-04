@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 public class InternalStorage {
     public static final String PROFILE_IMAGE = "profile";
     public static final String SURVEY_TITLE_IMAGE = "survey_title";
+    public static final String SPOT_IMAGE = "spot_image";
 
     private String internalStorageDir;
     private String profile_dir = "/profile/";

@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +22,12 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.AppDatabase;
+import com.example.choiceitsamsungschool.InternalStorage;
 import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.SpotDB;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
@@ -45,6 +48,7 @@ import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class SurveyPage extends Fragment {
     @SuppressLint("StaticFieldLeak")
+    private Survey current_survey;
     private static SurveyPage page = null;
     private static LayoutInflater inflater;
     private static APIServer apiServer;
@@ -255,6 +259,14 @@ public class SurveyPage extends Fragment {
                 end_refresh.setRefreshing(false);
             }
         });
+
+//        end_survey = survey_page.findViewById(R.id.survey_page_end_button);
+//        end_survey.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                endLate();
+//            }
+//        });
 
         return survey_page;
     }
@@ -562,33 +574,7 @@ public class SurveyPage extends Fragment {
         all_spots = new ArrayList<>();
         all_spots.addAll(all_spots_list);
 
-        int count = all_spots.size() / 2;
-
-        cardStackAdapterFirst.clear();
-        first = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            first.add(all_spots.get(i));
-        }
-        cardStackAdapterFirst.addAllSpot(first);
-
-        cardStackAdapterSecond.clear();
-        second = new ArrayList<>();
-        for (int i = count; i < 2 * count; i++) {
-            second.add(all_spots.get(i));
-        }
-        cardStackAdapterSecond.addAllSpot(second);
-
-        for (int i = 2 * count; i < all_spots.size(); i++) {
-            dop_spots.add(all_spots.get(i));
-        }
-
-        index_of_spot = 0;
-        current_question = 1;
-        step = (int) (current_question * 1.0 / count_questions * 100);
-        current_progress = step;
-
-        progress_title.setText(current_question + "/" + count_questions);
-        progress.setProgress(current_progress, true);
+        updateSpots();
 
         changeState();
     }
@@ -616,5 +602,62 @@ public class SurveyPage extends Fragment {
 
     private void check() {
 
+    }
+
+    public void setSurvey(Survey survey) {
+        toolbar.setTitle(survey.title);
+        description.setText(survey.description);
+
+        current_survey = survey;
+        List<SpotDB> spots = AppDatabase.getDatabase(getContext()).spotDao().getSpot(survey.survey_id);
+
+        count_questions_view.setText(spots.size());
+
+        InternalStorage internalStorage = InternalStorage.getInternalStorage();
+
+        all_spots = new ArrayList<>();
+
+        for (SpotDB spotDB : spots) {
+            all_spots.add(new Spot(
+                    spotDB.id,
+                    spotDB.title,
+                    internalStorage.load(spotDB.spot_id, InternalStorage.SPOT_IMAGE)
+            ));
+        }
+
+        all_spots_list.addAll(all_spots);
+
+        updateSpots();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateSpots() {
+        int count = all_spots.size() / 2;
+
+        cardStackAdapterFirst.clear();
+        first = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            first.add(all_spots.get(i));
+        }
+        cardStackAdapterFirst.addAllSpot(first);
+
+        cardStackAdapterSecond.clear();
+        second = new ArrayList<>();
+        for (int i = count; i < 2 * count; i++) {
+            second.add(all_spots.get(i));
+        }
+        cardStackAdapterSecond.addAllSpot(second);
+
+        for (int i = 2 * count; i < all_spots.size(); i++) {
+            dop_spots.add(all_spots.get(i));
+        }
+
+        index_of_spot = 0;
+        current_question = 1;
+        step = (int) (current_question * 1.0 / count_questions * 100);
+        current_progress = step;
+
+        progress_title.setText(current_question + "/" + count_questions);
+        progress.setProgress(current_progress, true);
     }
 }

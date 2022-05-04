@@ -36,6 +36,12 @@ public class Survey {
     public Boolean is_search = false;
 
     @ColumnInfo
+    public Boolean is_start = false;
+
+    @ColumnInfo
+    public Boolean is_end = false;
+
+    @ColumnInfo
     public String person_url;
 
     public Survey() {
