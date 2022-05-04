@@ -15,8 +15,10 @@ public class InternalStorage {
     private String internalStorageDir;
     private String profile_dir = "/profile/";
     private String survey_dir = "/survey/";
+    private final String _spot = "_spot";
     private final String _profile = "_profile";
     private final String _survey_title = "_survey_title";
+    private String spot_dir = "/spot/";
     private final String format = ".png";
 
     private static InternalStorage internalStorage = null;
@@ -31,6 +33,11 @@ public class InternalStorage {
 
         File survey = new File(internalStorageDir + survey_dir);
         if (!survey.exists()) {
+            survey.mkdirs();
+        }
+
+        File spot = new File(internalStorageDir + spot_dir);
+        if (!spot.exists()) {
             survey.mkdirs();
         }
     }
@@ -74,6 +81,9 @@ public class InternalStorage {
             case InternalStorage.SURVEY_TITLE_IMAGE:
                 path = internalStorageDir + survey_dir + id + _survey_title + format;
                 return Drawable.createFromPath(path);
+            case InternalStorage.SPOT_IMAGE:
+                path = internalStorageDir + spot_dir + id + _spot + format;
+                return Drawable.createFromPath(path);
         }
         return null;
     }
@@ -110,6 +120,29 @@ public class InternalStorage {
             bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
             fOut.flush();
             fOut.close();
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void saveSpotImage(Bitmap bitmap, String spot_id) {
+        try {
+            String file_dir = internalStorageDir + spot_dir;
+            File dir = new File(file_dir);
+            File file = new File(dir, spot_id + _spot + format);
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void removeSpotImage(String id) {
+        try {
+            String file_dir = internalStorageDir + spot_dir;
+            File dir = new File(file_dir);
+            File file = new File(dir, id + _spot + format);
+            file.delete();
         } catch (Exception ignored) {
         }
     }
