@@ -101,10 +101,15 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     }
 
     public void openSurvey(Survey survey) {
+        surveyPage.setSurvey(survey);
         viewPager.setCurrentItem(6, false);
     }
 
     public void closePersonPage() {
+        viewPager.setCurrentItem(last_fragment, false);
+    }
+
+    public void closeSurvey() {
         viewPager.setCurrentItem(last_fragment, false);
     }
 }

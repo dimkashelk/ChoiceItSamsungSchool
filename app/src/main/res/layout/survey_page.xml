@@ -88,7 +88,7 @@
                         app:layout_constraintTop_toBottomOf="@id/survey_page_history_list" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/survey_page_end_button"
+                        android:id="@+id/survey_page_end_late_button"
                         style="@style/FillButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

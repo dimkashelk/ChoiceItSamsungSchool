@@ -260,13 +260,13 @@ public class SurveyPage extends Fragment {
             }
         });
 
-//        end_survey = survey_page.findViewById(R.id.survey_page_end_button);
-//        end_survey.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                endLate();
-//            }
-//        });
+        end_survey = survey_page.findViewById(R.id.survey_page_end_late_button);
+        end_survey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endLate();
+            }
+        });
 
         return survey_page;
     }
@@ -628,6 +628,8 @@ public class SurveyPage extends Fragment {
         all_spots_list.addAll(all_spots);
 
         updateSpots();
+
+        toolbar.setNavigationOnClickListener(null);
     }
 
     @SuppressLint("SetTextI18n")
@@ -659,5 +661,29 @@ public class SurveyPage extends Fragment {
 
         progress_title.setText(current_question + "/" + count_questions);
         progress.setProgress(current_progress, true);
+    }
+
+    public void endLate() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Закончить?");
+        builder.setMessage("При завершении прогресс не сохранится. Закончить?");
+        builder.setCancelable(true);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                NavigationItemListener.get().closeSurvey();
+                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                sheetBehaviorMain.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
