@@ -446,10 +446,11 @@ public class SurveyPage extends Fragment {
 
         HashMap<Integer, List<Spot>> dop = new HashMap<>();
         for (Spot spot : map_res.keySet()) {
-            if (!dop.containsKey(map_res.get(spot))) {
+            int count_voice = AppDatabase.getDatabase(getContext()).spotDao().getSpotCountVoice(spot.id);
+            if (!dop.containsKey(map_res.get(spot) + count_voice)) {
                 dop.put(map_res.get(spot), new ArrayList<>());
             }
-            dop.get(map_res.get(spot)).add(spot);
+            dop.get(map_res.get(spot) + count_voice).add(spot);
         }
 
         ArrayList<Integer> keys = new ArrayList<>(dop.keySet());

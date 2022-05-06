@@ -19,6 +19,9 @@ public class SpotDB {
     @ColumnInfo
     public int survey_id;
 
+    @ColumnInfo
+    public int count_voice;
+
     public SpotDB() {
     }
 
@@ -26,5 +29,12 @@ public class SpotDB {
         this.spot_id = spot_id;
         this.title = title;
         this.survey_id = survey_id;
+    }
+
+    public SpotDB(String spot_id, String title, int survey_id, int count_voice) {
+        this.spot_id = spot_id;
+        this.title = title;
+        this.survey_id = survey_id;
+        this.count_voice = count_voice;
     }
 }
