@@ -406,7 +406,7 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.core.widget.NestedScrollView>
 
-                    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/survey_page_close_survey"
                         style="@style/FillButton.LoadingButton"
                         android:layout_width="match_parent"
@@ -420,11 +420,7 @@
                         android:text="@string/finish"
                         android:textAlignment="center"
                         android:textSize="18sp"
-                        app:initialCornerAngle="15dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:spinning_bar_color="@color/purple_500"
-                        app:spinning_bar_padding="6dp"
-                        app:spinning_bar_width="4dp" />
+                        app:layout_constraintBottom_toBottomOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>

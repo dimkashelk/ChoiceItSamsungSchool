@@ -10,13 +10,17 @@ import androidx.core.content.ContextCompat;
 
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
+import com.example.choiceitsamsungschool.db.SpotDB;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.example.choiceitsamsungschool.main_page.CreatePage;
 import com.example.choiceitsamsungschool.main_page.FriendsPage;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
+import com.example.choiceitsamsungschool.main_page.SaveResultSurvey;
 import com.example.choiceitsamsungschool.main_page.SearchPage;
+import com.example.choiceitsamsungschool.main_page.Spot;
+import com.example.choiceitsamsungschool.main_page.SurveyPage;
 import com.example.choiceitsamsungschool.main_page.UploadSurvey;
 import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.main_page.UserPageArchive;
@@ -26,6 +30,7 @@ import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
@@ -70,6 +75,7 @@ public class APIServer {
     public static FriendsPage friendsPage;
     public static SearchPage searchPage;
     public static CreatePage createPage;
+    public static SurveyPage surveyPage;
 
     private String token;
     private int count_friends = 0;
@@ -562,5 +568,33 @@ public class APIServer {
                 MainActivity.get().getLogin(),
                 MainActivity.get().getToken()
         );
+    }
+
+    public void endSurvey(HashMap<Integer, List<Spot>> map) {
+        String login = mainActivity.getLogin();
+        String token = mainActivity.getToken();
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+
+        HashMap<String, Integer> dop = new HashMap<>();
+
+        for (Integer position : map.keySet()) {
+            for (Spot spot : map.get(position)) {
+                SpotDB spotDB = appDatabase.spotDao().getSpot(spot.id);
+                if (spotDB != null) {
+                    dop.put(spotDB.spot_id, position);
+                }
+            }
+        }
+
+        SaveResultSurvey saver = new SaveResultSurvey(dop);
+        saver.execute(login, token);
+    }
+
+    public void dontSaveSurveyRes() {
+        surveyPage.errorSave();
+    }
+
+    public static void setSurveyPage(SurveyPage surveyPage) {
+        APIServer.surveyPage = surveyPage;
     }
 }

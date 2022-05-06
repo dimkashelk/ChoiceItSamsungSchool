@@ -19,6 +19,9 @@ public interface SpotDao {
     @Query("select * from SpotDB where survey_id = :surveyId")
     public List<SpotDB> getSpot(String surveyId);
 
+    @Query("select * from SpotDB where id = :surveyId")
+    public SpotDB getSpot(Integer surveyId);
+
     @Query("delete from SpotDB")
     void removeAllSpot();
 }

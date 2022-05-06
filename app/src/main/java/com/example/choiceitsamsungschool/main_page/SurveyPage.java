@@ -32,6 +32,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
@@ -90,7 +91,9 @@ public class SurveyPage extends Fragment {
     private CircularProgressButton start_survey;
     private MaterialButton reset_all;
     private MaterialButton end_survey;
+    private MaterialButton close_survey;
     private HashMap<Spot, Integer> map_res = new HashMap<>();
+    private HashMap<Integer, List<Spot>> map_res_dop = new HashMap<>();
     private ViewGroup listView;
     private SwipeRefreshLayout page_refresh;
     private SwipeRefreshLayout main_refresh;
@@ -149,27 +152,29 @@ public class SurveyPage extends Fragment {
         cardStackViewSecond.setLayoutManager(cardManagerSecond);
 
         Drawable drawable = getContext().getDrawable(R.mipmap.ic_launcher);
-        all_spots.add(new Spot(0, "Test", drawable));
-        all_spots.add(new Spot(1, "Test", drawable));
-        all_spots.add(new Spot(2, "Test", drawable));
-        all_spots.add(new Spot(3, "Test", drawable));
-        all_spots.add(new Spot(4, "Test", drawable));
-        all_spots.add(new Spot(5, "Test", drawable));
-        all_spots.add(new Spot(6, "Test", drawable));
-        all_spots.add(new Spot(7, "Test", drawable));
-        all_spots.add(new Spot(8, "Test", drawable));
-        all_spots.add(new Spot(9, "Test", drawable));
-        all_spots.add(new Spot(10, "Test", drawable));
-        all_spots.add(new Spot(11, "Test", drawable));
-        all_spots.add(new Spot(13, "Test", drawable));
-        all_spots.add(new Spot(14, "Test", drawable));
-        all_spots.add(new Spot(15, "Test", drawable));
-        all_spots.add(new Spot(16, "Test", drawable));
+        all_spots.add(new Spot(0, "Test0", drawable));
+        all_spots.add(new Spot(1, "Test1", drawable));
+        all_spots.add(new Spot(2, "Test2", drawable));
+        all_spots.add(new Spot(3, "Test3", drawable));
+        all_spots.add(new Spot(4, "Test4", drawable));
+        all_spots.add(new Spot(5, "Test5", drawable));
+        all_spots.add(new Spot(6, "Test6", drawable));
+        all_spots.add(new Spot(7, "Test7", drawable));
+        all_spots.add(new Spot(8, "Test8", drawable));
+        all_spots.add(new Spot(9, "Test9", drawable));
+        all_spots.add(new Spot(10, "Test10", drawable));
+        all_spots.add(new Spot(11, "Test11", drawable));
+        all_spots.add(new Spot(12, "Test12", drawable));
+        all_spots.add(new Spot(13, "Test13", drawable));
+        all_spots.add(new Spot(14, "Test14", drawable));
+        all_spots.add(new Spot(15, "Test15", drawable));
 
         all_spots_list.addAll(all_spots);
 
+        int s = 1;
         for (Spot spot: all_spots_list) {
-            map_res.put(spot, 1);
+            map_res.put(spot, s);
+            s += 1;
         }
 
         int count = all_spots.size() / 2;
@@ -265,6 +270,14 @@ public class SurveyPage extends Fragment {
             @Override
             public void onClick(View v) {
                 endLate();
+            }
+        });
+
+        close_survey = survey_page.findViewById(R.id.survey_page_close_survey);
+        close_survey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                end();
             }
         });
 
@@ -456,6 +469,9 @@ public class SurveyPage extends Fragment {
                             this
                     ).getPage());
                     fl = false;
+                    List<Spot> d = new ArrayList<>();
+                    d.add(spot);
+                    map_res_dop.put(start, d);
                 } else {
                     listView.addView(new ResultLine(
                             getContext(),
@@ -464,6 +480,7 @@ public class SurveyPage extends Fragment {
                             getLayoutInflater(),
                             this
                     ).getPage());
+                    map_res_dop.get(start).add(spot);
                 }
             }
             start++;
@@ -685,5 +702,22 @@ public class SurveyPage extends Fragment {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void end() {
+        NavigationItemListener.get().closeSurvey();
+
+        APIServer apiServer = APIServer.getSingletonAPIServer();
+        apiServer.endSurvey(map_res_dop);
+
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        sheetBehaviorEnd.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        sheetBehaviorMain.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    public void errorSave() {
+        Snackbar snackbar = Snackbar.make(AppActivity.get().getLayout(), "Не получилось сохранить результат, попробуйте позже", Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(R.id.bottomNavigationView);
+        snackbar.show();
     }
 }
