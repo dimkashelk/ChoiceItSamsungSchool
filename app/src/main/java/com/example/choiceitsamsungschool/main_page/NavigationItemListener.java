@@ -94,11 +94,15 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     }
 
     public void openPersonPage(Person person) {
-        viewPager.setCurrentItem(6, false);
+        APIServer.getSingletonAPIServer().loadSurveys(person.person_id);
+        personPage.setFriend(person);
+        viewPager.setCurrentItem(5, false);
     }
 
     public void openPersonPage(Friend friend) {
-        viewPager.setCurrentItem(6, false);
+        APIServer.getSingletonAPIServer().loadSurveys(friend.friend_id);
+        personPage.setFriend(friend);
+        viewPager.setCurrentItem(5, false);
     }
 
     public void openSurvey(Survey survey) {

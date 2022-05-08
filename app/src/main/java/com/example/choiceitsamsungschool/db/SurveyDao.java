@@ -50,4 +50,7 @@ public interface SurveyDao {
 
     @Query("delete from Survey where is_news")
     void removeAllNews();
+
+    @Query("select * from Survey where person_url = :person_id")
+    List<Survey> getSurveysPerson(String person_id);
 }

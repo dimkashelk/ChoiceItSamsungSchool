@@ -17,6 +17,7 @@ import com.example.choiceitsamsungschool.main_page.FriendsPage;
 import com.example.choiceitsamsungschool.main_page.HomePage;
 import com.example.choiceitsamsungschool.main_page.LoadData;
 import com.example.choiceitsamsungschool.main_page.LoadImage;
+import com.example.choiceitsamsungschool.main_page.PersonPage;
 import com.example.choiceitsamsungschool.main_page.SaveResultSurvey;
 import com.example.choiceitsamsungschool.main_page.SearchPage;
 import com.example.choiceitsamsungschool.main_page.Spot;
@@ -59,6 +60,7 @@ public class APIServer {
     public static final String LOAD_USER_SURVEYS = "user_surveys";
     public static final String LOAD_USER_NEWS_FEED = "user_news_feed";
     public static final String LOAD_PERSON = "load_person";
+    public static final String LOAD_PERSON_SURVEYS = "load_person/surveys";
     public static final String SEARCH = "search";
     public static final String LOAD_SURVEY = "load_survey";
     public static final String LOAD_SEARCH_PERSON = "load_search_person";
@@ -76,6 +78,7 @@ public class APIServer {
     public static SearchPage searchPage;
     public static CreatePage createPage;
     public static SurveyPage surveyPage;
+    public static PersonPage personPage;
 
     private String token;
     private int count_friends = 0;
@@ -611,5 +614,20 @@ public class APIServer {
         }
 
         surveyPage.loadedSurvey(String.valueOf(survey_id));
+    }
+
+    public void loadSurveys(String person_id) {
+        LoadData loader = new LoadData(this);
+        loader.execute(APIServer.LOAD_PERSON_SURVEYS, getLogin(), getToken(), person_id);
+    }
+
+    public void setSurveys(Vector<Survey> surveys, Vector<Bitmap> survey_images) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        for (int i = 0; i < surveys.size(); i++) {
+            appDatabase.surveyDao().addSurvey(surveys.get(i));
+            InternalStorage.getInternalStorage().saveSurveyTitleImage(survey_images.get(i), surveys.get(i).survey_id);
+        }
+
+        personPage.updateSurveys();
     }
 }

@@ -39,6 +39,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
     private Vector<Person> persons = new Vector<>();
     private Vector<SpotDB> spotDBs = new Vector<>();
     private Vector<Bitmap> spotDBs_images = new Vector<>();
+    private Vector<Bitmap> survey_images = new Vector<>();
     private APIServer apiServer;
     private String method;
     private Boolean logout = false;
@@ -165,6 +166,16 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         .post(body)
                         .build();
                 break;
+            case APIServer.LOAD_PERSON_SURVEYS:
+                json = "{'login': '" + strings[1] + "', " +
+                        "'token': '" + strings[2] + "'," +
+                        "'person_id': '" + strings[3] + "'";
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_PERSON_SURVEYS)
+                        .post(body)
+                        .build();
+                break;
             default:
                 request = new Request.Builder()
                         .url(APIServer.URL)
@@ -269,6 +280,19 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         spotDBs_images.add(decode(array.get(i).getAsJsonObject().get("image").getAsString()));
                     }
                     break;
+                case APIServer.LOAD_PERSON_SURVEYS:
+                    count_surveys = jsonObject.get("count_surveys").getAsInt();
+                    JsonArray data = jsonObject.get("spots").getAsJsonArray();
+                    for (int i = 0; i < count_surveys; i++) {
+                        Survey survey = new Survey();
+                        survey.survey_id = data.get(i).getAsJsonObject().get("survey_id").getAsString();
+                        survey.title = data.get(i).getAsJsonObject().get("title").getAsString();
+                        survey.description = data.get(i).getAsJsonObject().get("description").getAsString();
+                        survey.person_url = data.get(i).getAsJsonObject().get("person_url").getAsString();
+                        surveys.add(survey);
+                        survey_images.add(decode(data.get(i).getAsJsonObject().get("image").getAsString()));
+                    }
+                    break;
             }
             return true;
         } catch (Exception e) {
@@ -303,6 +327,9 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                     break;
                 case APIServer.LOAD_SURVEY:
                     apiServer.setSpots(survey_id, spotDBs, spotDBs_images);
+                    break;
+                case APIServer.LOAD_PERSON_SURVEYS:
+                    apiServer.setSurveys(surveys, survey_images);
             }
         } else {
             if (logout) {
