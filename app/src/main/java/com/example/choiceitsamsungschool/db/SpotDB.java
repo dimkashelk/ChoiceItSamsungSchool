@@ -20,7 +20,7 @@ public class SpotDB {
     public int survey_id;
 
     @ColumnInfo
-    public int count_voice;
+    public int count_voice = 0;
 
     public SpotDB() {
     }
