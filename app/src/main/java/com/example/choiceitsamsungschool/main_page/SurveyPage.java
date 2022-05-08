@@ -151,48 +151,9 @@ public class SurveyPage extends Fragment {
         cardStackViewFirst.setLayoutManager(cardManagerFirst);
         cardStackViewSecond.setLayoutManager(cardManagerSecond);
 
-        Drawable drawable = getContext().getDrawable(R.mipmap.ic_launcher);
-        all_spots.add(new Spot(0, "Test0", drawable));
-        all_spots.add(new Spot(1, "Test1", drawable));
-        all_spots.add(new Spot(2, "Test2", drawable));
-        all_spots.add(new Spot(3, "Test3", drawable));
-        all_spots.add(new Spot(4, "Test4", drawable));
-        all_spots.add(new Spot(5, "Test5", drawable));
-        all_spots.add(new Spot(6, "Test6", drawable));
-        all_spots.add(new Spot(7, "Test7", drawable));
-        all_spots.add(new Spot(8, "Test8", drawable));
-        all_spots.add(new Spot(9, "Test9", drawable));
-        all_spots.add(new Spot(10, "Test10", drawable));
-        all_spots.add(new Spot(11, "Test11", drawable));
-        all_spots.add(new Spot(12, "Test12", drawable));
-        all_spots.add(new Spot(13, "Test13", drawable));
-        all_spots.add(new Spot(14, "Test14", drawable));
-        all_spots.add(new Spot(15, "Test15", drawable));
-
-        all_spots_list.addAll(all_spots);
-
-        int s = 1;
-        for (Spot spot: all_spots_list) {
-            map_res.put(spot, s);
-            s += 1;
-        }
-
-        int count = all_spots.size() / 2;
-        first = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            first.add(all_spots.get(i));
-        }
         cardStackAdapterFirst = new CardStackAdapter(first);
 
-        second = new ArrayList<>();
-        for (int i = count; i < 2 * count; i++) {
-            second.add(all_spots.get(i));
-        }
         cardStackAdapterSecond = new CardStackAdapter(second);
-
-        for (int i = 2 * count; i < all_spots.size(); i++) {
-            dop_spots.add(all_spots.get(i));
-        }
 
         cardStackViewFirst.setAdapter(cardStackAdapterFirst);
         cardStackViewSecond.setAdapter(cardStackAdapterSecond);
@@ -220,8 +181,6 @@ public class SurveyPage extends Fragment {
         count_questions_view = survey_page.findViewById(R.id.survey_page_main_count_questions);
         start_survey = survey_page.findViewById(R.id.survey_page_start_survey);
 
-        description.setText("Нет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описанияНет описания");
-        count_questions_view.setText(String.valueOf(count_questions));
         start_survey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -628,6 +587,8 @@ public class SurveyPage extends Fragment {
 
         current_survey = survey;
         List<SpotDB> spots = AppDatabase.getDatabase(getContext()).spotDao().getSpot(survey.survey_id);
+
+        count_questions = spots.size();
 
         count_questions_view.setText(spots.size());
 
