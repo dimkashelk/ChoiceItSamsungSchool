@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.choiceitsamsungschool.AppDatabase;
 import com.example.choiceitsamsungschool.R;
+import com.example.choiceitsamsungschool.db.Survey;
 import com.google.android.material.button.MaterialButton;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,7 +41,9 @@ public class SurveyCard extends View {
     }
 
     public void openSurvey() {
-        Toast.makeText(getContext(), "Открыли страницу опроса", Toast.LENGTH_LONG).show();
+        AppDatabase appDatabase = AppDatabase.getDatabase(getContext());
+        List<Survey> survey = appDatabase.surveyDao().getSurvey(survey_id);
+        NavigationItemListener.get().openSurvey(survey.get(0));
     }
 
     public View getPage() {
