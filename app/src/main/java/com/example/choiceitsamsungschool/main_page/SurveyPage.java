@@ -141,9 +141,9 @@ public class SurveyPage extends Fragment {
         cardStackViewSecond = survey_page.findViewById(R.id.survey_page_second_layout);
 
         cardManagerFirst = new CardStackLayoutManager(getContext(), new MyCardStackListener(1, this));
-        cardManagerFirst.setSwipeThreshold(0.6f);
+        cardManagerFirst.setSwipeThreshold(0.4f);
         cardManagerSecond = new CardStackLayoutManager(getContext(), new MyCardStackListener(2, this));
-        cardManagerSecond.setSwipeThreshold(0.6f);
+        cardManagerSecond.setSwipeThreshold(0.4f);
 
         cardManagerFirst.setCanScrollHorizontal(true);
         cardManagerFirst.setCanScrollVertical(false);
