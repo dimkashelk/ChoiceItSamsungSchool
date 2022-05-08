@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -105,6 +104,8 @@ public class SurveyPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        APIServer.surveyPage = this;
+
         SurveyPage.inflater = inflater;
 
         survey_page = inflater.inflate(R.layout.survey_page, container, false);
@@ -180,13 +181,6 @@ public class SurveyPage extends Fragment {
         description = survey_page.findViewById(R.id.survey_page_main_description);
         count_questions_view = survey_page.findViewById(R.id.survey_page_main_count_questions);
         start_survey = survey_page.findViewById(R.id.survey_page_start_survey);
-
-        start_survey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSurvey();
-            }
-        });
 
         reset_all = survey_page.findViewById(R.id.survey_page_reset_all);
         reset_all.setOnClickListener(new View.OnClickListener() {
@@ -609,6 +603,7 @@ public class SurveyPage extends Fragment {
         updateSpots();
 
         toolbar.setNavigationOnClickListener(null);
+        start_survey.startAnimation();
     }
 
     @SuppressLint("SetTextI18n")
@@ -681,5 +676,21 @@ public class SurveyPage extends Fragment {
         Snackbar snackbar = Snackbar.make(AppActivity.get().getLayout(), "Не получилось сохранить результат, попробуйте позже", Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(R.id.bottomNavigationView);
         snackbar.show();
+    }
+
+    public Survey getCurrentSurvey() {
+        return current_survey;
+    }
+
+    public void loadedSurvey(String survey_id) {
+        if (current_survey.survey_id.equals(survey_id)) {
+            start_survey.revertAnimation();
+            start_survey.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startSurvey();
+                }
+            });
+        }
     }
 }

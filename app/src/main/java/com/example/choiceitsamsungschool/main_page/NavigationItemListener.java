@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.R;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
@@ -101,6 +102,7 @@ public class NavigationItemListener implements BottomNavigationView.OnNavigation
     }
 
     public void openSurvey(Survey survey) {
+        APIServer.getSingletonAPIServer().loadSurvey(survey);
         surveyPage.setSurvey(survey);
         viewPager.setCurrentItem(6, false);
     }

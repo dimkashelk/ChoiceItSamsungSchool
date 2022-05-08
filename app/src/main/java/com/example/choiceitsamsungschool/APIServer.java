@@ -597,4 +597,19 @@ public class APIServer {
     public static void setSurveyPage(SurveyPage surveyPage) {
         APIServer.surveyPage = surveyPage;
     }
+
+    public void loadSurvey(Survey survey) {
+        LoadData loader = new LoadData(this);
+        loader.execute(APIServer.LOAD_SURVEY, getLogin(), getToken(), survey.survey_id);
+    }
+
+    public void setSpots(int survey_id, List<SpotDB> spotDBs, List<Bitmap> images) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(mainActivity.getBaseContext());
+        for (int i = 0; i < spotDBs.size(); i++) {
+            appDatabase.spotDao().addSpot(spotDBs.get(i));
+            InternalStorage.getInternalStorage().saveSpotImage(images.get(i), spotDBs.get(i).spot_id);
+        }
+
+        surveyPage.loadedSurvey(String.valueOf(survey_id));
+    }
 }

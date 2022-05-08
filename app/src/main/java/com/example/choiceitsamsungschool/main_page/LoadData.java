@@ -1,16 +1,22 @@
 package com.example.choiceitsamsungschool.main_page;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
+import com.example.choiceitsamsungschool.db.SpotDB;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.io.InputStream;
+import java.util.Objects;
 import java.util.Vector;
 
 import okhttp3.OkHttpClient;
@@ -25,10 +31,14 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
     private int count_news = 0;
     private int count_surveys_search = 0;
     private int count_persons_search = 0;
+    private int count_spots = 0;
+    private int survey_id = 0;
     private Vector<Friend> friends = new Vector<>();
     private Vector<Survey> surveys = new Vector<>();
     private Vector<Survey> news = new Vector<>();
     private Vector<Person> persons = new Vector<>();
+    private Vector<SpotDB> spotDBs = new Vector<>();
+    private Vector<Bitmap> spotDBs_images = new Vector<>();
     private APIServer apiServer;
     private String method;
     private Boolean logout = false;
@@ -76,6 +86,11 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
          * @param age_to
          * @param count_question_from
          * @param count_question_to
+         * LOAD SURVEY
+         * @param METHOD
+         * @param LOGIN
+         * @param TOKEN
+         * @param survey_id
          * */
         RequestBody body;
         Request request;
@@ -136,6 +151,17 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 body = RequestBody.create(json, APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.SEARCH)
+                        .post(body)
+                        .build();
+                break;
+            case APIServer.LOAD_SURVEY:
+                json = "{'login': '" + strings[1] + "', " +
+                        "'token': '" + strings[2] + "'," +
+                        "'survey_id': '" + strings[3] + "'";
+                survey_id = Integer.getInteger(strings[3]);
+                body = RequestBody.create(json, APIServer.JSON);
+                request = new Request.Builder()
+                        .url(APIServer.URL + APIServer.LOAD_SURVEY)
                         .post(body)
                         .build();
                 break;
@@ -200,6 +226,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         news.add(survey);
                     }
                     break;
+                case APIServer.LOAD_SEARCH_PERSON:
                 case APIServer.LOAD_PERSON:
                     person = new Person();
                     person.person_id = jsonObject.get("person_id").getAsString();
@@ -228,11 +255,30 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         surveys.add(survey);
                     }
                     break;
+                case APIServer.LOAD_SURVEY:
+                    count_spots = jsonObject.get("count_spots").getAsInt();
+                    JsonArray array = jsonObject.get("spots").getAsJsonArray();
+                    for (int i = 0; i < count_spots; i++) {
+                        SpotDB spotDB = new SpotDB(
+                                array.get(i).getAsJsonObject().get("spot_id").getAsString(),
+                                array.get(i).getAsJsonObject().get("title").getAsString(),
+                                survey_id,
+                                array.get(i).getAsJsonObject().get("count_voice").getAsInt()
+                        );
+                        spotDBs.add(spotDB);
+                        spotDBs_images.add(decode(array.get(i).getAsJsonObject().get("image").getAsString()));
+                    }
+                    break;
             }
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private Bitmap decode(String str) {
+        byte[] imageAsBytes = Base64.decode(str, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
     @Override
@@ -248,12 +294,15 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 case APIServer.LOAD_USER_NEWS_FEED:
                     apiServer.setNews(news);
                     break;
+                case APIServer.LOAD_SEARCH_PERSON:
                 case APIServer.LOAD_PERSON:
                     apiServer.addPerson(person);
                     break;
                 case APIServer.SEARCH:
                     apiServer.setResultSearch(persons, surveys);
                     break;
+                case APIServer.LOAD_SURVEY:
+                    apiServer.setSpots(survey_id, spotDBs, spotDBs_images);
             }
         } else {
             if (logout) {
