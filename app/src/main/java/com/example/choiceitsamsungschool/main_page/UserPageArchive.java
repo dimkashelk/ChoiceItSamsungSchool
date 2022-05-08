@@ -40,8 +40,7 @@ public class UserPageArchive extends View {
                                 surveys.get(i).survey_id,
                                 InternalStorage.SURVEY_TITLE_IMAGE
                         ),
-                        inflater,
-                        UserPage.get()).getPage());
+                        inflater).getPage());
             }
         }
         page = view;
@@ -62,8 +61,7 @@ public class UserPageArchive extends View {
                                 surveys.get(i).survey_id,
                                 InternalStorage.SURVEY_TITLE_IMAGE
                         ),
-                        inflater,
-                        UserPage.get()).getPage());
+                        inflater).getPage());
             }
         }
     }

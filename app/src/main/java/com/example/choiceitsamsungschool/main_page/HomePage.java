@@ -254,8 +254,7 @@ public class HomePage extends Fragment {
                         context,
                         surveys_list.get(i).survey_id,
                         InternalStorage.getInternalStorage().load(surveys_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
-                        inflater,
-                        this);
+                        inflater);
                 parent_surveys.addView(surveyCard.getPage());
             }
         }
@@ -404,8 +403,7 @@ public class HomePage extends Fragment {
                         page.getContext(),
                         surveys_list.get(i).survey_id,
                         InternalStorage.getInternalStorage().load(surveys_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
-                        inflater,
-                        page);
+                        inflater);
                 parent_surveys.addView(surveyCard.getPage());
             }
         }

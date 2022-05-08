@@ -17,55 +17,13 @@ public class SurveyCard extends View {
     private String survey_id;
     private Drawable image;
     private View page;
-    private UserPage userPage;
     private MaterialButton like, favorite;
-    private HomePage homePage;
-    private SearchPage searchPage;
 
-    public SurveyCard(Context context, String survey_id, Drawable image, LayoutInflater inflater, UserPage userPage) {
+    public SurveyCard(Context context, String survey_id, Drawable image, LayoutInflater inflater) {
         super(context);
 
         this.survey_id = survey_id;
         this.image = image;
-        this.userPage = userPage;
-
-        page = inflater.inflate(R.layout.survey_card, null);
-        CircleImageView userImage = page.findViewById(R.id.survey_card_user_image);
-        userImage.setImageDrawable(image);
-
-        RoundedImageView surveyImage = page.findViewById(R.id.survey_card_image);
-        surveyImage.setImageDrawable(image);
-
-        like = page.findViewById(R.id.survey_card_like);
-        favorite = page.findViewById(R.id.survey_card_favorite);
-        page.setOnClickListener(v -> openSurvey());
-    }
-
-    public SurveyCard(Context context, String survey_id, Drawable image, LayoutInflater inflater, HomePage homePage) {
-        super(context);
-
-        this.survey_id = survey_id;
-        this.image = image;
-        this.homePage = homePage;
-
-        page = inflater.inflate(R.layout.survey_card, null);
-        CircleImageView userImage = page.findViewById(R.id.survey_card_user_image);
-        userImage.setImageDrawable(image);
-
-        RoundedImageView surveyImage = page.findViewById(R.id.survey_card_image);
-        surveyImage.setImageDrawable(image);
-
-        like = page.findViewById(R.id.survey_card_like);
-        favorite = page.findViewById(R.id.survey_card_favorite);
-        page.setOnClickListener(v -> openSurvey());
-    }
-
-    public SurveyCard(Context context, String survey_id, Drawable image, LayoutInflater inflater, SearchPage searchPage) {
-        super(context);
-
-        this.survey_id = survey_id;
-        this.image = image;
-        this.searchPage = searchPage;
 
         page = inflater.inflate(R.layout.survey_card, null);
         CircleImageView userImage = page.findViewById(R.id.survey_card_user_image);

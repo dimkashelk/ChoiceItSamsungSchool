@@ -124,8 +124,7 @@ public class UserPage extends Fragment {
                                 user_surveys.get(i).survey_id,
                                 InternalStorage.SURVEY_TITLE_IMAGE
                         ),
-                        inflater,
-                        this).getPage());
+                        inflater).getPage());
             }
         }
 
@@ -252,8 +251,7 @@ public class UserPage extends Fragment {
                             user_surveys.get(i).survey_id,
                             InternalStorage.SURVEY_TITLE_IMAGE
                     ),
-                    inflater,
-                    this).getPage());
+                    inflater).getPage());
         }
     }
 

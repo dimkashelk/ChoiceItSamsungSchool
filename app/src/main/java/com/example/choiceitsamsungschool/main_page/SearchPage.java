@@ -266,8 +266,7 @@ public class SearchPage extends Fragment {
                         getContext(),
                         survey_list.get(i).survey_id,
                         internalStorage.load(survey_list.get(i).survey_id, InternalStorage.SURVEY_TITLE_IMAGE),
-                        inflater,
-                        this
+                        inflater
                 ).getPage());
             }
         }
@@ -331,8 +330,7 @@ public class SearchPage extends Fragment {
                             res_surveys.get(i).survey_id,
                             InternalStorage.SURVEY_TITLE_IMAGE
                     ),
-                    inflater,
-                    this
+                    inflater
             );
             parent_res.addView(line.getPage());
         }
