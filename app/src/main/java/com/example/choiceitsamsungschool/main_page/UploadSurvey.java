@@ -4,11 +4,16 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import androidx.core.util.Pair;
+
 import com.example.choiceitsamsungschool.APIServer;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -22,7 +27,7 @@ public class UploadSurvey extends AsyncTask<String, String, Boolean> {
     private String method;
     private String title;
     private String description;
-    private List<Bitmap> images;
+    private List<Pair<Bitmap, String>> images;
     private boolean add_to_favorites;
     private boolean only_for_friends;
     private boolean anonymous_statistic;
@@ -35,7 +40,7 @@ public class UploadSurvey extends AsyncTask<String, String, Boolean> {
             APIServer apiServer,
             String title,
             String description,
-            List<Bitmap> images,
+            List<Pair<Bitmap, String>> images,
             int day,
             int month,
             int year,
@@ -66,25 +71,30 @@ public class UploadSurvey extends AsyncTask<String, String, Boolean> {
          */
         RequestBody body;
         Request request;
-        StringBuilder json = new StringBuilder("{'login': '" + strings[0] + "', " +
-                "'token': '" + strings[1] + "', " +
-                "'images': [");
-        for (Bitmap image : images) {
-            json.append("'").append(bitmapToString(image)).append("',");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("login", strings[0]);
+        jsonObject.addProperty("token", strings[1]);
+        JsonArray array = new JsonArray();
+        for (Pair<Bitmap, String> pair : images) {
+            JsonObject images_json = new JsonObject();
+            images_json.addProperty("image", bitmapToString(pair.first));
+            images_json.addProperty("title", pair.second);
+            array.add(images_json);
         }
-        json.append("],");
-        json.append("'to_date': '").append(day).append("/").append(month).append("/").append(year).append("',");
-        json.append("'add_to_favorites': ").append(add_to_favorites).append(",");
-        json.append("'only_for_friends': ").append(only_for_friends).append(",");
-        json.append("'anonymous_statistic': ").append(anonymous_statistic).append(",");
-        json.append("'send_to_friends': [");
+        jsonObject.add("images", array);
+        Timestamp timestamp = new Timestamp(new Date(day + "/" + month + "/" + year).getTime());
+        jsonObject.addProperty("to_date", timestamp.getTime());
+        jsonObject.addProperty("add_to_favorites", add_to_favorites);
+        jsonObject.addProperty("only_for_friends", only_for_friends);
+        jsonObject.addProperty("anonymous_statistic", anonymous_statistic);
+        array = new JsonArray();
         for (String str : friends) {
-            json.append(str).append(",");
+            array.add(str);
         }
-        json.append("],");
-        json.append("'title': '").append(title).append("',");
-        json.append("'description': '").append(description).append("'}");
-        body = RequestBody.create(json.toString(), APIServer.JSON);
+        jsonObject.add("send_to_friends", array);
+        jsonObject.addProperty("title", title);
+        jsonObject.addProperty("description", description);
+        body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
         request = new Request.Builder()
                 .url(APIServer.URL + APIServer.UPLOAD_SURVEY)
                 .post(body)
@@ -95,8 +105,8 @@ public class UploadSurvey extends AsyncTask<String, String, Boolean> {
                 return false;
             }
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            if (!jsonObject.get("status").getAsBoolean()) {
+            JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+            if (!jsonObjectRes.get("status").getAsBoolean()) {
                 return false;
             }
         } catch (Exception e) {
