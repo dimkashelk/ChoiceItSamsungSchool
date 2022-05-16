@@ -12,11 +12,8 @@ import com.example.choiceitsamsungschool.db.SpotDB;
 import com.example.choiceitsamsungschool.db.Survey;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.io.InputStream;
-import java.util.Objects;
 import java.util.Vector;
 
 import okhttp3.OkHttpClient;
@@ -95,10 +92,11 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
          * */
         RequestBody body;
         Request request;
-        String json = "{'login': '" + strings[1] + "', " +
-                "'token': '" + strings[2] + "'}";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("login", strings[1]);
+        jsonObject.addProperty("token", strings[2]);
         method = strings[0];
-        body = RequestBody.create(json, APIServer.JSON);
+        body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
         switch (strings[0]) {
             case APIServer.LOAD_FRIENDS:
                 request = new Request.Builder()
@@ -113,15 +111,13 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         .build();
                 break;
             case APIServer.LOAD_USER_NEWS_FEED:
-                json = "{'login': '" + strings[1] + "', " +
-                        "'token': '" + strings[2] + "'," +
-                        "'friends': '" + strings[3] + "'," +
-                        "'min_count': '" + strings[4] + "'," +
-                        "'max_count': '" + strings[5] + "'," +
-                        "'is_selected_most_popular': '" + strings[7] + "'," +
-                        "'is_increasing': '" + strings[8] + "'," +
-                        "'is_selected_date': '" + strings[6] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("friends", strings[3]);
+                jsonObject.addProperty("min_count", strings[4]);
+                jsonObject.addProperty("max_count", strings[5]);
+                jsonObject.addProperty("is_selected_most_popular", strings[7]);
+                jsonObject.addProperty("is_increasing", strings[8]);
+                jsonObject.addProperty("is_selected_date", strings[6]);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_USER_NEWS_FEED)
                         .post(body)
@@ -129,48 +125,40 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 break;
             case APIServer.LOAD_SEARCH_PERSON:
             case APIServer.LOAD_PERSON:
-                json = "{'login': '" + strings[1] + "', " +
-                        "'token': '" + strings[2] + "'," +
-                        "'person': '" + strings[3] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("person", strings[3]);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_PERSON)
                         .post(body)
                         .build();
                 break;
             case APIServer.SEARCH:
-                json = "{'login': '" + strings[1] + "', " +
-                        "'token': '" + strings[2] + "'," +
-                        "'value': '" + strings[3] + "'," +
-                        "'search_persons': '" + strings[4] + "'," +
-                        "'search_surveys': '" + strings[5] + "'," +
-                        "'search_friends_surveys': '" + strings[6] + "'," +
-                        "'age_from': '" + strings[7] + "'," +
-                        "'age_to': '" + strings[8] + "'," +
-                        "'count_question_from': '" + strings[9] + "'," +
-                        "'count_question_to': '" + strings[10] + "'," + "}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("value", strings[3]);
+                jsonObject.addProperty("search_persons", strings[4]);
+                jsonObject.addProperty("search_surveys", strings[5]);
+                jsonObject.addProperty("search_friends_surveys", strings[6]);
+                jsonObject.addProperty("age_from", strings[7]);
+                jsonObject.addProperty("age_to", strings[8]);
+                jsonObject.addProperty("count_question_from", strings[9]);
+                jsonObject.addProperty("pecount_question_torson", strings[10]);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.SEARCH)
                         .post(body)
                         .build();
                 break;
             case APIServer.LOAD_SURVEY:
-                json = "{'login': '" + strings[1] + "', " +
-                        "'token': '" + strings[2] + "'," +
-                        "'survey_id': '" + strings[3] + "'";
+                jsonObject.addProperty("survey_id", strings[3]);
                 survey_id = Integer.getInteger(strings[3]);
-                body = RequestBody.create(json, APIServer.JSON);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_SURVEY)
                         .post(body)
                         .build();
                 break;
             case APIServer.LOAD_PERSON_SURVEYS:
-                json = "{'login': '" + strings[1] + "', " +
-                        "'token': '" + strings[2] + "'," +
-                        "'person_id': '" + strings[3] + "'";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("person_id", strings[3]);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_PERSON_SURVEYS)
                         .post(body)
@@ -188,15 +176,15 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 return false;
             }
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            if (!jsonObject.get("status").getAsBoolean()) {
+            JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+            if (!jsonObjectRes.get("status").getAsBoolean()) {
                 logout = true;
                 return false;
             }
             switch (strings[0]) {
                 case APIServer.LOAD_FRIENDS:
-                    count_friends = jsonObject.get("count").getAsInt();
-                    JsonArray friends_json = jsonObject.getAsJsonArray("friends");
+                    count_friends = jsonObjectRes.get("count").getAsInt();
+                    JsonArray friends_json = jsonObjectRes.getAsJsonArray("friends");
                     for (int i = 0; i < count_friends; i++) {
                         Friend friend = new Friend();
                         friend.friend_id = friends_json.get(i).getAsJsonObject().get("id").getAsString();
@@ -209,8 +197,8 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                     }
                     break;
                 case APIServer.LOAD_USER_SURVEYS:
-                    count_surveys = jsonObject.get("count").getAsInt();
-                    JsonArray surveys_json = jsonObject.getAsJsonArray("surveys");
+                    count_surveys = jsonObjectRes.get("count").getAsInt();
+                    JsonArray surveys_json = jsonObjectRes.getAsJsonArray("surveys");
                     for (int i = 0; i < count_surveys; i++) {
                         Survey survey = new Survey();
                         survey.survey_id = surveys_json.get(i).getAsJsonObject().get("id").getAsString();
@@ -224,8 +212,8 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                     }
                     break;
                 case APIServer.LOAD_USER_NEWS_FEED:
-                    count_news = jsonObject.get("count").getAsInt();
-                    JsonArray news_json = jsonObject.getAsJsonArray("news");
+                    count_news = jsonObjectRes.get("count").getAsInt();
+                    JsonArray news_json = jsonObjectRes.getAsJsonArray("news");
                     for (int i = 0; i < count_news; i++) {
                         Survey survey = new Survey();
                         survey.survey_id = news_json.get(i).getAsJsonObject().get("id").getAsString();
@@ -240,35 +228,35 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 case APIServer.LOAD_SEARCH_PERSON:
                 case APIServer.LOAD_PERSON:
                     person = new Person();
-                    person.person_id = jsonObject.get("person_id").getAsString();
-                    person.first_name = jsonObject.get("first_name").getAsString();
-                    person.second_name = jsonObject.get("second_name").getAsString();
+                    person.person_id = jsonObjectRes.get("person_id").getAsString();
+                    person.first_name = jsonObjectRes.get("first_name").getAsString();
+                    person.second_name = jsonObjectRes.get("second_name").getAsString();
                     break;
                 case APIServer.SEARCH:
-                    count_surveys_search = jsonObject.get("count_surveys").getAsInt();
-                    count_persons_search = jsonObject.get("count_persons").getAsInt();
+                    count_surveys_search = jsonObjectRes.get("count_surveys").getAsInt();
+                    count_persons_search = jsonObjectRes.get("count_persons").getAsInt();
                     for (int i = 0; i < count_persons_search; i++) {
                         Person person = new Person();
-                        person.person_id = jsonObject.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("person_id").getAsString();
-                        person.first_name = jsonObject.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("first_name").getAsString();
-                        person.second_name = jsonObject.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("second_name").getAsString();
+                        person.person_id = jsonObjectRes.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("person_id").getAsString();
+                        person.first_name = jsonObjectRes.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("first_name").getAsString();
+                        person.second_name = jsonObjectRes.get("persons").getAsJsonArray().get(i).getAsJsonObject().get("second_name").getAsString();
                         person.is_search = true;
                         persons.add(person);
                     }
                     for (int i = 0; i < count_surveys_search; i++) {
                         Survey survey = new Survey();
-                        survey.survey_id = jsonObject.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("survey_id").getAsString();
-                        survey.title = jsonObject.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("title").getAsString();
-                        survey.description = jsonObject.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("description").getAsString();
-                        survey.title_image_url = jsonObject.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("title_image_url").getAsString();
-                        survey.person_url = jsonObject.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("person_url").getAsString();
+                        survey.survey_id = jsonObjectRes.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("survey_id").getAsString();
+                        survey.title = jsonObjectRes.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("title").getAsString();
+                        survey.description = jsonObjectRes.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("description").getAsString();
+                        survey.title_image_url = jsonObjectRes.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("title_image_url").getAsString();
+                        survey.person_url = jsonObjectRes.get("surveys").getAsJsonArray().get(i).getAsJsonObject().get("person_url").getAsString();
                         survey.is_search = true;
                         surveys.add(survey);
                     }
                     break;
                 case APIServer.LOAD_SURVEY:
-                    count_spots = jsonObject.get("count_spots").getAsInt();
-                    JsonArray array = jsonObject.get("spots").getAsJsonArray();
+                    count_spots = jsonObjectRes.get("count_spots").getAsInt();
+                    JsonArray array = jsonObjectRes.get("spots").getAsJsonArray();
                     for (int i = 0; i < count_spots; i++) {
                         SpotDB spotDB = new SpotDB(
                                 array.get(i).getAsJsonObject().get("spot_id").getAsString(),
@@ -281,8 +269,8 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                     }
                     break;
                 case APIServer.LOAD_PERSON_SURVEYS:
-                    count_surveys = jsonObject.get("count_surveys").getAsInt();
-                    JsonArray data = jsonObject.get("spots").getAsJsonArray();
+                    count_surveys = jsonObjectRes.get("count_surveys").getAsInt();
+                    JsonArray data = jsonObjectRes.get("spots").getAsJsonArray();
                     for (int i = 0; i < count_surveys; i++) {
                         Survey survey = new Survey();
                         survey.survey_id = data.get(i).getAsJsonObject().get("survey_id").getAsString();
