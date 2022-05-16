@@ -23,7 +23,7 @@ import com.example.choiceitsamsungschool.db.UserDao;
         Survey.class,
         Person.class,
         SpotDB.class
-}, version = 23, exportSchema = false)
+}, version = 24, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;

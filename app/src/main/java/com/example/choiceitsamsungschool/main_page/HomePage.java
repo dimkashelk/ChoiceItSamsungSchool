@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +13,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.choiceitsamsungschool.APIServer;
@@ -40,8 +35,8 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.Vector;
@@ -55,31 +50,76 @@ public class HomePage extends Fragment {
     private static LayoutInflater inflater;
     private static APIServer apiServer;
     private MaterialToolbar toolbar;
-    private AnimatedVectorDrawable icon_collapsed_date;
-    private AnimatedVectorDrawable icon_expanded_date;
-    private AnimatedVectorDrawable icon_collapsed_active;
-    private AnimatedVectorDrawable icon_expanded_active;
-    private AnimatedVectorDrawable icon_collapsed_most_popular;
-    private AnimatedVectorDrawable icon_expanded_most_popular;
+    private static boolean is_increasing = false;
+    private AnimatedVectorDrawable icon_collapsed;
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
-    private static boolean is_increasing_most_popular = false;
-    private static boolean is_increasing_active = false;
-    private static boolean is_increasing_date = false;
+    private AnimatedVectorDrawable icon_expanded;
     private static NumberPicker from;
     private static NumberPicker to;
     private static ChipGroup friends_group = null;
     private static Vector<Friend> friends_list = new Vector<>();
     private static ViewGroup parent_surveys = null;
     private static List<Survey> surveys_list = new Vector<>();
-    private MaterialCheckBox check_box_date;
-    private MaterialCheckBox check_box_active;
-    private MaterialCheckBox check_box_most_popular;
-    private MaterialButton is_increasing_date_button;
-    private MaterialButton is_increasing_most_popular_button;
-    private MaterialButton is_increasing_active_button;
+    private MaterialRadioButton check_box_date;
+    private MaterialRadioButton check_box_most_popular;
+    private MaterialButton is_increasing_button;
     private TextInputEditText friend_name_field;
+
+    public static HomePage get() {
+        if (page == null)
+            page = new HomePage();
+        return page;
+    }
+
+    public static boolean get_increasing() {
+        return is_increasing;
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void filterFriends() {
+        String s = friend_name_field.getText().toString();
+        Vector<Friend> new_list = new Vector<>();
+        for (Friend friend : friends) {
+            String dop = friend.first_name + " " + friend.second_name;
+            if (dop.contains(s)) {
+                new_list.add(friend);
+            }
+        }
+        friends = new_list;
+        friends_group.removeAllViews();
+        for (int i = 0; i < friends.size(); i++) {
+            Chip friend = new Chip(page.getContext());
+            friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
+                    page.getContext(),
+                    null,
+                    0,
+                    R.style.ChipStyle
+            );
+            friend.setChipDrawable(chipDrawable);
+            friends_group.addView(friend);
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void changeState() {
+        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            toolbar.setNavigationIcon(menu);
+            menu.start();
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            toolbar.setNavigationIcon(close);
+            close.start();
+            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
+        }
+    }
+
+    public View getHome_page() {
+        return home_page;
+    }
 
     @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n", "CutPasteId"})
     @Nullable
@@ -101,14 +141,8 @@ public class HomePage extends Fragment {
         toolbar = home_page.findViewById(R.id.home_tool_bar);
         toolbar.setNavigationOnClickListener(v -> changeState());
 
-        icon_collapsed_date = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_collapsed_to_expanded);
-        icon_expanded_date = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_expanded_to_collapsed);
-
-        icon_collapsed_active = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_collapsed_to_expanded);
-        icon_expanded_active = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_expanded_to_collapsed);
-
-        icon_collapsed_most_popular = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_collapsed_to_expanded);
-        icon_expanded_most_popular = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_expanded_to_collapsed);
+        icon_collapsed = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_collapsed_to_expanded);
+        icon_expanded = (AnimatedVectorDrawable) context.getDrawable(R.drawable.avd_checkable_expandcollapse_expanded_to_collapsed);
 
         menu = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_menu_animated);
         close = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_close_animated);
@@ -162,56 +196,20 @@ public class HomePage extends Fragment {
             }
         });
 
-        is_increasing_date_button = home_page.findViewById(R.id.home_page_check_box_date_button);
-        is_increasing_date_button.setOnClickListener(new View.OnClickListener() {
+        is_increasing_button = home_page.findViewById(R.id.home_page_check_box_button);
+        is_increasing_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (is_increasing_date) {
-                    is_increasing_date_button.setIcon(icon_expanded_date);
-                    is_increasing_date_button.setText(R.string.decreasing);
-                    icon_expanded_date.start();
-                    is_increasing_date = false;
+                if (is_increasing) {
+                    is_increasing_button.setIcon(icon_expanded);
+                    is_increasing_button.setText(R.string.decreasing);
+                    icon_expanded.start();
+                    is_increasing = false;
                 } else {
-                    is_increasing_date_button.setIcon(icon_collapsed_date);
-                    is_increasing_date_button.setText(R.string.increasing);
-                    icon_collapsed_date.start();
-                    is_increasing_date = true;
-                }
-            }
-        });
-
-        is_increasing_active_button = home_page.findViewById(R.id.home_page_check_box_active_button);
-        is_increasing_active_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (is_increasing_active) {
-                    is_increasing_active_button.setIcon(icon_expanded_active);
-                    is_increasing_active_button.setText(R.string.decreasing);
-                    icon_expanded_active.start();
-                    is_increasing_active = false;
-                } else {
-                    is_increasing_active_button.setIcon(icon_collapsed_active);
-                    is_increasing_active_button.setText(R.string.increasing);
-                    icon_collapsed_active.start();
-                    is_increasing_active = true;
-                }
-            }
-        });
-
-        is_increasing_most_popular_button = home_page.findViewById(R.id.home_page_check_box_most_popular_button);
-        is_increasing_most_popular_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (is_increasing_most_popular) {
-                    is_increasing_most_popular_button.setIcon(icon_expanded_most_popular);
-                    is_increasing_most_popular_button.setText(R.string.decreasing);
-                    icon_expanded_most_popular.start();
-                    is_increasing_most_popular = false;
-                } else {
-                    is_increasing_most_popular_button.setIcon(icon_collapsed_most_popular);
-                    is_increasing_most_popular_button.setText(R.string.increasing);
-                    icon_collapsed_most_popular.start();
-                    is_increasing_most_popular = true;
+                    is_increasing_button.setIcon(icon_collapsed);
+                    is_increasing_button.setText(R.string.increasing);
+                    icon_collapsed.start();
+                    is_increasing = true;
                 }
             }
         });
@@ -260,7 +258,6 @@ public class HomePage extends Fragment {
         }
 
         check_box_date = home_page.findViewById(R.id.home_page_check_box_date);
-        check_box_active = home_page.findViewById(R.id.home_page_check_box_active);
         check_box_most_popular = home_page.findViewById(R.id.home_page_check_box_most_popular);
 
         friend_name_field = home_page.findViewById(R.id.home_page_friend_name_input);
@@ -278,48 +275,11 @@ public class HomePage extends Fragment {
         return home_page;
     }
 
-    @SuppressLint("SetTextI18n")
-    public void filterFriends() {
-        String s = friend_name_field.getText().toString();
-        Vector<Friend> new_list = new Vector<>();
-        for (Friend friend: friends) {
-            String dop = friend.first_name + " " + friend.second_name;
-            if (dop.contains(s)) {
-                new_list.add(friend);
-            }
+    public boolean get_selected_date() {
+        if (check_box_date == null) {
+            return false;
         }
-        friends = new_list;
-        friends_group.removeAllViews();
-        for (int i = 0; i < friends.size(); i++) {
-            Chip friend = new Chip(page.getContext());
-            friend.setText(friends.get(i).first_name + " " + friends.get(i).second_name);
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(
-                    page.getContext(),
-                    null,
-                    0,
-                    R.style.ChipStyle
-            );
-            friend.setChipDrawable(chipDrawable);
-            friends_group.addView(friend);
-        }
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void changeState() {
-        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            toolbar.setNavigationIcon(menu);
-            menu.start();
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            toolbar.setNavigationIcon(close);
-            close.start();
-            manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
-        }
-    }
-
-    public View getHome_page() {
-        return home_page;
+        return check_box_date.isChecked();
     }
 
     @SuppressLint("SetTextI18n")
@@ -352,16 +312,11 @@ public class HomePage extends Fragment {
         }
     }
 
-    public static boolean get_increasing_most_popular() {
-        return is_increasing_most_popular;
-    }
-
-    public static boolean get_increasing_active() {
-        return is_increasing_active;
-    }
-
-    public static boolean get_increasing_date() {
-        return is_increasing_date;
+    public boolean get_selected_most_popular() {
+        if (check_box_most_popular == null) {
+            return false;
+        }
+        return check_box_most_popular.isChecked();
     }
 
     @SuppressLint("ResourceType")
@@ -377,7 +332,7 @@ public class HomePage extends Fragment {
     }
 
     public static int get_min_count() {
-        if (page == null) {
+        if (from == null) {
             return 1;
         } else {
             return from.getValue();
@@ -385,7 +340,7 @@ public class HomePage extends Fragment {
     }
 
     public static int get_max_count() {
-        if (page == null) {
+        if (to == null) {
             return 15;
         } else {
             return to.getValue();
@@ -418,20 +373,11 @@ public class HomePage extends Fragment {
         to.setMinValue(1);
         to.setMaxValue(15);
         check_box_date.setChecked(false);
-        check_box_active.setChecked(false);
         check_box_most_popular.setChecked(false);
-        is_increasing_date_button.setIcon(icon_expanded_date);
-        is_increasing_date_button.setText(R.string.decreasing);
-        icon_expanded_date.start();
-        is_increasing_date = false;
-        is_increasing_active_button.setIcon(icon_expanded_active);
-        is_increasing_active_button.setText(R.string.decreasing);
-        icon_expanded_active.start();
-        is_increasing_active = false;
-        is_increasing_most_popular_button.setIcon(icon_expanded_most_popular);
-        is_increasing_most_popular_button.setText(R.string.decreasing);
-        icon_expanded_most_popular.start();
-        is_increasing_most_popular = false;
+        is_increasing_button.setIcon(icon_expanded);
+        is_increasing_button.setText(R.string.decreasing);
+        icon_expanded.start();
+        is_increasing = false;
         loadUserNewsFeed();
         changeState();
     }

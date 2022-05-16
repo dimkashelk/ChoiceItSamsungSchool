@@ -288,9 +288,9 @@ public class APIServer {
                 ids.toString(),
                 String.valueOf(HomePage.get_min_count()),
                 String.valueOf(HomePage.get_max_count()),
-                String.valueOf(HomePage.get_increasing_most_popular()),
-                String.valueOf(HomePage.get_increasing_active()),
-                String.valueOf(HomePage.get_increasing_date())
+                String.valueOf(HomePage.get().get_selected_date()),
+                String.valueOf(HomePage.get().get_selected_most_popular()),
+                String.valueOf(HomePage.get_increasing())
         );
     }
 

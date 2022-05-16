@@ -67,9 +67,9 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
          * @param friends_id_list
          * @param min_count
          * @param max_count
-         * @param is_increasing_most_popular
-         * @param is_increasing_active
-         * @param is_increasing_date
+         * @param is_selected_date
+         * @param is_selected_most_popular
+         * @param is_increasing
          * LOAD PERSON
          * @param METHOD
          * @param LOGIN
@@ -118,9 +118,9 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         "'friends': '" + strings[3] + "'," +
                         "'min_count': '" + strings[4] + "'," +
                         "'max_count': '" + strings[5] + "'," +
-                        "'is_increasing_most_popular': '" + strings[6] + "'," +
-                        "'is_increasing_active': '" + strings[7] + "'," +
-                        "'is_increasing_date': '" + strings[8] + "'}";
+                        "'is_selected_most_popular': '" + strings[7] + "'," +
+                        "'is_increasing': '" + strings[8] + "'," +
+                        "'is_selected_date': '" + strings[6] + "'}";
                 body = RequestBody.create(json, APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_USER_NEWS_FEED)
