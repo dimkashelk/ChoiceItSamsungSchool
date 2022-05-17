@@ -106,7 +106,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 break;
             case APIServer.LOAD_USER_SURVEYS:
                 request = new Request.Builder()
-                        .url(APIServer.URL + APIServer.LOAD_USER_DATA)
+                        .url(APIServer.URL + APIServer.LOAD_USER_SURVEYS)
                         .post(body)
                         .build();
                 break;
@@ -140,7 +140,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                 jsonObject.addProperty("age_from", strings[7]);
                 jsonObject.addProperty("age_to", strings[8]);
                 jsonObject.addProperty("count_question_from", strings[9]);
-                jsonObject.addProperty("pecount_question_torson", strings[10]);
+                jsonObject.addProperty("count_question_to", strings[10]);
                 body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.SEARCH)
