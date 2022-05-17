@@ -117,4 +117,5 @@
     <string name="information">Информация</string>
     <string name="close">Закрыть</string>
     <string name="finish">Закончить опрос</string>
+    <string name="by_alphabet">По алфавиту</string>
 </resources>

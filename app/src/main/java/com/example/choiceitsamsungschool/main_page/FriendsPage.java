@@ -45,10 +45,11 @@ public class FriendsPage extends Fragment {
     private AnimatedVectorDrawable menu;
     private AnimatedVectorDrawable close;
     private InputMethodManager manager;
-    private static NumberPicker from;
-    private static NumberPicker to;
+//    private static NumberPicker from;
+//    private static NumberPicker to;
     private ViewGroup friends_list = null;
     private MaterialRadioButton check_box_age;
+    private MaterialRadioButton check_box_alphabet;
     private MaterialRadioButton check_box_count_surveys;
     private TextInputEditText friend_name_field;
     private TextInputLayout friend_name_layout;
@@ -86,27 +87,27 @@ public class FriendsPage extends Fragment {
         sheetBehavior.setHideable(false);
         sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-        from = friends_page.findViewById(R.id.friends_page_number_picker_from);
-        from.setMinValue(1);
-        from.setMaxValue(100);
-        from.setValue(1);
-        from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                to.setMinValue(newVal);
-            }
-        });
-
-        to = friends_page.findViewById(R.id.friends_page_number_picker_to);
-        to.setMinValue(1);
-        to.setMaxValue(100);
-        to.setValue(100);
-        to.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                from.setMaxValue(newVal);
-            }
-        });
+//        from = friends_page.findViewById(R.id.friends_page_number_picker_from);
+//        from.setMinValue(1);
+//        from.setMaxValue(100);
+//        from.setValue(1);
+//        from.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                to.setMinValue(newVal);
+//            }
+//        });
+//
+//        to = friends_page.findViewById(R.id.friends_page_number_picker_to);
+//        to.setMinValue(1);
+//        to.setMaxValue(100);
+//        to.setValue(100);
+//        to.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                from.setMaxValue(newVal);
+//            }
+//        });
 
         friends_group = friends_page.findViewById(R.id.friends_page_content_layout);
 
@@ -134,7 +135,8 @@ public class FriendsPage extends Fragment {
         MaterialButton apply = friends_page.findViewById(R.id.friends_page_apply);
         apply.setOnClickListener(v -> saveChanges());
 
-        check_box_age = friends_page.findViewById(R.id.friends_page_check_box_age);
+//        check_box_age = friends_page.findViewById(R.id.friends_page_check_box_age);
+        check_box_alphabet = friends_page.findViewById(R.id.friends_page_check_box_alphabet);
         check_box_count_surveys = friends_page.findViewById(R.id.friends_page_check_box_count_surveys);
 
         friend_name_field = friends_page.findViewById(R.id.friends_page_friend_name_input);
@@ -170,13 +172,14 @@ public class FriendsPage extends Fragment {
     }
 
     private void resetAll() {
-        from.setValue(1);
-        from.setMinValue(1);
-        from.setMaxValue(100);
-        to.setValue(100);
-        to.setMinValue(1);
-        to.setMaxValue(100);
-        check_box_age.setChecked(false);
+//        from.setValue(1);
+//        from.setMinValue(1);
+//        from.setMaxValue(100);
+//        to.setValue(100);
+//        to.setMinValue(1);
+//        to.setMaxValue(100);
+//        check_box_age.setChecked(false);
+
         check_box_count_surveys.setChecked(false);
         updateListFriends();
         changeState();
@@ -185,18 +188,26 @@ public class FriendsPage extends Fragment {
     @SuppressLint("UseCompatLoadingForDrawables")
     private void updateListFriends() {
         friends = AppDatabase.getDatabase(getContext()).friendDao().getAllFriend();
-        if (check_box_age.isChecked()) {
-            friends.sort(new Comparator<Friend>() {
-                @Override
-                public int compare(Friend o1, Friend o2) {
-                    return o1.age - o2.age;
-                }
-            });
-        } else if (check_box_count_surveys.isChecked()) {
+//        if (check_box_age.isChecked()) {
+//            friends.sort(new Comparator<Friend>() {
+//                @Override
+//                public int compare(Friend o1, Friend o2) {
+//                    return o1.age - o2.age;
+//                }
+//            });
+//        } else
+        if (check_box_count_surveys.isChecked()) {
             friends.sort(new Comparator<Friend>() {
                 @Override
                 public int compare(Friend o1, Friend o2) {
                     return o1.count_surveys - o2.count_surveys;
+                }
+            });
+        } else if (check_box_alphabet.isChecked()) {
+            friends.sort(new Comparator<Friend>() {
+                @Override
+                public int compare(Friend friend, Friend t1) {
+                    return (friend.first_name + friend.second_name).compareTo(t1.first_name + t1.second_name);
                 }
             });
         }
@@ -232,32 +243,32 @@ public class FriendsPage extends Fragment {
 
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     public void filterFriends() {
-        int age_from = from.getValue();
-        int age_to = to.getValue();
-        String s = friend_name_field.getText().toString();
-        friends = AppDatabase.getDatabase(getContext()).friendDao().getAllFriend();
-        Vector<Friend> new_list = new Vector<>();
-        for (Friend friend : friends) {
-            String dop = friend.first_name + " " + friend.second_name;
-            if (dop.contains(s)) {
-                if (friend.age >= age_from && friend.age <= age_to) {
-                    new_list.add(friend);
-                }
-            }
-        }
-        friends = new_list;
-        friends_group.removeAllViews();
-        for (int i = 0; i < friends.size(); i++) {
-            friends_group.addView(new FriendLine(
-                    getContext(),
-                    friends.get(i),
-                    InternalStorage.getInternalStorage().load(
-                            friends.get(i).friend_id,
-                            InternalStorage.PROFILE_IMAGE
-                    ),
-                    inflater,
-                    this).getPage());
-        }
+//        int age_from = from.getValue();
+//        int age_to = to.getValue();
+//        String s = friend_name_field.getText().toString();
+//        friends = AppDatabase.getDatabase(getContext()).friendDao().getAllFriend();
+//        Vector<Friend> new_list = new Vector<>();
+//        for (Friend friend : friends) {
+//            String dop = friend.first_name + " " + friend.second_name;
+//            if (dop.contains(s)) {
+//                if (friend.age >= age_from && friend.age <= age_to) {
+//                    new_list.add(friend);
+//                }
+//            }
+//        }
+//        friends = new_list;
+//        friends_group.removeAllViews();
+//        for (int i = 0; i < friends.size(); i++) {
+//            friends_group.addView(new FriendLine(
+//                    getContext(),
+//                    friends.get(i),
+//                    InternalStorage.getInternalStorage().load(
+//                            friends.get(i).friend_id,
+//                            InternalStorage.PROFILE_IMAGE
+//                    ),
+//                    inflater,
+//                    this).getPage());
+//        }
     }
 
     public View getFriends_page() {
