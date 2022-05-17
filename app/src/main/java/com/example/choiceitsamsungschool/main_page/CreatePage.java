@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -384,9 +385,9 @@ public class CreatePage extends Fragment implements SwipeRefreshLayout.OnRefresh
         if (empty_line) {
             return;
         }
-        Vector<Bitmap> images = new Vector<>();
+        Vector<Pair<Bitmap, String>> images = new Vector<>();
         for (AddLine addLine : add_lines) {
-            images.add(addLine.getBitmap());
+            images.add(new Pair<Bitmap, String>(addLine.getBitmap(), addLine.getTitle()));
         }
         Vector<String> friends = new Vector<>();
         for (Integer integer : friends_group.getCheckedChipIds()) {

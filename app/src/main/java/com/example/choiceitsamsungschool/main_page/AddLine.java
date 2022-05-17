@@ -79,6 +79,10 @@ public class AddLine extends View {
         return image;
     }
 
+    public String getTitle() {
+        return titleInput.getText().toString();
+    }
+
     public void startShake(Animation animation) {
         titleInputLayout.startAnimation(animation);
     }

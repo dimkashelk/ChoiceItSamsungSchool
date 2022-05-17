@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.Person;
@@ -545,7 +546,7 @@ public class APIServer {
     public void createSurvey(
             String title,
             String description,
-            List<Bitmap> images,
+            List<Pair<Bitmap, String>> images,
             int day,
             int month,
             int year,
