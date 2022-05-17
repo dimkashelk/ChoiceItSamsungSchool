@@ -3,9 +3,13 @@ package com.example.choiceitsamsungschool.main_page;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -48,14 +52,14 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
          * */
         RequestBody body;
         Request request;
-        String json;
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("login", strings[2]);
+        jsonObject.addProperty("token", strings[3]);
         switch (strings[0]) {
             case APIServer.LOAD_FRIENDS:
                 mode = strings[0];
-                json = "{'is_profile': " + true + "," +
-                        "'login': '" + strings[2] + "'," +
-                        "'token': '" + strings[3] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("is_profile", true);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 user_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_IMAGE + "/" + strings[1])
@@ -63,10 +67,8 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                         .build();
             case APIServer.LOAD_USER_SURVEYS:
                 mode = strings[0];
-                json = "{'is_title': " + true + "," +
-                        "'login': '" + strings[2] + "'," +
-                        "'token': '" + strings[3] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("is_title", true);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 survey_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_USER_SURVEYS + "/" + strings[1])
@@ -75,10 +77,8 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
             case APIServer.LOAD_SEARCH_PERSON:
             case APIServer.LOAD_PERSON:
                 mode = strings[0];
-                json = "{'profile': " + true + "," +
-                        "'login': '" + strings[2] + "'," +
-                        "'token': '" + strings[3] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("profile", true);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 person_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_PERSON + "/" + strings[1])
@@ -87,10 +87,8 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
             case APIServer.LOAD_SEARCH_SURVEY:
             case APIServer.LOAD_SURVEY:
                 mode = strings[0];
-                json = "{'survey': " + true + "," +
-                        "'login': '" + strings[2] + "'," +
-                        "'token': '" + strings[3] + "'}";
-                body = RequestBody.create(json, APIServer.JSON);
+                jsonObject.addProperty("survey", true);
+                body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
                 person_id = strings[1];
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.LOAD_SURVEY + "/" + strings[1])
@@ -113,8 +111,9 @@ public class LoadImage extends AsyncTask<String, Void, Boolean> {
                 case APIServer.LOAD_PERSON:
                 case APIServer.LOAD_USER_SURVEYS:
                 case APIServer.LOAD_FRIENDS:
-                    InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    Gson gson = new Gson();
+                    JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+                    bitmap = ImageUtil.convert(jsonObjectRes.get("image").getAsString());
                     break;
                 default:
                     bitmap = null;
