@@ -193,6 +193,7 @@ public class LoadData extends AsyncTask<String, Boolean, Boolean> {
                         friend.image_url = friends_json.get(i).getAsJsonObject().get("image").getAsString();
                         friend.age = friends_json.get(i).getAsJsonObject().get("age").getAsInt();
                         friend.count_surveys = friends_json.get(i).getAsJsonObject().get("count_surveys").getAsInt();
+                        friend.count_friends = friends_json.get(i).getAsJsonObject().get("count_friends").getAsInt();
                         friends.add(friend);
                     }
                     break;
