@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -570,7 +571,7 @@ public class WelcomePage extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkLoginUserLoginPassword(String login_string, String token) {
-        // saveToken(login_string, token);
+        saveToken(login_string, token);
 
         bottomSheetLoginLoginOk = true;
         bottomSheetLoginPasswordOk = true;
@@ -579,7 +580,7 @@ public class WelcomePage extends AppCompatActivity {
 
         bottomSheetDialogLogin.dismiss();
 
-        // TODO: открываем следующую страницу! Он молодец, он ввел пароль!
+        MainActivity.get().login();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

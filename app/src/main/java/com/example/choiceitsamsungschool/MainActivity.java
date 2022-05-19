@@ -20,8 +20,23 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
 
+    private static MainActivity mainActivity;
+
+    public static MainActivity get() {
+        return mainActivity;
+    }
+
+    private void checkAllPermission() {
+        // INTERNET
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mainActivity = this;
+
         super.onCreate(savedInstanceState);
 
         checkAllPermission();
@@ -32,12 +47,5 @@ public class MainActivity extends AppCompatActivity {
         Intent welcome_page = new Intent(this, WelcomePage.class);
         welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(welcome_page);
-    }
-
-    private void checkAllPermission() {
-        // INTERNET
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
-        }
     }
 }
