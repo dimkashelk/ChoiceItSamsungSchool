@@ -29,41 +29,41 @@ public class UserPageFavorites extends View {
         UserPageFavorites.inflater = inflater;
         View view = inflater.inflate(R.layout.user_page_favorites, container, false);
 
-        parent_favorites_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
-
-        if (surveys.size() != 0) {
-            parent_favorites_survey.removeAllViews();
-            for (int i = 0; i < surveys.size(); i++) {
-                parent_favorites_survey.addView(new SurveyCard(
-                        context,
-                        surveys.get(i).survey_id,
-                        InternalStorage.getInternalStorage().load(
-                                surveys.get(i).survey_id,
-                                InternalStorage.SURVEY_TITLE_IMAGE
-                        ),
-                        inflater).getPage());
-            }
-        }
+//        parent_favorites_survey = (ViewGroup) view.findViewById(R.id.user_page_favorites_list);
+//
+//        if (surveys.size() != 0) {
+//            parent_favorites_survey.removeAllViews();
+//            for (int i = 0; i < surveys.size(); i++) {
+//                parent_favorites_survey.addView(new SurveyCard(
+//                        context,
+//                        surveys.get(i).survey_id,
+//                        InternalStorage.getInternalStorage().load(
+//                                surveys.get(i).survey_id,
+//                                InternalStorage.SURVEY_TITLE_IMAGE
+//                        ),
+//                        inflater).getPage());
+//            }
+//        }
         page = view;
         return page;
     }
 
     public static void updateFavorites() {
-        AppDatabase appDatabase = AppDatabase.getDatabase(page.getContext());
-        surveys = appDatabase.surveyDao().getFavorites();
-
-        if (surveys.size() != 0 && parent_favorites_survey != null) {
-            parent_favorites_survey.removeAllViews();
-            for (int i = 0; i < surveys.size(); i++) {
-                parent_favorites_survey.addView(new SurveyCard(
-                        page.getContext(),
-                        surveys.get(i).survey_id,
-                        InternalStorage.getInternalStorage().load(
-                                surveys.get(i).survey_id,
-                                InternalStorage.SURVEY_TITLE_IMAGE
-                        ),
-                        inflater).getPage());
-            }
-        }
+//        AppDatabase appDatabase = AppDatabase.getDatabase(page.getContext());
+//        surveys = appDatabase.surveyDao().getFavorites();
+//
+//        if (surveys.size() != 0 && parent_favorites_survey != null) {
+//            parent_favorites_survey.removeAllViews();
+//            for (int i = 0; i < surveys.size(); i++) {
+//                parent_favorites_survey.addView(new SurveyCard(
+//                        page.getContext(),
+//                        surveys.get(i).survey_id,
+//                        InternalStorage.getInternalStorage().load(
+//                                surveys.get(i).survey_id,
+//                                InternalStorage.SURVEY_TITLE_IMAGE
+//                        ),
+//                        inflater).getPage());
+//            }
+//        }
     }
 }

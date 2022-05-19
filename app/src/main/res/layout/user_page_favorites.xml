@@ -21,10 +21,14 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <ProgressBar
-                style="@style/ProgressBar"
+            <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="@string/in_dev"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
