@@ -8,7 +8,7 @@
     <string name="create_by">Проект создал @dimkashelk</string>
     <string name="registration">Регистрация</string>
 
-    <string name="password">Пароль</string>
+    <string name="password">Пароль (минимум 8 символов)</string>
     <string name="re_type_password">Повторите пароль</string>
     <string name="email">Почта</string>
     <string name="first_name">Имя</string>
@@ -28,7 +28,7 @@
     <string name="error_email">Используйте существующий адрес электронной почты</string>
     <string name="not_free_email">Данная почта уже занята, попробуйте другую</string>
     <string name="free_email">Данная почта свободна</string>
-    <string name="error_password">Пароль должен содержать только a–z, A–Z, 0–9, !@#$%,^:&amp;?()*/-+[]</string>
+    <string name="error_password">Пароль должен содержать только a–z, A–Z, 0–9, !@#$%,^:&amp;?()*/-+[], минимальная длина - 8 символов</string>
     <string name="error_re_password">Пароль должен с тем, что вы ввели в предыдущем поле</string>
     <string name="register">Зарегистрируйтесь</string>
     <string name="forgot_password_title">Забыли пароль?</string>

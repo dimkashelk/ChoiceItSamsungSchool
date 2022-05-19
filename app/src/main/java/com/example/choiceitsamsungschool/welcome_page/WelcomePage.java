@@ -17,11 +17,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.choiceitsamsungschool.APIServer;
+import com.example.choiceitsamsungschool.MainActivity;
 import com.example.choiceitsamsungschool.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -569,7 +571,7 @@ public class WelcomePage extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setOkLoginUserLoginPassword(String login_string, String token) {
-        // saveToken(login_string, token);
+        saveToken(login_string, token);
 
         bottomSheetLoginLoginOk = true;
         bottomSheetLoginPasswordOk = true;
@@ -578,7 +580,7 @@ public class WelcomePage extends AppCompatActivity {
 
         bottomSheetDialogLogin.dismiss();
 
-        // TODO: открываем следующую страницу! Он молодец, он ввел пароль!
+        MainActivity.get().login();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -746,7 +748,13 @@ public class WelcomePage extends AppCompatActivity {
     }
 
     public boolean checkUserPassword() {
-        if (bottomSheetCreateAccountPassword.getText().toString().equals("")) {
+        if (bottomSheetCreateAccountPassword.getText().toString().equals("") ||
+                bottomSheetCreateAccountPassword.getText().toString().length() < 8) {
+            bottomSheetCreateAccountPasswordLayout.setError(getResources().getString(
+                    R.string.error_password
+            ));
+            bottomSheetCreateAccountPasswordLayout.startAnimation(shake);
+            vibrate(250);
             bottomSheetCreateAccountPasswordOk = false;
             return false;
         }
@@ -834,9 +842,11 @@ public class WelcomePage extends AppCompatActivity {
             bottomSheetLoginLoginOk = true;
             return true;
         } else {
-            bottomSheetLoginLoginLayout.setError(getResources().getString(
-                    R.string.error_login
-            ));
+            bottomSheetLoginLoginLayout.setError(
+                    getResources().getString(R.string.error_login) +
+                            '\n' +
+                            getResources().getString(R.string.error_email)
+            );
             bottomSheetLoginLoginLayout.startAnimation(shake);
             vibrate(250);
             bottomSheetLoginLoginOk = false;
@@ -919,7 +929,9 @@ public class WelcomePage extends AppCompatActivity {
                 bottomSheetCreateAccountPasswordOk &&
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
-            // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+            Toast.makeText(this, token, Toast.LENGTH_LONG).show();
+            saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+            MainActivity.get().login();
         }
     }
 
@@ -1006,7 +1018,8 @@ public class WelcomePage extends AppCompatActivity {
 
         bottomSheetDialogVerifyCode.dismiss();
 
-        // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+        saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+        MainActivity.get().login();
     }
 
     private void setEnable(EditText editText, boolean enable) {
@@ -1096,5 +1109,9 @@ public class WelcomePage extends AppCompatActivity {
     public void setOkVerifyCodeRePassword() {
         bottomSheetVerifyCodeRePasswordLayout.setError(null);
         bottomSheetVerifyCodeRePasswordLayout.setErrorEnabled(false);
+    }
+
+    public void stopLoading() {
+        bottomSheetCreateAccountButton.revertAnimation();
     }
 }

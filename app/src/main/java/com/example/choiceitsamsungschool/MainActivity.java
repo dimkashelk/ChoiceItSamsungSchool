@@ -20,10 +20,23 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
 
-    private APIServer apiServer;
+    private static MainActivity mainActivity;
+
+    public static MainActivity get() {
+        return mainActivity;
+    }
+
+    private void checkAllPermission() {
+        // INTERNET
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mainActivity = this;
+
         super.onCreate(savedInstanceState);
 
         checkAllPermission();

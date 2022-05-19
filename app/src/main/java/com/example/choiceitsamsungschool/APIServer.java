@@ -201,4 +201,14 @@ public class APIServer {
             getInternetPermission();
         }
     }
+
+    public void stopLoading(Boolean emailOk, Boolean shortNameOk) {
+        if (!emailOk) {
+            notFreeEmail();
+        }
+        if (!shortNameOk) {
+            notFreeLogin();
+        }
+        welcomePage.stopLoading();
+    }
 }
