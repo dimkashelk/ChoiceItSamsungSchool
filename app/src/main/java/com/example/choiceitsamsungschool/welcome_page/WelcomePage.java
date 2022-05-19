@@ -1018,7 +1018,8 @@ public class WelcomePage extends AppCompatActivity {
 
         bottomSheetDialogVerifyCode.dismiss();
 
-        // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+        saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+        MainActivity.get().login();
     }
 
     private void setEnable(EditText editText, boolean enable) {
