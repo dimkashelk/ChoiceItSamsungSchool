@@ -32,10 +32,11 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
         mode = params[params.length - 1];
         RequestBody body;
         Request request;
+        JsonObject jsonObject = new JsonObject();
         switch (mode) {
             case APIServer.LOGIN: {
-                String json = "{'login': '" + params[0] + "'}";
-                body = RequestBody.create(json, JSON);
+                jsonObject.addProperty("login", params[0]);
+                body = RequestBody.create(jsonObject.toString(), JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_LOGIN)
                         .post(body)
@@ -43,8 +44,8 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 break;
             }
             case APIServer.EMAIL: {
-                String json = "{'email': '" + params[0] + "'}";
-                body = RequestBody.create(json, JSON);
+                jsonObject.addProperty("email", params[0]);
+                body = RequestBody.create(jsonObject.toString(), JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_EMAIL)
                         .post(body)
@@ -52,8 +53,8 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 break;
             }
             case APIServer.FIND_EMAIL: {
-                String json = "{'email': '" + params[0] + "'}";
-                body = RequestBody.create(json, JSON);
+                jsonObject.addProperty("email", params[0]);
+                body = RequestBody.create(jsonObject.toString(), JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.FIND_EMAIL)
                         .post(body)
@@ -62,8 +63,10 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
             }
             default: {
                 // CHECK VERIFY CODE
-                String json = "{'email': '" + params[0] + "', 'code': '" + params[1] + "', 'password': '" + params[2] + "'}";
-                body = RequestBody.create(json, JSON);
+                jsonObject.addProperty("email", params[0]);
+                jsonObject.addProperty("code", params[1]);
+                jsonObject.addProperty("password", params[2]);
+                body = RequestBody.create(jsonObject.toString(), JSON);
                 request = new Request.Builder()
                         .url(APIServer.URL + APIServer.CHECK_VERIFY_CODE)
                         .post(body)
@@ -78,21 +81,21 @@ public class CheckUserLoginEmail extends AsyncTask<String, Void, Boolean> {
                 return false;
             }
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
+            JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
             switch (mode) {
                 case APIServer.FIND_EMAIL:
-                    findEmail = jsonObject.get("find").getAsBoolean();
+                    findEmail = jsonObjectRes.get("find").getAsBoolean();
                     return findEmail;
                 case APIServer.LOGIN:
-                    isFreeLogin = jsonObject.get("is_free_login").getAsBoolean();
+                    isFreeLogin = jsonObjectRes.get("is_free_login").getAsBoolean();
                     return isFreeLogin;
                 case APIServer.EMAIL:
-                    isFreeEmail = jsonObject.get("is_free_email").getAsBoolean();
+                    isFreeEmail = jsonObjectRes.get("is_free_email").getAsBoolean();
                     return isFreeEmail;
                 case APIServer.CHECK_VERIFY_CODE:
-                    okVerifyCode = jsonObject.get("ok").getAsBoolean();
+                    okVerifyCode = jsonObjectRes.get("ok").getAsBoolean();
                     if (okVerifyCode) {
-                        token = jsonObject.get("token").getAsString();
+                        token = jsonObjectRes.get("token").getAsString();
                     }
                     return okVerifyCode;
             }
