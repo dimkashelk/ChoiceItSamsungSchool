@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.fragment.app.FragmentContainerView
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,16 +15,12 @@
         app:layout_constrainedHeight="true"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        style="@style/BottomNavigationView"
         android:layout_width="match_parent"
         android:id="@+id/bottomNavigationView"
         android:layout_gravity="bottom"
-        android:background="@color/pink_50"
         android:layout_height="wrap_content"
-        app:itemIconTint="@color/pink_200"
-        app:itemRippleColor="@color/pink_100"
-        app:itemIconSize="27dp"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="auto"
         app:layout_constraintTop_toBottomOf="@+id/content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />

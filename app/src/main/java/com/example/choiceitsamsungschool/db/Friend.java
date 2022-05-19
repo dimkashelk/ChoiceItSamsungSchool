@@ -2,6 +2,7 @@ package com.example.choiceitsamsungschool.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -20,16 +21,24 @@ public class Friend {
     @ColumnInfo(name = "second_name")
     public String second_name;
 
-    @ColumnInfo(name = "profile_image")
-    public String profile_image;
+    @ColumnInfo
+    public Integer age;
+
+    @ColumnInfo
+    public Integer count_surveys;
+
+    @ColumnInfo
+    public Integer count_friends;
+
+    @Ignore
+    public String image_url;
 
     public Friend() {
     }
 
-    public Friend(String friend_id, String first_name, String second_name, String profile_image) {
+    public Friend(String friend_id, String first_name, String second_name) {
         this.friend_id = friend_id;
         this.first_name = first_name;
         this.second_name = second_name;
-        this.profile_image = profile_image;
     }
 }

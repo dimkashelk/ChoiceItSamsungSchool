@@ -19,10 +19,10 @@ public interface UserDao {
     public List<User> getAllUsers();
 
     @Query("select * from User where id = :userId")
-    public List<User> getFriend(long userId);
+    public List<User> getUser(long userId);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateUser(User friend);
+    void updateUser(User user);
 
     @Query("delete from User")
     void removeAllUsers();

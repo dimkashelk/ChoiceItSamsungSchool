@@ -21,6 +21,15 @@ public interface FriendDao {
     @Query("select * from Friend where id = :friendId")
     public List<Friend> getFriend(long friendId);
 
+    @Query("select * from Friend where friend_id = :friendId")
+    public List<Friend> getFriend(String friendId);
+
+    @Query("select age from Friend")
+    public List<Integer> getAges();
+
+    @Query("select * from Friend where (first_name || ' ' || second_name) like '%' || :search || '%'")
+    public List<Friend> getAllFriend(String search);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateFriend(Friend friend);
 

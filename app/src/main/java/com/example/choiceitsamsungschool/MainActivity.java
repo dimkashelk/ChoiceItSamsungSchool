@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.db.User;
+import com.example.choiceitsamsungschool.main_page.AppActivity;
 import com.example.choiceitsamsungschool.welcome_page.WelcomePage;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor_authorize_data;
 
     private static MainActivity mainActivity;
-
-    public static MainActivity get() {
-        return mainActivity;
-    }
 
     private void checkAllPermission() {
         // INTERNET
@@ -39,14 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        mainActivity = this;
+
+        setContentView(R.layout.loading_page);
+
         checkAllPermission();
 
         authorize_data = getSharedPreferences(PREFERENCES_AUTHORIZE_DATA, Context.MODE_PRIVATE);
         editor_authorize_data = authorize_data.edit();
 
-        Intent welcome_page = new Intent(this, WelcomePage.class);
-        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(welcome_page);
+        APIServer.setMainActivity(this);
+
+        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
     }
 
     public void checkAllPermission() {
@@ -73,5 +76,41 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
+    }
+
+    public SharedPreferences getAuthorize_data() {
+        return authorize_data;
+    }
+
+    public String getToken() {
+        return authorize_data.getString("token", "");
+    }
+
+    public String getLogin() {
+        return authorize_data.getString("login", "");
+    }
+
+    public void setLogin(String login) {
+        editor_authorize_data.putString("login", login);
+    }
+
+    public void setToken(String token) {
+        editor_authorize_data.putString("token", token);
+    }
+
+    public void login() {
+        Intent app_page = new Intent(this, AppActivity.class);
+        app_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(app_page);
+    }
+
+    public void logout() {
+        Intent welcome_page = new Intent(this, WelcomePage.class);
+        welcome_page.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(welcome_page);
+    }
+
+    public static MainActivity get() {
+        return mainActivity;
     }
 }

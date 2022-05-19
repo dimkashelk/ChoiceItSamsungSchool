@@ -50,7 +50,7 @@
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
         app:errorContentDescription="@string/error_first_name"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountFirstName"
@@ -76,7 +76,7 @@
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
         app:errorContentDescription="@string/error_second_name"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountSecondName"
@@ -102,7 +102,7 @@
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
         app:errorContentDescription="@string/error_login"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountShortName"
@@ -128,7 +128,7 @@
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
         app:errorContentDescription="@string/error_email"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountEmail"
@@ -154,7 +154,7 @@
         app:boxCornerRadiusTopStart="15dp"
         app:endIconMode="password_toggle"
         app:errorContentDescription="@string/error_password"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountPassword"
@@ -180,7 +180,7 @@
         app:boxCornerRadiusTopStart="15dp"
         app:endIconMode="password_toggle"
         app:errorContentDescription="@string/error_re_password"
-        app:errorTextColor="@color/pink_700">
+        app:errorTextColor="@color/purple_700">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bottomSheetCreateAccountRePassword"
@@ -207,7 +207,7 @@
         android:textSize="18sp"
         app:cornerRadius="15dp"
         app:initialCornerAngle="15dp"
-        app:spinning_bar_color="@color/pink_700"
+        app:spinning_bar_color="@color/purple_700"
         app:spinning_bar_padding="6dp"
         app:spinning_bar_width="4dp" />
 
@@ -236,6 +236,6 @@
             android:focusable="true"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/login"
-            android:textColor="@color/pink_700" />
+            android:textColor="@color/purple_700" />
     </LinearLayout>
 </LinearLayout>

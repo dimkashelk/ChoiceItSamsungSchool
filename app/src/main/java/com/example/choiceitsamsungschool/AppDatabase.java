@@ -8,13 +8,22 @@ import androidx.room.RoomDatabase;
 
 import com.example.choiceitsamsungschool.db.Friend;
 import com.example.choiceitsamsungschool.db.FriendDao;
+import com.example.choiceitsamsungschool.db.Person;
+import com.example.choiceitsamsungschool.db.PersonDao;
+import com.example.choiceitsamsungschool.db.SpotDB;
+import com.example.choiceitsamsungschool.db.SpotDao;
+import com.example.choiceitsamsungschool.db.Survey;
+import com.example.choiceitsamsungschool.db.SurveyDao;
 import com.example.choiceitsamsungschool.db.User;
 import com.example.choiceitsamsungschool.db.UserDao;
 
 @Database(entities = {
         User.class,
-        Friend.class
-}, version = 16, exportSchema = false)
+        Friend.class,
+        Survey.class,
+        Person.class,
+        SpotDB.class
+}, version = 24, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -22,6 +31,12 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract FriendDao friendDao();
+
+    public abstract SurveyDao surveyDao();
+
+    public abstract PersonDao personDao();
+
+    public abstract SpotDao spotDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
