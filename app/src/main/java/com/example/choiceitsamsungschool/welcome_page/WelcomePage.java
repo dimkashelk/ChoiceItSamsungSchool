@@ -930,7 +930,8 @@ public class WelcomePage extends AppCompatActivity {
                 bottomSheetCreateAccountRePasswordOk) {
             bottomSheetDialogCreateAccount.dismiss();
             Toast.makeText(this, token, Toast.LENGTH_LONG).show();
-            // TODO: saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+            saveToken(bottomSheetCreateAccountShortName.getText().toString(), token);
+            MainActivity.get().login();
         }
     }
 
