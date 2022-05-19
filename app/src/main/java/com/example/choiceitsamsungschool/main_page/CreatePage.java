@@ -230,19 +230,19 @@ public class CreatePage extends Fragment implements SwipeRefreshLayout.OnRefresh
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void changeState() {
-        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            toolbar.setNavigationIcon(menu);
-            menu.start();
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            toolbar.setNavigationIcon(close);
-            close.start();
-        }
-        friend_name_layout.clearFocus();
-        title_layout.clearFocus();
-        description_layout.clearFocus();
-        manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
+//        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//            toolbar.setNavigationIcon(menu);
+//            menu.start();
+//        } else {
+//            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//            toolbar.setNavigationIcon(close);
+//            close.start();
+//        }
+//        friend_name_layout.clearFocus();
+//        title_layout.clearFocus();
+//        description_layout.clearFocus();
+//        manager.hideSoftInputFromWindow(page.getView().getWindowToken(), 0);
     }
 
     public View getCreate_page() {
