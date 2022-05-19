@@ -3,35 +3,90 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/notebook/Documents/GitHub/ChoiceItSamsungSchool/app/src/main/res/layout/friends_page.xml" value="0.22" />
+        <entry key="..\:/Users/notebook/Documents/GitHub/ChoiceItSamsungSchool/app/src/main/res/layout/home_page.xml" value="0.22" />
+        <entry key="..\:/Users/shelk/.gradle/caches/transforms-3/ebc71e375219a026044e2bfcaa9e1cbe/transformed/jetified-tedimagepicker-1.2.8/res/drawable-anydpi-v21/ic_menu.xml" value="0.235" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable-v24/button_with_corner_radius_not_flooded.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable-v24/ic_welcome.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/asl_checkable_expandcollapse.xml" value="0.232" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/avd_checkable_expandcollapse_collapsed_to_expanded.xml" value="0.232" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/avd_checkable_expandcollapse_expanded_to_collapsed.xml" value="0.232" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/bottom_sheet_background_night.xml" value="0.238" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/buttom_with_corner_radius.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_color_border.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_color_border_error.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_corner_radius.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_corner_radius_flooded.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_corner_radius_flooded_night.xml" value="0.238" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/button_with_corner_radius_not_flooded.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/color_cursor.xml" value="0.2315" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/dark_progress_bar.xml" value="0.238" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/drawable_button_toggle_group_selector.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/drawable_button_toggle_group_text_selector.xml" value="0.235" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/et_custom.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_arrow_left.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_arrow_right.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_close.xml" value="0.2315" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_close_animated.xml" value="0.2315" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_favourites_not_filled.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_favourities_fill.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_heart_fill.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_heart_not_filled.xml" value="0.235" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_main_page_active.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_main_page_list.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_menu.xml" value="0.18" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_menu_animated.xml" value="0.2315" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_menu_big.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_notification.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_search_list.xml" value="0.235" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/ic_welcome.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/input_custom.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/input_custom_error.xml" value="0.3828125" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/input_custom_ok.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/like_white.xml" value="0.2195" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/overlay_black.xml" value="0.2195" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/skip_white.xml" value="0.2195" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/top_button_for_bottom_sheet.xml" value="0.3828125" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/vd_checkable_expandcollapse_collapsed.xml" value="0.232" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/drawable/vd_checkable_expandcollapse_expanded.xml" value="0.232" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_create_account_activity.xml" value="0.22" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/add_line.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/app_page.xml" value="0.2375" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_create_account_activity.xml" value="0.25" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_dialog_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_forgot_password.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_forgot_password_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_login_activity.xml" value="0.33" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/bottom_sheet_verify_code.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/create_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/dop.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/search_page.xml" value="0.41427247451343835" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/friend_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/friend_line.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/friends_page.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/history_line.xml" value="0.33" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/home_page.xml" value="0.33" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/item_spot.xml" value="0.22" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/loading_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/person_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/result_line.xml" value="0.33" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/search_page.xml" value="0.25" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/survey_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/survey_page.xml" value="0.33" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/test.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/user_page.xml" value="0.33" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/user_page_archive.xml" value="0.25" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/user_page_favorites.xml" value="0.18" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/user_page_settings.xml" value="0.33" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/welcome_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/welcome_page/activity_main.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/layout/welcome_page/bottom_sheet_forgot_password_activity.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/menu/toolbar_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/shelk/AndroidStudioProjects/ChoiceItSamsungSchool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.235" />
+        <entry key="..\:/Users/shelk/AppData/Local/Temp/drawable-temp/fake_of_asl_checkable_expandcollapse.xml" value="0.232" />
       </map>
     </option>
   </component>
