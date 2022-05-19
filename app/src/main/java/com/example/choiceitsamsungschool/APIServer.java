@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;
@@ -16,6 +17,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 public class APIServer {
+    private static APIServer apiServer = null;
     public static final String EMAIL = "email";
     public static final String LOGIN = "login";
     public static final String EMAIL_LOGIN = "email_login";
@@ -28,15 +30,37 @@ public class APIServer {
     public static final String REGISTRATION = "reg";
     public static final String FIND_EMAIL = "find_email";
     public static final String CHECK_VERIFY_CODE = "check_verify_code";
+    public static final String LOAD_FRIENDS = "load_friends";
+    public static final String LOAD_IMAGE = "images";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final OkHttpClient client;
     private WelcomePage welcomePage;
+    private UserPage userPage;
+
+    public APIServer() {
+        client = new OkHttpClient();
+    }
 
     public APIServer(WelcomePage welcomePage) {
         this.welcomePage = welcomePage;
         client = new OkHttpClient();
+    }
+
+    public static APIServer getSingletonAPIServer() {
+        if (apiServer == null) {
+            apiServer = new APIServer();
+        }
+        return apiServer;
+    }
+
+    public void setWelcomePage(WelcomePage welcomePage) {
+        this.welcomePage = welcomePage;
+    }
+
+    public void setUserPage(UserPage userPage) {
+        this.userPage = userPage;
     }
 
     private boolean checkInternetPermission() {

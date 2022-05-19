@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/user_page"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/user_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_100"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_page">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/user_page_button"
+            android:layout_width="67dp"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@android:color/transparent"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            android:shadowColor="@android:color/transparent"
+            app:icon="@drawable/ic_menu"
+            app:rippleColor="@android:color/transparent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:gravity="center_vertical"
+            android:text="\@user_login"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/user_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="@id/user_page"
+        app:layout_constraintTop_toBottomOf="@id/user_tool_bar">
+
+        <LinearLayout
+            android:id="@+id/user_page_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/pink_100"
+            android:orientation="vertical"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="@id/user_content_layout"
+            app:layout_constraintTop_toBottomOf="@id/user_content_layout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Архив опросов" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_page_front"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_sheet_background"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            app:behavior_peekHeight="60dp"
+            app:layout_behavior="com.example.choiceitsamsungschool.main_page.LockedBottomSheetBehavior"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="@id/user_content_layout"
+            app:layout_constraintTop_toBottomOf="@id/user_content_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bottom_sheet_background"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:outlineAmbientShadowColor="@android:color/transparent"
+                android:outlineSpotShadowColor="@android:color/transparent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="center_vertical"
+                    android:text="Профиль"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/user_page_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pink_50">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/user_page_info_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginRight="3pt"
+                        android:layout_marginLeft="3pt"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/user_page_image"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            app:layout_constrainedHeight="true"
+                            app:layout_constrainedWidth="true"
+                            android:padding="3dp"
+                            app:layout_constraintHorizontal_weight="2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:riv_corner_radius="500dp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="3"
+                            app:layout_constraintStart_toEndOf="@id/user_page_image"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/user_page_full_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Фамилия имя"
+                                android:textSize="18sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/user_page_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                app:layout_constrainedWidth="true"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/user_page_full_name">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/user_page_friends_card"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:outlineAmbientShadowColor="@android:color/transparent"
+                                    android:outlineSpotShadowColor="@android:color/transparent"
+                                    app:layout_constrainedWidth="true"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/user_page_survey_card"
+                                    app:layout_constraintHorizontal_weight="1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/user_page_count_friends"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_medium"
+                                            android:gravity="center"
+                                            android:layout_marginBottom="10dp"
+                                            android:text="0"
+                                            android:textSize="20sp" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_medium"
+                                            android:gravity="center"
+                                            android:text="Ваши друзья"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/user_page_survey_card"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:outlineAmbientShadowColor="@android:color/transparent"
+                                    android:outlineSpotShadowColor="@android:color/transparent"
+                                    app:layout_constrainedWidth="true"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_weight="1"
+                                    app:layout_constraintStart_toEndOf="@id/user_page_friends_card"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/user_page_count_survey"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_medium"
+                                            android:gravity="center"
+                                            android:layout_marginBottom="10dp"
+                                            android:text="0"
+                                            android:textSize="20sp" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_medium"
+                                            android:gravity="center"
+                                            android:text="Ваши опросы"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+                                </com.google.android.material.card.MaterialCardView>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/user_page_change_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8pt"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="8pt"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Редактировать профиль"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/user_page_info_layout" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/user_page_friends_list_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8pt"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="8pt"
+                        android:clickable="true"
+                        android:focusable="true"
+
+                        android:outlineAmbientShadowColor="@android:color/transparent"
+                        android:outlineSpotShadowColor="@android:color/transparent"
+                        app:layout_constraintTop_toBottomOf="@id/user_page_change_data">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="0dp"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:gravity="start|center_vertical"
+                                android:outlineAmbientShadowColor="@android:color/transparent"
+                                android:outlineSpotShadowColor="@android:color/transparent"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:text="@string/friends"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                app:backgroundTint="@android:color/transparent"
+                                app:icon="@drawable/ic_arrow_right"
+                                app:iconGravity="end"
+                                app:iconTint="@color/black"
+                                app:rippleColor="@color/pink_100" />
+
+                            <HorizontalScrollView
+                                android:id="@+id/user_page_friends_list_scroll"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none">
+
+                                <LinearLayout
+                                    android:id="@+id/user_page_friends_list"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

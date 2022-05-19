@@ -44,4 +44,9 @@
     <string name="ok_verify_code">Верный код</string>
     <string name="change_password">Изменить пароль</string>
     <string name="tag_verify_code">Введите код подтверждения, отправленный на почту, и введите новый пароль</string>
+    <string name="home">Главная</string>
+    <string name="friends">Друзья</string>
+    <string name="create_survey">Создать опрос</string>
+    <string name="search">Поиск</string>
+    <string name="my_page">Моя страница</string>
 </resources>
