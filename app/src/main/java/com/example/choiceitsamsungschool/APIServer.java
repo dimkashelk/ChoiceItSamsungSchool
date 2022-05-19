@@ -27,6 +27,7 @@ import com.example.choiceitsamsungschool.main_page.UploadSurvey;
 import com.example.choiceitsamsungschool.main_page.UserPage;
 import com.example.choiceitsamsungschool.main_page.UserPageArchive;
 import com.example.choiceitsamsungschool.main_page.UserPageFavorites;
+
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginEmail;
 import com.example.choiceitsamsungschool.welcome_page.CheckUserLoginPassword;
 import com.example.choiceitsamsungschool.welcome_page.RegisterUser;

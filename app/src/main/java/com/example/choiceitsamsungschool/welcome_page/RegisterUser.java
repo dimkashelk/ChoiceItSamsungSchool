@@ -1,6 +1,7 @@
 package com.example.choiceitsamsungschool.welcome_page;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.choiceitsamsungschool.APIServer;
 import com.google.gson.Gson;
@@ -35,12 +36,13 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
     @Override
     protected Boolean doInBackground(String... strings) {
         try {
-            String json = "{'login': '" + shortName + "', " +
-                    "'password': '" + password + "'" +
-                    "'first_name': '" + firstName + "', " +
-                    "'second_name': '" + secondName + "', " +
-                    "'email': '" + email + "', " + "}";
-            RequestBody body = RequestBody.create(json, APIServer.JSON);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("login", shortName);
+            jsonObject.addProperty("password", password);
+            jsonObject.addProperty("first_name", firstName);
+            jsonObject.addProperty("second_name", secondName);
+            jsonObject.addProperty("email", email);
+            RequestBody body = RequestBody.create(jsonObject.toString(), APIServer.JSON);
             Request request = new Request.Builder()
                     .url(APIServer.URL + APIServer.REGISTRATION)
                     .post(body)
@@ -50,19 +52,20 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
                 return false;
             }
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-            if (jsonObject.get("status").getAsBoolean()) {
-                token = jsonObject.get("token").getAsString();
+            JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+            if (jsonObjectRes.get("status").getAsBoolean()) {
+                token = jsonObjectRes.get("token").getAsString();
             } else {
-                if (!jsonObject.get("email_free").getAsBoolean()) {
+                if (!jsonObjectRes.get("email_free").getAsBoolean()) {
                     emailOk = false;
                 }
-                if (!jsonObject.get("login_free").getAsBoolean()) {
+                if (!jsonObjectRes.get("login_free").getAsBoolean()) {
                     shortNameOk = false;
                 }
             }
             return true;
         } catch (Exception e) {
+            Log.e("reg user", e.getLocalizedMessage());
             return false;
         }
     }
@@ -70,15 +73,13 @@ public class RegisterUser extends AsyncTask<String, Boolean, Boolean> {
     @Override
     protected void onPostExecute(Boolean s) {
         super.onPostExecute(s);
-        if (emailOk && shortNameOk) {
-            apiServer.resultCheckingEmailLogin(emailOk, shortNameOk, token);
-        } else {
-            if (!emailOk) {
-                apiServer.notFreeEmail();
-            }
-            if (!shortNameOk) {
-                apiServer.notFreeLogin();
+        if (s) {
+            if (emailOk && shortNameOk) {
+                apiServer.resultCheckingEmailLogin(emailOk, shortNameOk, token);
+            } else {
+                apiServer.stopLoading(emailOk, shortNameOk);
             }
         }
+        apiServer.stopLoading(false, false);
     }
 }

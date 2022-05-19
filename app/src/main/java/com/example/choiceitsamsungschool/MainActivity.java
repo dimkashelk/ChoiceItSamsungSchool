@@ -23,12 +23,19 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences authorize_data;
     private SharedPreferences.Editor editor_authorize_data;
 
-    private APIServer apiServer;
-
     private static MainActivity mainActivity;
+
+    private void checkAllPermission() {
+        // INTERNET
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mainActivity = this;
+
         super.onCreate(savedInstanceState);
 
         mainActivity = this;
@@ -42,13 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         APIServer.setMainActivity(this);
 
-        User default_user = new User("Дмитрий", "Шелковников", "", "dimkashelk");
-        AppDatabase appDatabase = AppDatabase.getDatabase(getBaseContext());
-        appDatabase.userDao().removeAllUsers();
-        appDatabase.userDao().addUser(default_user);
-
-//        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
-        login();
+        APIServer.getSingletonAPIServer().authorize(getLogin(), getToken());
     }
 
     public void checkAllPermission() {
