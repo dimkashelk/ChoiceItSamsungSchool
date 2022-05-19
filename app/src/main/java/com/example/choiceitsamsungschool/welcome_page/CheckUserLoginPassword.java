@@ -32,10 +32,10 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
             if (mode.equals(APIServer.LOGIN)) {
                 login = strings[0];
                 String password = strings[1];
-                String json = "{" +
-                        "\"login\": \"" + login + "\"," +
-                        "\"password\": \"" + password + "\" }";
-                RequestBody body = RequestBody.create(json, JSON);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("login", login);
+                jsonObject.addProperty("password", password);
+                RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)
                         .post(body)
@@ -45,18 +45,19 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                     return null;
                 }
                 Gson gson = new Gson();
-                JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-                if (jsonObject.get("ok").getAsBoolean()) {
-                    return jsonObject.get("token").getAsString();
+                JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+                if (jsonObjectRes.get("ok").getAsBoolean()) {
+                    return jsonObjectRes.get("token").getAsString();
                 } else {
                     return null;
                 }
             } else {
                 email = strings[0];
                 String password = strings[1];
-                String json = "{'email': '" + login + "', " +
-                        "'password': '" + password + "'}";
-                RequestBody body = RequestBody.create(json, JSON);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("email", email);
+                jsonObject.addProperty("password", password);
+                RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
                 Request request = new Request.Builder()
                         .url(APIServer.URL + APIServer.AUTHORIZATION)
                         .post(body)
@@ -66,10 +67,10 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
                     return null;
                 }
                 Gson gson = new Gson();
-                JsonObject jsonObject = gson.fromJson(response.body().string(), JsonObject.class);
-                if (jsonObject.get("ok").getAsBoolean()) {
-                    login = jsonObject.get("login").getAsString();
-                    return jsonObject.get("token").getAsString();
+                JsonObject jsonObjectRes = gson.fromJson(response.body().string(), JsonObject.class);
+                if (jsonObjectRes.get("ok").getAsBoolean()) {
+                    login = jsonObjectRes.get("login").getAsString();
+                    return jsonObjectRes.get("token").getAsString();
                 } else {
                     return null;
                 }
@@ -81,10 +82,10 @@ public class CheckUserLoginPassword extends AsyncTask<String, Boolean, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if (s != null && login != null) {
-            apiServer.okUserLoginPassword(login, s);
+    protected void onPostExecute(String token) {
+        super.onPostExecute(token);
+        if (token != null && login != null) {
+            apiServer.okUserLoginPassword(login, token);
         } else {
             apiServer.errorUserLoginPassword();
         }
